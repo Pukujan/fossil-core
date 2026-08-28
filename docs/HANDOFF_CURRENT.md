@@ -1,5 +1,11 @@
 # Current Handoff
 
+## Finance-quant knowledge-pack ingestion (2026-08-28)
+
+The finance-quant scope-expansion conversation is captured as project-scoped
+research in the existing AI-systems pack; see
+`docs/handoffs/2026-08-28-finance-quant-scope-expansion-pack.md`. This does not
+change FOSSIL's frozen architecture, D021, or the active post-Gate-2 campaign.
 **Date:** 2026-08-19  
 **Project:** **FOSSIL — Fault-tolerant Open Semantic Store for Intellectual Lineage**  
 **Repository:** `Pukujan/fossil-core`  
