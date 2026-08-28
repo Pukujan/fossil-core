@@ -2,6 +2,13 @@
 
 ## Issue #79 control-plane continuation
 
+## Finance-quant knowledge-pack ingestion (2026-08-28)
+
+The finance-quant scope-expansion conversation is captured as project-scoped
+research in the existing AI-systems pack; see
+`docs/handoffs/2026-08-28-finance-quant-scope-expansion-pack.md`. This does not
+change FOSSIL's frozen architecture, D021, or the active post-Gate-2 campaign.
+
 Draft PR [#80](https://github.com/Pukujan/fossil-core/pull/80) adds the GitHub-hosted Tailscale workflows, fail-closed private service/inference probes, Langfuse synthetic-trace verification, ownership contract, and bootstrap runbook for `Pukujan/fossil-core#79`.
 
 Discovery confirmed local Codex can reach the remote Gravebuster host over Tailscale and found the Fossil source checkout there. No running Fossil health/API service or durable Fossil database endpoint was observed, and no separate Gravebuster GitHub source repository was identified. The live workflows are intentionally fail-closed until those facts are configured in GitHub variables/secrets and Tailscale ACL/trust policy.
