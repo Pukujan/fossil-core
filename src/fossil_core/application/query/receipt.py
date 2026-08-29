@@ -24,7 +24,12 @@ _SECRET_KEY_PARTS = (
     "token",
 )
 _ABSTENTION_OUTCOMES = frozenset(
-    {"insufficient_evidence", "conflicting_evidence", "current_state_unresolved"}
+    {
+        "insufficient_evidence",
+        "conflicting_evidence",
+        "current_state_unresolved",
+        "route_failed",
+    }
 )
 
 
@@ -241,6 +246,39 @@ def _claim_ids(output: Mapping[str, Any]) -> list[str]:
 
 def _resolver_records(response: Mapping[str, Any]) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
+    graph = response.get("retrieval_metadata")
+    if isinstance(graph, Mapping) and str(graph.get("resolver", "")):
+        resolved_ids = [
+            str(item) for item in graph.get("resolved_canonical_ids", []) if str(item)
+        ]
+        records.append(
+            {
+                "resolver": str(graph["resolver"]),
+                "resolved_ids": resolved_ids,
+                "added_ids": resolved_ids,
+                "removed_ids": [],
+                "final_context_ids": [
+                    str(item) for item in graph.get("returned_canonical_ids", []) if str(item)
+                ],
+                "diagnostics": sanitize_diagnostics(
+                    {
+                        key: graph[key]
+                        for key in (
+                            "status",
+                            "requested_pack_ids",
+                            "graph_search_limit",
+                            "graph_edges_returned",
+                            "graph_edges_resolved_to_canonical",
+                            "graph_query_count",
+                            "edge_uuids",
+                            "episode_uuids",
+                            "error_type",
+                        )
+                        if key in graph
+                    }
+                ),
+            }
+        )
     security = response.get("context_security")
     if isinstance(security, Mapping):
         records.append(
@@ -528,6 +566,7 @@ def execute_query_with_receipt(
     retrieval_started = time.perf_counter()
     candidates = retriever.search(query, pack_ids=requested_pack_ids, limit=limit)
     retrieval_latency_ms = (time.perf_counter() - retrieval_started) * 1000.0
+    retrieval_metadata = getattr(retriever, "last_search_metadata", None)
 
     model_started = time.perf_counter()
     response = copy.deepcopy(
@@ -550,6 +589,8 @@ def execute_query_with_receipt(
             )
         )
     )
+    if isinstance(retrieval_metadata, Mapping):
+        response["retrieval_metadata"] = copy.deepcopy(dict(retrieval_metadata))
     model_latency_ms = (time.perf_counter() - model_started) * 1000.0
     total_latency_ms = (time.perf_counter() - started) * 1000.0
 
@@ -602,3 +643,80 @@ def execute_query_with_receipt(
         cost_usd=retriever_cost + model_cost,
     )
     return response, receipt
+
+
+def build_failed_query_execution_receipt(
+    *,
+    query: str,
+    pack_mounts: Mapping[str, str] | Iterable[Mapping[str, Any]],
+    query_pack_ids: Sequence[str],
+    projection: Mapping[str, Any],
+    policy: Mapping[str, Any],
+    retriever_metadata: Mapping[str, Any],
+    model_metadata: Mapping[str, Any],
+    failure_type: str,
+    trace_ref: str,
+    run_ref: str | None = None,
+    query_id: str | None = None,
+    retrieval_metadata: Mapping[str, Any] | None = None,
+    latency_ms: float = 0.0,
+) -> dict[str, Any]:
+    """Represent an unavailable route without turning it into an empty success."""
+
+    failure = str(failure_type) or "UnknownRouteFailure"
+    retriever_attempt = {
+        "provider": str(retriever_metadata.get("provider", "unknown")),
+        "model_id": retriever_metadata.get("model_id"),
+        "implementation": str(retriever_metadata.get("implementation", "unknown")),
+        "outcome": "failed",
+        "error_type": failure,
+    }
+    model_attempt = {
+        "provider": str(model_metadata.get("provider", "unknown")),
+        "model_id": model_metadata.get("model_id"),
+        "implementation": str(model_metadata.get("implementation", "unknown")),
+        "outcome": "not_run",
+        "fallback_reason": "retrieval_route_failed_closed",
+    }
+    services = [
+        build_service_invocation(
+            "retriever",
+            retriever_metadata,
+            attempts=[retriever_attempt],
+            latency_ms=float(latency_ms),
+            cost_usd=0.0,
+        ),
+        build_service_invocation(
+            "model",
+            model_metadata,
+            attempts=[model_attempt],
+            latency_ms=None,
+            cost_usd=0.0,
+        ),
+    ]
+    response: dict[str, Any] = {
+        "output": {
+            "outcome": "route_failed",
+            "answer_text": "Retrieval route failed closed.",
+            "claims": [],
+            "confidence": None,
+        },
+        "authority": "execution_failed",
+    }
+    if retrieval_metadata is not None:
+        response["retrieval_metadata"] = copy.deepcopy(dict(retrieval_metadata))
+    return build_query_execution_receipt(
+        query=query,
+        pack_mounts=pack_mounts,
+        pack_scope_ids=query_pack_ids,
+        projection=projection,
+        policy=policy,
+        services=services,
+        candidates=[],
+        response=response,
+        trace_ref=trace_ref,
+        run_ref=run_ref,
+        query_id=query_id,
+        latency_ms=float(latency_ms),
+        cost_usd=0.0,
+    )

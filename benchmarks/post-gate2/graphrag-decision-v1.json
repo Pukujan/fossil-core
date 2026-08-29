@@ -1,0 +1,86 @@
+{
+  "schema_version": "fossil.graphrag-decision-benchmark.v1",
+  "benchmark_id": "FOSSIL-GRAPHRAG-BENCH-01",
+  "description": "Matched local Graphiti/Neo4j graph-expansion decision benchmark. The graph remains a replaceable projection and this plan does not change canonical FOSSIL semantics.",
+  "retrieval_plan": "benchmarks/post-gate2/retrieval-bakeoff-v1.json",
+  "retrieval_case_set": "benchmarks/gate2/real-corpus-history-v2.json",
+  "answer_case_set": "benchmarks/post-gate2/answer-reliability-v1.json",
+  "pack_pins": {
+    "fossil-common": "d583005dce06dbb499c3c0de5c22b899655eb8d2",
+    "fossil-ai-systems": "84accd2ee895663990e82ca5b79b592cb503db24"
+  },
+  "stable_pack_ids": {
+    "fossil-common": "pack_269099f7b2ba43b7a99b9427d64092de",
+    "fossil-ai-systems": "pack_f024177f89a5442db84171c3dd7f58e5"
+  },
+  "retrieval_limit": 5,
+  "candidate_multiplier": 4,
+  "graph": {
+    "projection": "graphiti-neo4j",
+    "projection_version": "1",
+    "search_api": "Graphiti.search_",
+    "search_methods": ["bm25", "breadth_first_search"],
+    "reranker": "reciprocal_rank_fusion",
+    "bfs_max_depth": 2,
+    "canonical_resolution": "Graphiti episode UUID -> dkg event ID -> validated FOSSIL proposed document ID",
+    "graph_native_ids_are_canonical": false,
+    "automatic_fallback": false
+  },
+  "routes": [
+    {"name": "BM25", "implementation": "d021-bm25-degraded-v1"},
+    {"name": "D021", "implementation": "d021-bge-dense-v1"},
+    {"name": "HYBRID", "implementation": "workstream-d-bge-bm25-rrf-v1"},
+    {"name": "RERANKED", "implementation": "workstream-d-bge-bm25-rrf-crossencoder-v1"},
+    {"name": "GRAPHITI", "implementation": "fossil-graphiti-neo4j-bounded-expansion-v1"}
+  ],
+  "query_classes": {
+    "exact / identifier": ["gate1_controls_not_winners", "graphiti_current_role"],
+    "conceptual": [
+      "source_quality_claim_specific",
+      "model_agreement_not_evidence",
+      "insufficient_evidence_keeps_uncertainty",
+      "fresh_build_scoped_ledger",
+      "logical_packs_over_physical_shards"
+    ],
+    "current-state": [
+      "current_architecture_after_reconsideration",
+      "former_sqlite_canonical_history",
+      "sqlite_dependent_staleness"
+    ],
+    "historical / lineage": [
+      "recovery_is_reconstructed",
+      "lost_chat_exact_wording_unavailable",
+      "do_not_invent_recovery_wording",
+      "later_primary_evidence_preferred"
+    ],
+    "relationship / multi-hop": [
+      "candidate_authority_cross_pack_dependency",
+      "sqlite_supersession_lineage",
+      "common_mount_isolation"
+    ],
+    "broad synthesis": [
+      "false_premise_quote_missing_chat",
+      "historical_current_supersession_bundle"
+    ],
+    "conflicting / superseded evidence": [
+      "graph_canonical_rejected",
+      "graph_disagreement_relation"
+    ]
+  },
+  "fairness": {
+    "same_case_set": true,
+    "same_pack_revisions": true,
+    "same_final_candidate_limit": true,
+    "same_answer_evaluator": true,
+    "same_context_security": true,
+    "same_lineage_resolver": true,
+    "initial_graph_build_time_in_query_latency": false
+  },
+  "decision_rule": {
+    "material_class_win": "graph recall@5 improvement >= 0.10 or at least one fewer miss with no route safety regression",
+    "primary": "graph materially wins ordinary and specialist classes without unacceptable latency/resource/safety regression",
+    "specialist": "graph materially wins historical/lineage, relationship/multi-hop, or conflicting/superseded evidence while simpler routes remain preferable elsewhere",
+    "projection_only": "graph projection is verified and useful for materialization/lineage but has no material matched retrieval-class win",
+    "reject": "graph projection-backed retrieval has no meaningful advantage and is not retained for retrieval"
+  }
+}
