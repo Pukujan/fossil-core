@@ -62,6 +62,12 @@ The durable/evidence foundation remains complete, including:
 
 Historical Gate 1/Gate 2/workstream proof detail remains in the implementation, research, handoff, decision-log, issue, and git records. This current-state document does not replace those records.
 
+## 2026-08-29 GraphRAG retrieval decision
+
+The local Graphiti/Neo4j projection was evaluated on the existing frozen Gate-2/post-Gate-2 retrieval and answer gold sets. The bounded projection-bound route resolved graph episodes back to canonical FOSSIL event/document identities and preserved pack, lifecycle/lineage, citation, and untrusted-context boundaries. It did not provide a matched retrieval advantage: compared with the existing cross-encoder-reranked route, GRAPHITI achieved hit/recall/MRR `0.048/0.016/0.024` versus `1.000/1.000/0.873`, and answer/citation correctness `0.333/0.333` versus `0.833/1.000`, despite lower retrieval p95 latency (`75.55 ms` versus `214.75 ms`).
+
+Decision: `RETAIN_PROJECTION_NOT_RETRIEVAL`. Graphiti/Neo4j remains useful as a rebuildable projection/materialization surface, but it is not promoted into FOSSIL’s normal retrieval policy. The report and complete `fossil.query-execution-receipt.v1` sidecar are committed under `benchmarks/post-gate2/results/2026-08-29-graphrag-decision/`; this result does not change canonical FOSSIL semantics.
+
 ## 2026-08-15 baseline closeout anchors
 
 ### Graphiti / receipt / ingestion fan-in

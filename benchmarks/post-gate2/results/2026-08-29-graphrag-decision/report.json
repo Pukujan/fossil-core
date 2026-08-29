@@ -1,0 +1,2490 @@
+{
+  "acceptance_weakened": false,
+  "benchmark": {
+    "answer_case_count": 6,
+    "answer_case_set": "benchmarks/post-gate2/answer-reliability-v1.json",
+    "candidate_multiplier": 4,
+    "corpus_document_count": 27,
+    "corpus_event_count": 51,
+    "plan": "benchmarks\\post-gate2\\graphrag-decision-v1.json",
+    "retrieval_case_count": 21,
+    "retrieval_case_set": "benchmarks/gate2/real-corpus-history-v2.json",
+    "retrieval_limit": 5,
+    "version": "FOSSIL-GRAPHRAG-BENCH-01"
+  },
+  "decision": {
+    "baseline_route": "RERANKED",
+    "decision": "RETAIN_PROJECTION_NOT_RETRIEVAL",
+    "graph_latency_non_regression": true,
+    "graph_safety_non_regression": true,
+    "material_class_wins": [],
+    "ordinary_class_wins": [],
+    "specialist_class_wins": []
+  },
+  "environment": {
+    "device": "cpu",
+    "graphiti_version": "0.29.3",
+    "machine": "AMD64",
+    "neo4j_version": "5.26.30",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD",
+    "python": "3.12.10"
+  },
+  "graph_projection": {
+    "build_id": "existing-verified-ba47b4417e047d3de13a57c3",
+    "graph_native_ids_are_canonical": false,
+    "graphiti_version": "0.29.3",
+    "incremental_projection_ms": null,
+    "initial_graph_materialization_ms": null,
+    "materialization_status": "reused_preexisting_verified_projection",
+    "materialization_timing_note": "The exact 51-event projection pre-existed this benchmark; its historical build elapsed time is unavailable and is explicitly not included in per-query latency.",
+    "materialized_event_count": 51,
+    "name": "graphiti-neo4j",
+    "neo4j_version": "5.26.30",
+    "projection_validation_ms": 40.78539996407926,
+    "retrieval_model_calls": 0,
+    "retrieval_model_identity": null,
+    "stable_pack_ids": [
+      "pack_269099f7b2ba43b7a99b9427d64092de",
+      "pack_f024177f89a5442db84171c3dd7f58e5"
+    ],
+    "version": "1"
+  },
+  "graph_unavailable_control": {
+    "automatic_fallback": false,
+    "canonical_truth_unchanged": true,
+    "case_id": "current_architecture_after_reconsideration",
+    "expected_status": "route_failed",
+    "observed_status": "route_failed",
+    "receipt_id": "qrx_98ab122b6bf8b03e77e87d95"
+  },
+  "head": "e4d465a0f4dfffeeb5b0799ed666af38126ee4bc",
+  "invariants": {
+    "citation": true,
+    "lifecycle": true,
+    "lineage": true,
+    "pack": true,
+    "security": true
+  },
+  "pack_pins": {
+    "fossil-ai-systems": "84accd2ee895663990e82ca5b79b592cb503db24",
+    "fossil-common": "d583005dce06dbb499c3c0de5c22b899655eb8d2"
+  },
+  "passed": true,
+  "receipt_sidecar": {
+    "all_validated_against": "schemas/query-execution-receipt/v1.schema.json",
+    "inventory_count": 136,
+    "path": "benchmarks\\post-gate2\\results\\2026-08-29-graphrag-decision\\receipts.jsonl",
+    "receipt_count": 136,
+    "sha256": "8993c8d8a6112e918968077b27e47f16568afc854b789cee11e02a2f2b808d7f"
+  },
+  "route_reports": {
+    "BM25": {
+      "answer": {
+        "metrics": {
+          "abstention_conflict_handling": 1.0,
+          "answer_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "outcome_accuracy": 1.0,
+          "unsupported_claim_rate": 0.0
+        },
+        "observations": [
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "current-durable-core",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "historical-sqlite-premise",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": true,
+            "case_correct": true,
+            "case_id": "current-stale-sqlite-prototype",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "current-graph-projection-not-canonical",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "historical-rejected-graph-canonical",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": true,
+            "case_correct": true,
+            "case_id": "insufficient-evidence-control",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          }
+        ]
+      },
+      "failure_taxonomy": {
+        "benchmark_id": "bench_905fa197981f9110c36381ae",
+        "counts": {
+          "bad_ranking": 5,
+          "incomplete_multi_target_recall": 2,
+          "pack_isolation_violation": 0,
+          "retrieval_miss": 1,
+          "stale_superseded_leakage": 1
+        },
+        "examples": {
+          "bad_ranking": [
+            {
+              "case_id": "former_sqlite_canonical_history",
+              "category": "current-vs-historical",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c"
+              ],
+              "returned_ids": [
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_a047d79b8604fadbd44efdf4",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_677f372218d173f32ab6cb30"
+              ]
+            },
+            {
+              "case_id": "sqlite_supersession_lineage",
+              "category": "decision-lineage",
+              "reciprocal_rank": 0.3333333333333333,
+              "relevant_ids": [
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_a047d79b8604fadbd44efdf4",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "sqlite_dependent_staleness",
+              "category": "stale-superseded",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_a047d79b8604fadbd44efdf4"
+              ],
+              "returned_ids": [
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_a047d79b8604fadbd44efdf4",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ]
+            },
+            {
+              "case_id": "do_not_invent_recovery_wording",
+              "category": "conversation-lineage",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_841df02f01de69cafeb9c084"
+              ],
+              "returned_ids": [
+                "clm_677f372218d173f32ab6cb30",
+                "clm_841df02f01de69cafeb9c084",
+                "clm_b9cec2a2d1753db24f59ff1309d31656",
+                "clm_a568c87b8a2deb8ad9f752299c2bca80",
+                "clm_1f4c5f053bd7dccac79c301c"
+              ]
+            },
+            {
+              "case_id": "historical_current_supersession_bundle",
+              "category": "decision-lineage",
+              "reciprocal_rank": 0.25,
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "clm_a047d79b8604fadbd44efdf4",
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_643b698b7e9e6aee6a16c48c"
+              ]
+            }
+          ],
+          "incomplete_multi_target_recall": [
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ],
+              "returned_ids": [
+                "clm_bdf2ed41fb11e6b1808d3df4",
+                "clm_a047d79b8604fadbd44efdf4",
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "rel_c0e74317e7ff1ee59461b036"
+              ]
+            },
+            {
+              "case_id": "historical_current_supersession_bundle",
+              "category": "decision-lineage",
+              "recall_at_k": 0.6666666666666666,
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "clm_a047d79b8604fadbd44efdf4",
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_643b698b7e9e6aee6a16c48c"
+              ]
+            }
+          ],
+          "pack_isolation_violation": [],
+          "retrieval_miss": [
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "relevant_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ],
+              "returned_ids": [
+                "clm_bdf2ed41fb11e6b1808d3df4",
+                "clm_a047d79b8604fadbd44efdf4",
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "rel_c0e74317e7ff1ee59461b036"
+              ]
+            }
+          ],
+          "stale_superseded_leakage": [
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "first_relevant_rank": null,
+              "leaked": [
+                {
+                  "id": "clm_bdf2ed41fb11e6b1808d3df4",
+                  "rank": 1,
+                  "state": "rejected"
+                },
+                {
+                  "id": "clm_a047d79b8604fadbd44efdf4",
+                  "rank": 2,
+                  "state": "stale_pending_review"
+                }
+              ]
+            }
+          ]
+        },
+        "service": {
+          "estimated_cost_per_call_usd": 0.0,
+          "implementation": "bm25",
+          "implementation_version": "fossil-graphrag-bm25-v1",
+          "kind": "retriever",
+          "local": true,
+          "model_id": null,
+          "provider": "fossil",
+          "provider_version": "1",
+          "runtime": {}
+        },
+        "unsupported_confidence_leakage": {
+          "applicable": false,
+          "observed": false,
+          "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+        }
+      },
+      "operational": {
+        "graph_query_count": null,
+        "mean_latency_ms": 3.7160809373571757,
+        "p95_latency_ms": 6.463899975642562,
+        "peak_python_alloc_bytes": 59117,
+        "process_rss_bytes_after_route": 610648064
+      },
+      "receipt_count": 27,
+      "retrieval": {
+        "decision_critical_misses": 1,
+        "metrics": {
+          "estimated_cost_usd": 0.0,
+          "failure_rate_by_category": {
+            "contradiction-disagreement": 0.0,
+            "conversation-lineage": 0.0,
+            "cross-pack-isolation": 0.0,
+            "current-vs-historical": 0.5,
+            "decision-lineage": 0.0,
+            "exact-factual-lookup": 0.0,
+            "insufficient-evidence": 0.0,
+            "obscure-deep-evidence": 0.0,
+            "source-citation-recovery": 0.0,
+            "stale-superseded": 0.0
+          },
+          "hit_rate": 0.9523809523809523,
+          "limit": 5,
+          "mean_latency_ms": 3.7160809373571757,
+          "mean_recall_at_k": 0.9365079365079365,
+          "mrr": 0.8134920634920635,
+          "p95_latency_ms": 6.463899975642562,
+          "peak_python_alloc_bytes": 59117
+        },
+        "query_class_metrics": {
+          "broad synthesis": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.625,
+            "recall_at_k": 0.8333333333333333
+          },
+          "conceptual": {
+            "case_count": 5,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "conflicting / superseded evidence": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "current-state": {
+            "case_count": 3,
+            "decision_critical_misses": 1,
+            "hit_rate": 0.6666666666666666,
+            "missed_case_ids": [
+              "current_architecture_after_reconsideration"
+            ],
+            "mrr": 0.3333333333333333,
+            "recall_at_k": 0.6666666666666666
+          },
+          "exact / identifier": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "historical / lineage": {
+            "case_count": 4,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.875,
+            "recall_at_k": 1.0
+          },
+          "relationship / multi-hop": {
+            "case_count": 3,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.7777777777777778,
+            "recall_at_k": 1.0
+          }
+        }
+      },
+      "safety": {
+        "current_query_top1_superseded_leakage": [],
+        "current_query_top1_superseded_leakage_count": 0,
+        "pack_isolation_preserved": true,
+        "pack_isolation_violations": []
+      },
+      "semantic": {
+        "answer_evaluation": {
+          "abstention_conflict_handling": 1.0,
+          "answer_correctness": 1.0,
+          "case_count": 6,
+          "citation_correctness": 1.0,
+          "unsupported_claim_rate": 0.0
+        },
+        "current_vs_superseded_leakage": {
+          "current_query_count": 2,
+          "leakage_case_count": 1,
+          "leakage_rate": 0.5,
+          "top1_forbidden_id_leakage_case_count": 0
+        },
+        "historical_current_target_correctness": {
+          "answer": {
+            "case_correctness": 1.0,
+            "case_count": 3,
+            "citation_correctness": 1.0,
+            "outcome_accuracy": 1.0,
+            "unsupported_claim_rate": 0.0
+          },
+          "basis": {
+            "answer_categories": [
+              "current-answer",
+              "current-unresolved",
+              "historical-answer"
+            ],
+            "retrieval_categories": [
+              "current-vs-historical",
+              "decision-lineage",
+              "stale-superseded"
+            ]
+          },
+          "retrieval": {
+            "case_count": 5,
+            "hit_rate": 0.8,
+            "mrr": 0.31666666666666665,
+            "recall_at_k": 0.7333333333333333
+          }
+        },
+        "lineage_correctness": {
+          "answer": {
+            "case_correctness": 1.0,
+            "case_count": 4,
+            "citation_correctness": 1.0,
+            "outcome_accuracy": 1.0,
+            "unsupported_claim_rate": 0.0
+          },
+          "basis": {
+            "answer_categories": [
+              "current-unresolved",
+              "historical-answer",
+              "historical-rejected",
+              "resolved-contradiction"
+            ],
+            "retrieval_categories": [
+              "conversation-lineage",
+              "decision-lineage"
+            ]
+          },
+          "retrieval": {
+            "case_count": 7,
+            "hit_rate": 1.0,
+            "mrr": 0.7261904761904762,
+            "recall_at_k": 0.9523809523809524
+          }
+        },
+        "pack_isolation": {
+          "preserved": true,
+          "violation_case_count": 0
+        },
+        "poisoning_context_security_compatibility": {
+          "comparable_receipt_count": 27,
+          "receipts_with_untrusted_context_resolver": 27,
+          "resolver_coverage": 1.0,
+          "unsupported_confidence_leakage": {
+            "applicable": false,
+            "observed": false,
+            "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+          }
+        }
+      },
+      "service": {
+        "estimated_cost_per_call_usd": 0.0,
+        "implementation": "bm25",
+        "implementation_version": "fossil-graphrag-bm25-v1",
+        "kind": "retriever",
+        "local": true,
+        "model_id": null,
+        "provider": "fossil",
+        "provider_version": "1",
+        "runtime": {}
+      }
+    },
+    "D021": {
+      "answer": {
+        "metrics": {
+          "abstention_conflict_handling": 0.5,
+          "answer_correctness": 0.8333333333333334,
+          "citation_correctness": 1.0,
+          "outcome_accuracy": 0.8333333333333334,
+          "unsupported_claim_rate": 0.16666666666666666
+        },
+        "observations": [
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "current-durable-core",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "historical-sqlite-premise",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": true,
+            "case_correct": true,
+            "case_id": "current-stale-sqlite-prototype",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "current-graph-projection-not-canonical",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "historical-rejected-graph-canonical",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": false,
+            "case_correct": false,
+            "case_id": "insufficient-evidence-control",
+            "citation_correct": true,
+            "outcome_match": false,
+            "unsupported_claim_rate": 1.0
+          }
+        ]
+      },
+      "failure_taxonomy": {
+        "benchmark_id": "bench_32b660437b21bdb47b4b2a0c",
+        "counts": {
+          "bad_ranking": 5,
+          "incomplete_multi_target_recall": 1,
+          "pack_isolation_violation": 0,
+          "retrieval_miss": 0,
+          "stale_superseded_leakage": 1
+        },
+        "examples": {
+          "bad_ranking": [
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "reciprocal_rank": 0.2,
+              "relevant_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ],
+              "returned_ids": [
+                "clm_76c6bead3d10df4ca7de8af4",
+                "clm_62b7f9c6184b14371338ca36",
+                "clm_bdf2ed41fb11e6b1808d3df4",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "sqlite_supersession_lineage",
+              "category": "decision-lineage",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_a047d79b8604fadbd44efdf4",
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ]
+            },
+            {
+              "case_id": "sqlite_dependent_staleness",
+              "category": "stale-superseded",
+              "reciprocal_rank": 0.3333333333333333,
+              "relevant_ids": [
+                "clm_a047d79b8604fadbd44efdf4"
+              ],
+              "returned_ids": [
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_a047d79b8604fadbd44efdf4",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_76c6bead3d10df4ca7de8af4"
+              ]
+            },
+            {
+              "case_id": "graph_disagreement_relation",
+              "category": "contradiction-disagreement",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "rel_c0e74317e7ff1ee59461b036"
+              ],
+              "returned_ids": [
+                "clm_f69dd23d961d485db1c53f0b",
+                "rel_c0e74317e7ff1ee59461b036",
+                "clm_bdf2ed41fb11e6b1808d3df4",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "do_not_invent_recovery_wording",
+              "category": "conversation-lineage",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_841df02f01de69cafeb9c084"
+              ],
+              "returned_ids": [
+                "clm_677f372218d173f32ab6cb30",
+                "clm_841df02f01de69cafeb9c084",
+                "clm_1f4c5f053bd7dccac79c301c",
+                "clm_a568c87b8a2deb8ad9f752299c2bca80",
+                "clm_fabdddf47e97cdd1876329fe"
+              ]
+            }
+          ],
+          "incomplete_multi_target_recall": [
+            {
+              "case_id": "historical_current_supersession_bundle",
+              "category": "decision-lineage",
+              "recall_at_k": 0.6666666666666666,
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_76c6bead3d10df4ca7de8af4",
+                "clm_a047d79b8604fadbd44efdf4"
+              ]
+            }
+          ],
+          "pack_isolation_violation": [],
+          "retrieval_miss": [],
+          "stale_superseded_leakage": [
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "first_relevant_rank": 5,
+              "leaked": [
+                {
+                  "id": "clm_bdf2ed41fb11e6b1808d3df4",
+                  "rank": 3,
+                  "state": "rejected"
+                }
+              ]
+            }
+          ]
+        },
+        "service": {
+          "estimated_cost_per_call_usd": 0.0,
+          "implementation": "semantic-in-memory-cosine",
+          "implementation_version": "fossil-graphrag-d021-v1",
+          "kind": "retriever",
+          "local": true,
+          "model_id": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+          "provider": "sentence-transformers",
+          "provider_version": "5.2.2",
+          "runtime": {
+            "embedding_implementation": "sentence-transformer-encode",
+            "embedding_implementation_version": "1",
+            "embedding_runtime": "{\"device\":\"cpu\",\"model_revision\":\"5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\",\"normalize_embeddings\":\"true\",\"torch_version\":\"2.13.0\",\"transformers_version\":\"5.16.1\"}"
+          }
+        },
+        "unsupported_confidence_leakage": {
+          "applicable": false,
+          "observed": false,
+          "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+        }
+      },
+      "operational": {
+        "graph_query_count": null,
+        "mean_latency_ms": 37.30577616287129,
+        "p95_latency_ms": 40.31429998576641,
+        "peak_python_alloc_bytes": 82652,
+        "process_rss_bytes_after_route": 614313984
+      },
+      "receipt_count": 27,
+      "retrieval": {
+        "decision_critical_misses": 0,
+        "metrics": {
+          "estimated_cost_usd": 0.0,
+          "failure_rate_by_category": {
+            "contradiction-disagreement": 0.0,
+            "conversation-lineage": 0.0,
+            "cross-pack-isolation": 0.0,
+            "current-vs-historical": 0.0,
+            "decision-lineage": 0.0,
+            "exact-factual-lookup": 0.0,
+            "insufficient-evidence": 0.0,
+            "obscure-deep-evidence": 0.0,
+            "source-citation-recovery": 0.0,
+            "stale-superseded": 0.0
+          },
+          "hit_rate": 1.0,
+          "limit": 5,
+          "mean_latency_ms": 37.30577616287129,
+          "mean_recall_at_k": 0.9841269841269842,
+          "mrr": 0.8587301587301588,
+          "p95_latency_ms": 40.31429998576641,
+          "peak_python_alloc_bytes": 82652
+        },
+        "query_class_metrics": {
+          "broad synthesis": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 0.8333333333333333
+          },
+          "conceptual": {
+            "case_count": 5,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "conflicting / superseded evidence": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.75,
+            "recall_at_k": 1.0
+          },
+          "current-state": {
+            "case_count": 3,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.5111111111111111,
+            "recall_at_k": 1.0
+          },
+          "exact / identifier": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "historical / lineage": {
+            "case_count": 4,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.875,
+            "recall_at_k": 1.0
+          },
+          "relationship / multi-hop": {
+            "case_count": 3,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.8333333333333334,
+            "recall_at_k": 1.0
+          }
+        }
+      },
+      "safety": {
+        "current_query_top1_superseded_leakage": [],
+        "current_query_top1_superseded_leakage_count": 0,
+        "pack_isolation_preserved": true,
+        "pack_isolation_violations": []
+      },
+      "semantic": {
+        "answer_evaluation": {
+          "abstention_conflict_handling": 0.5,
+          "answer_correctness": 0.8333333333333334,
+          "case_count": 6,
+          "citation_correctness": 1.0,
+          "unsupported_claim_rate": 0.16666666666666666
+        },
+        "current_vs_superseded_leakage": {
+          "current_query_count": 2,
+          "leakage_case_count": 1,
+          "leakage_rate": 0.5,
+          "top1_forbidden_id_leakage_case_count": 0
+        },
+        "historical_current_target_correctness": {
+          "answer": {
+            "case_correctness": 1.0,
+            "case_count": 3,
+            "citation_correctness": 1.0,
+            "outcome_accuracy": 1.0,
+            "unsupported_claim_rate": 0.0
+          },
+          "basis": {
+            "answer_categories": [
+              "current-answer",
+              "current-unresolved",
+              "historical-answer"
+            ],
+            "retrieval_categories": [
+              "current-vs-historical",
+              "decision-lineage",
+              "stale-superseded"
+            ]
+          },
+          "retrieval": {
+            "case_count": 5,
+            "hit_rate": 1.0,
+            "mrr": 0.6066666666666667,
+            "recall_at_k": 0.9333333333333333
+          }
+        },
+        "lineage_correctness": {
+          "answer": {
+            "case_correctness": 1.0,
+            "case_count": 4,
+            "citation_correctness": 1.0,
+            "outcome_accuracy": 1.0,
+            "unsupported_claim_rate": 0.0
+          },
+          "basis": {
+            "answer_categories": [
+              "current-unresolved",
+              "historical-answer",
+              "historical-rejected",
+              "resolved-contradiction"
+            ],
+            "retrieval_categories": [
+              "conversation-lineage",
+              "decision-lineage"
+            ]
+          },
+          "retrieval": {
+            "case_count": 7,
+            "hit_rate": 1.0,
+            "mrr": 0.8571428571428571,
+            "recall_at_k": 0.9523809523809524
+          }
+        },
+        "pack_isolation": {
+          "preserved": true,
+          "violation_case_count": 0
+        },
+        "poisoning_context_security_compatibility": {
+          "comparable_receipt_count": 27,
+          "receipts_with_untrusted_context_resolver": 27,
+          "resolver_coverage": 1.0,
+          "unsupported_confidence_leakage": {
+            "applicable": false,
+            "observed": false,
+            "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+          }
+        }
+      },
+      "service": {
+        "estimated_cost_per_call_usd": 0.0,
+        "implementation": "semantic-in-memory-cosine",
+        "implementation_version": "fossil-graphrag-d021-v1",
+        "kind": "retriever",
+        "local": true,
+        "model_id": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+        "provider": "sentence-transformers",
+        "provider_version": "5.2.2",
+        "runtime": {
+          "embedding_implementation": "sentence-transformer-encode",
+          "embedding_implementation_version": "1",
+          "embedding_runtime": "{\"device\":\"cpu\",\"model_revision\":\"5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\",\"normalize_embeddings\":\"true\",\"torch_version\":\"2.13.0\",\"transformers_version\":\"5.16.1\"}"
+        }
+      }
+    },
+    "GRAPHITI": {
+      "answer": {
+        "metrics": {
+          "abstention_conflict_handling": 0.5,
+          "answer_correctness": 0.3333333333333333,
+          "citation_correctness": 0.3333333333333333,
+          "outcome_accuracy": 0.8333333333333334,
+          "unsupported_claim_rate": 0.6666666666666666
+        },
+        "observations": [
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "current-durable-core",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": false,
+            "case_id": "historical-sqlite-premise",
+            "citation_correct": false,
+            "outcome_match": true,
+            "unsupported_claim_rate": 1.0
+          },
+          {
+            "appropriate_abstention": false,
+            "case_correct": false,
+            "case_id": "current-stale-sqlite-prototype",
+            "citation_correct": false,
+            "outcome_match": false,
+            "unsupported_claim_rate": 1.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": false,
+            "case_id": "current-graph-projection-not-canonical",
+            "citation_correct": false,
+            "outcome_match": true,
+            "unsupported_claim_rate": 1.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": false,
+            "case_id": "historical-rejected-graph-canonical",
+            "citation_correct": false,
+            "outcome_match": true,
+            "unsupported_claim_rate": 1.0
+          },
+          {
+            "appropriate_abstention": true,
+            "case_correct": true,
+            "case_id": "insufficient-evidence-control",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          }
+        ]
+      },
+      "failure_taxonomy": {
+        "benchmark_id": "bench_91d12403726e31584207fa34",
+        "counts": {
+          "bad_ranking": 1,
+          "incomplete_multi_target_recall": 21,
+          "pack_isolation_violation": 0,
+          "retrieval_miss": 20,
+          "stale_superseded_leakage": 0
+        },
+        "examples": {
+          "bad_ranking": [
+            {
+              "case_id": "historical_current_supersession_bundle",
+              "category": "decision-lineage",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            }
+          ],
+          "incomplete_multi_target_recall": [
+            {
+              "case_id": "source_quality_claim_specific",
+              "category": "source-citation-recovery",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_32f20bd13ce2ffc9d2ac1606"
+              ],
+              "returned_ids": []
+            },
+            {
+              "case_id": "model_agreement_not_evidence",
+              "category": "insufficient-evidence",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_7fee179225b3ef0c4d413917"
+              ],
+              "returned_ids": []
+            },
+            {
+              "case_id": "insufficient_evidence_keeps_uncertainty",
+              "category": "insufficient-evidence",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_041fdd3cc6542b6dca47b183"
+              ],
+              "returned_ids": []
+            },
+            {
+              "case_id": "gate1_controls_not_winners",
+              "category": "exact-factual-lookup",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_6542963629260bde4e67d660"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "fresh_build_scoped_ledger",
+              "category": "obscure-deep-evidence",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_62b7f9c6184b14371338ca36"
+              ],
+              "returned_ids": []
+            },
+            {
+              "case_id": "candidate_authority_cross_pack_dependency",
+              "category": "cross-pack-isolation",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "rel_04b8861fde6b22abcae58ef4"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "former_sqlite_canonical_history",
+              "category": "current-vs-historical",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "sqlite_supersession_lineage",
+              "category": "decision-lineage",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "sqlite_dependent_staleness",
+              "category": "stale-superseded",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_a047d79b8604fadbd44efdf4"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "graph_canonical_rejected",
+              "category": "contradiction-disagreement",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ],
+              "returned_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "graphiti_current_role",
+              "category": "exact-factual-lookup",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_f69dd23d961d485db1c53f0b"
+              ],
+              "returned_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "graph_disagreement_relation",
+              "category": "contradiction-disagreement",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "rel_c0e74317e7ff1ee59461b036"
+              ],
+              "returned_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "logical_packs_over_physical_shards",
+              "category": "obscure-deep-evidence",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_783ff75008ce760e0a227fa9"
+              ],
+              "returned_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "recovery_is_reconstructed",
+              "category": "conversation-lineage",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_fabdddf47e97cdd1876329fe"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "lost_chat_exact_wording_unavailable",
+              "category": "conversation-lineage",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_1f4c5f053bd7dccac79c301c"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "do_not_invent_recovery_wording",
+              "category": "conversation-lineage",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_841df02f01de69cafeb9c084"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "later_primary_evidence_preferred",
+              "category": "conversation-lineage",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_677f372218d173f32ab6cb30"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "false_premise_quote_missing_chat",
+              "category": "conversation-lineage",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_1f4c5f053bd7dccac79c301c",
+                "clm_841df02f01de69cafeb9c084"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "historical_current_supersession_bundle",
+              "category": "decision-lineage",
+              "recall_at_k": 0.3333333333333333,
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "common_mount_isolation",
+              "category": "cross-pack-isolation",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_7fee179225b3ef0c4d413917"
+              ],
+              "returned_ids": []
+            }
+          ],
+          "pack_isolation_violation": [],
+          "retrieval_miss": [
+            {
+              "case_id": "source_quality_claim_specific",
+              "category": "source-citation-recovery",
+              "relevant_ids": [
+                "clm_32f20bd13ce2ffc9d2ac1606"
+              ],
+              "returned_ids": []
+            },
+            {
+              "case_id": "model_agreement_not_evidence",
+              "category": "insufficient-evidence",
+              "relevant_ids": [
+                "clm_7fee179225b3ef0c4d413917"
+              ],
+              "returned_ids": []
+            },
+            {
+              "case_id": "insufficient_evidence_keeps_uncertainty",
+              "category": "insufficient-evidence",
+              "relevant_ids": [
+                "clm_041fdd3cc6542b6dca47b183"
+              ],
+              "returned_ids": []
+            },
+            {
+              "case_id": "gate1_controls_not_winners",
+              "category": "exact-factual-lookup",
+              "relevant_ids": [
+                "clm_6542963629260bde4e67d660"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "fresh_build_scoped_ledger",
+              "category": "obscure-deep-evidence",
+              "relevant_ids": [
+                "clm_62b7f9c6184b14371338ca36"
+              ],
+              "returned_ids": []
+            },
+            {
+              "case_id": "candidate_authority_cross_pack_dependency",
+              "category": "cross-pack-isolation",
+              "relevant_ids": [
+                "rel_04b8861fde6b22abcae58ef4"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "relevant_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "former_sqlite_canonical_history",
+              "category": "current-vs-historical",
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "sqlite_supersession_lineage",
+              "category": "decision-lineage",
+              "relevant_ids": [
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "sqlite_dependent_staleness",
+              "category": "stale-superseded",
+              "relevant_ids": [
+                "clm_a047d79b8604fadbd44efdf4"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "graph_canonical_rejected",
+              "category": "contradiction-disagreement",
+              "relevant_ids": [
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ],
+              "returned_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "graphiti_current_role",
+              "category": "exact-factual-lookup",
+              "relevant_ids": [
+                "clm_f69dd23d961d485db1c53f0b"
+              ],
+              "returned_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "graph_disagreement_relation",
+              "category": "contradiction-disagreement",
+              "relevant_ids": [
+                "rel_c0e74317e7ff1ee59461b036"
+              ],
+              "returned_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "logical_packs_over_physical_shards",
+              "category": "obscure-deep-evidence",
+              "relevant_ids": [
+                "clm_783ff75008ce760e0a227fa9"
+              ],
+              "returned_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "recovery_is_reconstructed",
+              "category": "conversation-lineage",
+              "relevant_ids": [
+                "clm_fabdddf47e97cdd1876329fe"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "lost_chat_exact_wording_unavailable",
+              "category": "conversation-lineage",
+              "relevant_ids": [
+                "clm_1f4c5f053bd7dccac79c301c"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "do_not_invent_recovery_wording",
+              "category": "conversation-lineage",
+              "relevant_ids": [
+                "clm_841df02f01de69cafeb9c084"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "later_primary_evidence_preferred",
+              "category": "conversation-lineage",
+              "relevant_ids": [
+                "clm_677f372218d173f32ab6cb30"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "false_premise_quote_missing_chat",
+              "category": "conversation-lineage",
+              "relevant_ids": [
+                "clm_1f4c5f053bd7dccac79c301c",
+                "clm_841df02f01de69cafeb9c084"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba"
+              ]
+            },
+            {
+              "case_id": "common_mount_isolation",
+              "category": "cross-pack-isolation",
+              "relevant_ids": [
+                "clm_7fee179225b3ef0c4d413917"
+              ],
+              "returned_ids": []
+            }
+          ],
+          "stale_superseded_leakage": []
+        },
+        "service": {
+          "estimated_cost_per_call_usd": 0.0,
+          "implementation": "graphiti-neo4j-bounded-expansion",
+          "implementation_version": "fossil-graphrag-graphiti-v1",
+          "kind": "retriever",
+          "local": true,
+          "model_id": null,
+          "provider": "graphiti-core",
+          "provider_version": "0.29.3",
+          "runtime": {
+            "candidate_multiplier": "4",
+            "graph_expansion_resolver": "fossil-graphiti-expansion-v1",
+            "graph_native_ids_are_canonical": "false",
+            "neo4j_version": "5.26.30",
+            "projection": "{\"build_id\":\"existing-verified-ba47b4417e047d3de13a57c3\",\"name\":\"graphiti-neo4j\",\"version\":\"1\"}",
+            "search_api": "Graphiti.search_",
+            "search_config": "edge_config=EdgeSearchConfig(search_methods=[<EdgeSearchMethod.bm25: 'bm25'>, <EdgeSearchMethod.bfs: 'breadth_first_search'>], reranker=<EdgeReranker.rrf: 'reciprocal_rank_fusion'>, sim_min_score=0.6, mmr_lambda=0.5, bfs_max_depth=2) node_config=None episode_config=None community_config=None limit=20 reranker_min_score=0",
+            "search_scope": "group_ids=FOSSIL_pack_ids"
+          }
+        },
+        "unsupported_confidence_leakage": {
+          "applicable": false,
+          "observed": false,
+          "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+        }
+      },
+      "operational": {
+        "graph_query_count": {
+          "max": 2.0,
+          "mean": 1.7777777777777777,
+          "min": 1.0,
+          "p95": 2.0,
+          "sample_count": 27
+        },
+        "mean_latency_ms": 49.79085238162605,
+        "p95_latency_ms": 75.54879994131625,
+        "peak_python_alloc_bytes": 614362,
+        "process_rss_bytes_after_route": 690208768
+      },
+      "receipt_count": 27,
+      "retrieval": {
+        "decision_critical_misses": 13,
+        "metrics": {
+          "estimated_cost_usd": 0.0,
+          "failure_rate_by_category": {
+            "contradiction-disagreement": 1.0,
+            "conversation-lineage": 1.0,
+            "cross-pack-isolation": 1.0,
+            "current-vs-historical": 1.0,
+            "decision-lineage": 0.5,
+            "exact-factual-lookup": 1.0,
+            "insufficient-evidence": 1.0,
+            "obscure-deep-evidence": 1.0,
+            "source-citation-recovery": 1.0,
+            "stale-superseded": 1.0
+          },
+          "hit_rate": 0.047619047619047616,
+          "limit": 5,
+          "mean_latency_ms": 49.79085238162605,
+          "mean_recall_at_k": 0.015873015873015872,
+          "mrr": 0.023809523809523808,
+          "p95_latency_ms": 75.54879994131625,
+          "peak_python_alloc_bytes": 614362
+        },
+        "query_class_metrics": {
+          "broad synthesis": {
+            "case_count": 2,
+            "decision_critical_misses": 1,
+            "hit_rate": 0.5,
+            "missed_case_ids": [
+              "false_premise_quote_missing_chat"
+            ],
+            "mrr": 0.25,
+            "recall_at_k": 0.16666666666666666
+          },
+          "conceptual": {
+            "case_count": 5,
+            "decision_critical_misses": 0,
+            "hit_rate": 0.0,
+            "missed_case_ids": [
+              "source_quality_claim_specific",
+              "model_agreement_not_evidence",
+              "insufficient_evidence_keeps_uncertainty",
+              "fresh_build_scoped_ledger",
+              "logical_packs_over_physical_shards"
+            ],
+            "mrr": 0.0,
+            "recall_at_k": 0.0
+          },
+          "conflicting / superseded evidence": {
+            "case_count": 2,
+            "decision_critical_misses": 2,
+            "hit_rate": 0.0,
+            "missed_case_ids": [
+              "graph_canonical_rejected",
+              "graph_disagreement_relation"
+            ],
+            "mrr": 0.0,
+            "recall_at_k": 0.0
+          },
+          "current-state": {
+            "case_count": 3,
+            "decision_critical_misses": 3,
+            "hit_rate": 0.0,
+            "missed_case_ids": [
+              "current_architecture_after_reconsideration",
+              "former_sqlite_canonical_history",
+              "sqlite_dependent_staleness"
+            ],
+            "mrr": 0.0,
+            "recall_at_k": 0.0
+          },
+          "exact / identifier": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 0.0,
+            "missed_case_ids": [
+              "gate1_controls_not_winners",
+              "graphiti_current_role"
+            ],
+            "mrr": 0.0,
+            "recall_at_k": 0.0
+          },
+          "historical / lineage": {
+            "case_count": 4,
+            "decision_critical_misses": 4,
+            "hit_rate": 0.0,
+            "missed_case_ids": [
+              "recovery_is_reconstructed",
+              "lost_chat_exact_wording_unavailable",
+              "do_not_invent_recovery_wording",
+              "later_primary_evidence_preferred"
+            ],
+            "mrr": 0.0,
+            "recall_at_k": 0.0
+          },
+          "relationship / multi-hop": {
+            "case_count": 3,
+            "decision_critical_misses": 3,
+            "hit_rate": 0.0,
+            "missed_case_ids": [
+              "candidate_authority_cross_pack_dependency",
+              "sqlite_supersession_lineage",
+              "common_mount_isolation"
+            ],
+            "mrr": 0.0,
+            "recall_at_k": 0.0
+          }
+        }
+      },
+      "safety": {
+        "current_query_top1_superseded_leakage": [],
+        "current_query_top1_superseded_leakage_count": 0,
+        "pack_isolation_preserved": true,
+        "pack_isolation_violations": []
+      },
+      "semantic": {
+        "answer_evaluation": {
+          "abstention_conflict_handling": 0.5,
+          "answer_correctness": 0.3333333333333333,
+          "case_count": 6,
+          "citation_correctness": 0.3333333333333333,
+          "unsupported_claim_rate": 0.6666666666666666
+        },
+        "current_vs_superseded_leakage": {
+          "current_query_count": 2,
+          "leakage_case_count": 0,
+          "leakage_rate": 0.0,
+          "top1_forbidden_id_leakage_case_count": 0
+        },
+        "historical_current_target_correctness": {
+          "answer": {
+            "case_correctness": 0.3333333333333333,
+            "case_count": 3,
+            "citation_correctness": 0.3333333333333333,
+            "outcome_accuracy": 0.6666666666666666,
+            "unsupported_claim_rate": 0.6666666666666666
+          },
+          "basis": {
+            "answer_categories": [
+              "current-answer",
+              "current-unresolved",
+              "historical-answer"
+            ],
+            "retrieval_categories": [
+              "current-vs-historical",
+              "decision-lineage",
+              "stale-superseded"
+            ]
+          },
+          "retrieval": {
+            "case_count": 5,
+            "hit_rate": 0.2,
+            "mrr": 0.1,
+            "recall_at_k": 0.06666666666666667
+          }
+        },
+        "lineage_correctness": {
+          "answer": {
+            "case_correctness": 0.0,
+            "case_count": 4,
+            "citation_correctness": 0.0,
+            "outcome_accuracy": 0.75,
+            "unsupported_claim_rate": 1.0
+          },
+          "basis": {
+            "answer_categories": [
+              "current-unresolved",
+              "historical-answer",
+              "historical-rejected",
+              "resolved-contradiction"
+            ],
+            "retrieval_categories": [
+              "conversation-lineage",
+              "decision-lineage"
+            ]
+          },
+          "retrieval": {
+            "case_count": 7,
+            "hit_rate": 0.14285714285714285,
+            "mrr": 0.07142857142857142,
+            "recall_at_k": 0.047619047619047616
+          }
+        },
+        "pack_isolation": {
+          "preserved": true,
+          "violation_case_count": 0
+        },
+        "poisoning_context_security_compatibility": {
+          "comparable_receipt_count": 27,
+          "receipts_with_untrusted_context_resolver": 27,
+          "resolver_coverage": 1.0,
+          "unsupported_confidence_leakage": {
+            "applicable": false,
+            "observed": false,
+            "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+          }
+        }
+      },
+      "service": {
+        "estimated_cost_per_call_usd": 0.0,
+        "implementation": "graphiti-neo4j-bounded-expansion",
+        "implementation_version": "fossil-graphrag-graphiti-v1",
+        "kind": "retriever",
+        "local": true,
+        "model_id": null,
+        "provider": "graphiti-core",
+        "provider_version": "0.29.3",
+        "runtime": {
+          "candidate_multiplier": "4",
+          "graph_expansion_resolver": "fossil-graphiti-expansion-v1",
+          "graph_native_ids_are_canonical": "false",
+          "neo4j_version": "5.26.30",
+          "projection": "{\"build_id\":\"existing-verified-ba47b4417e047d3de13a57c3\",\"name\":\"graphiti-neo4j\",\"version\":\"1\"}",
+          "search_api": "Graphiti.search_",
+          "search_config": "edge_config=EdgeSearchConfig(search_methods=[<EdgeSearchMethod.bm25: 'bm25'>, <EdgeSearchMethod.bfs: 'breadth_first_search'>], reranker=<EdgeReranker.rrf: 'reciprocal_rank_fusion'>, sim_min_score=0.6, mmr_lambda=0.5, bfs_max_depth=2) node_config=None episode_config=None community_config=None limit=20 reranker_min_score=0",
+          "search_scope": "group_ids=FOSSIL_pack_ids"
+        }
+      }
+    },
+    "HYBRID": {
+      "answer": {
+        "metrics": {
+          "abstention_conflict_handling": 0.5,
+          "answer_correctness": 0.8333333333333334,
+          "citation_correctness": 1.0,
+          "outcome_accuracy": 0.8333333333333334,
+          "unsupported_claim_rate": 0.16666666666666666
+        },
+        "observations": [
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "current-durable-core",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "historical-sqlite-premise",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": true,
+            "case_correct": true,
+            "case_id": "current-stale-sqlite-prototype",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "current-graph-projection-not-canonical",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "historical-rejected-graph-canonical",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": false,
+            "case_correct": false,
+            "case_id": "insufficient-evidence-control",
+            "citation_correct": true,
+            "outcome_match": false,
+            "unsupported_claim_rate": 1.0
+          }
+        ]
+      },
+      "failure_taxonomy": {
+        "benchmark_id": "bench_71fbc6430229b36ded944d77",
+        "counts": {
+          "bad_ranking": 4,
+          "incomplete_multi_target_recall": 2,
+          "pack_isolation_violation": 0,
+          "retrieval_miss": 1,
+          "stale_superseded_leakage": 1
+        },
+        "examples": {
+          "bad_ranking": [
+            {
+              "case_id": "sqlite_supersession_lineage",
+              "category": "decision-lineage",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_a047d79b8604fadbd44efdf4",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ]
+            },
+            {
+              "case_id": "sqlite_dependent_staleness",
+              "category": "stale-superseded",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_a047d79b8604fadbd44efdf4"
+              ],
+              "returned_ids": [
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_a047d79b8604fadbd44efdf4",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ]
+            },
+            {
+              "case_id": "graph_disagreement_relation",
+              "category": "contradiction-disagreement",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "rel_c0e74317e7ff1ee59461b036"
+              ],
+              "returned_ids": [
+                "clm_f69dd23d961d485db1c53f0b",
+                "rel_c0e74317e7ff1ee59461b036",
+                "clm_bdf2ed41fb11e6b1808d3df4",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ]
+            },
+            {
+              "case_id": "do_not_invent_recovery_wording",
+              "category": "conversation-lineage",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_841df02f01de69cafeb9c084"
+              ],
+              "returned_ids": [
+                "clm_677f372218d173f32ab6cb30",
+                "clm_841df02f01de69cafeb9c084",
+                "clm_1f4c5f053bd7dccac79c301c",
+                "clm_a568c87b8a2deb8ad9f752299c2bca80",
+                "clm_fabdddf47e97cdd1876329fe"
+              ]
+            }
+          ],
+          "incomplete_multi_target_recall": [
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "recall_at_k": 0.0,
+              "relevant_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ],
+              "returned_ids": [
+                "clm_bdf2ed41fb11e6b1808d3df4",
+                "clm_76c6bead3d10df4ca7de8af4",
+                "clm_62b7f9c6184b14371338ca36",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "rel_0996c7d4b845cf3a3fc6bdf8"
+              ]
+            },
+            {
+              "case_id": "historical_current_supersession_bundle",
+              "category": "decision-lineage",
+              "recall_at_k": 0.6666666666666666,
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "rel_e0102ade0b5fad5cc2668ccd"
+              ],
+              "returned_ids": [
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_a047d79b8604fadbd44efdf4",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "clm_76c6bead3d10df4ca7de8af4"
+              ]
+            }
+          ],
+          "pack_isolation_violation": [],
+          "retrieval_miss": [
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "relevant_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ],
+              "returned_ids": [
+                "clm_bdf2ed41fb11e6b1808d3df4",
+                "clm_76c6bead3d10df4ca7de8af4",
+                "clm_62b7f9c6184b14371338ca36",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "rel_0996c7d4b845cf3a3fc6bdf8"
+              ]
+            }
+          ],
+          "stale_superseded_leakage": [
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "first_relevant_rank": null,
+              "leaked": [
+                {
+                  "id": "clm_bdf2ed41fb11e6b1808d3df4",
+                  "rank": 1,
+                  "state": "rejected"
+                }
+              ]
+            }
+          ]
+        },
+        "service": {
+          "estimated_cost_per_call_usd": 0.0,
+          "implementation": "reciprocal-rank-fusion",
+          "implementation_version": "fossil-graphrag-hybrid-v1",
+          "kind": "retriever",
+          "local": true,
+          "model_id": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+          "provider": "fossil",
+          "provider_version": "1",
+          "runtime": {
+            "candidate_multiplier": "4",
+            "components": "[{\"estimated_cost_per_call_usd\":0.0,\"implementation\":\"bm25\",\"implementation_version\":\"fossil-graphrag-bm25-v1\",\"kind\":\"retriever\",\"local\":true,\"model_id\":null,\"provider\":\"fossil\",\"provider_version\":\"1\",\"runtime\":{}},{\"estimated_cost_per_call_usd\":0.0,\"implementation\":\"semantic-in-memory-cosine\",\"implementation_version\":\"fossil-graphrag-d021-v1\",\"kind\":\"retriever\",\"local\":true,\"model_id\":\"BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\",\"provider\":\"sentence-transformers\",\"provider_version\":\"5.2.2\",\"runtime\":{\"embedding_implementation\":\"sentence-transformer-encode\",\"embedding_implementation_version\":\"1\",\"embedding_runtime\":\"{\\\"device\\\":\\\"cpu\\\",\\\"model_revision\\\":\\\"5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\\\",\\\"normalize_embeddings\\\":\\\"true\\\",\\\"torch_version\\\":\\\"2.13.0\\\",\\\"transformers_version\\\":\\\"5.16.1\\\"}\"}}]",
+            "rrf_k": "60",
+            "weights": "[1.0,1.0]"
+          }
+        },
+        "unsupported_confidence_leakage": {
+          "applicable": false,
+          "observed": false,
+          "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+        }
+      },
+      "operational": {
+        "graph_query_count": null,
+        "mean_latency_ms": 49.39131903284717,
+        "p95_latency_ms": 53.85129991918802,
+        "peak_python_alloc_bytes": 198425,
+        "process_rss_bytes_after_route": 613355520
+      },
+      "receipt_count": 27,
+      "retrieval": {
+        "decision_critical_misses": 1,
+        "metrics": {
+          "estimated_cost_usd": 0.0,
+          "failure_rate_by_category": {
+            "contradiction-disagreement": 0.0,
+            "conversation-lineage": 0.0,
+            "cross-pack-isolation": 0.0,
+            "current-vs-historical": 0.5,
+            "decision-lineage": 0.0,
+            "exact-factual-lookup": 0.0,
+            "insufficient-evidence": 0.0,
+            "obscure-deep-evidence": 0.0,
+            "source-citation-recovery": 0.0,
+            "stale-superseded": 0.0
+          },
+          "hit_rate": 0.9523809523809523,
+          "limit": 5,
+          "mean_latency_ms": 49.39131903284717,
+          "mean_recall_at_k": 0.9365079365079365,
+          "mrr": 0.8571428571428571,
+          "p95_latency_ms": 53.85129991918802,
+          "peak_python_alloc_bytes": 198425
+        },
+        "query_class_metrics": {
+          "broad synthesis": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 0.8333333333333333
+          },
+          "conceptual": {
+            "case_count": 5,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "conflicting / superseded evidence": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.75,
+            "recall_at_k": 1.0
+          },
+          "current-state": {
+            "case_count": 3,
+            "decision_critical_misses": 1,
+            "hit_rate": 0.6666666666666666,
+            "missed_case_ids": [
+              "current_architecture_after_reconsideration"
+            ],
+            "mrr": 0.5,
+            "recall_at_k": 0.6666666666666666
+          },
+          "exact / identifier": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "historical / lineage": {
+            "case_count": 4,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.875,
+            "recall_at_k": 1.0
+          },
+          "relationship / multi-hop": {
+            "case_count": 3,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.8333333333333334,
+            "recall_at_k": 1.0
+          }
+        }
+      },
+      "safety": {
+        "current_query_top1_superseded_leakage": [],
+        "current_query_top1_superseded_leakage_count": 0,
+        "pack_isolation_preserved": true,
+        "pack_isolation_violations": []
+      },
+      "semantic": {
+        "answer_evaluation": {
+          "abstention_conflict_handling": 0.5,
+          "answer_correctness": 0.8333333333333334,
+          "case_count": 6,
+          "citation_correctness": 1.0,
+          "unsupported_claim_rate": 0.16666666666666666
+        },
+        "current_vs_superseded_leakage": {
+          "current_query_count": 2,
+          "leakage_case_count": 1,
+          "leakage_rate": 0.5,
+          "top1_forbidden_id_leakage_case_count": 0
+        },
+        "historical_current_target_correctness": {
+          "answer": {
+            "case_correctness": 1.0,
+            "case_count": 3,
+            "citation_correctness": 1.0,
+            "outcome_accuracy": 1.0,
+            "unsupported_claim_rate": 0.0
+          },
+          "basis": {
+            "answer_categories": [
+              "current-answer",
+              "current-unresolved",
+              "historical-answer"
+            ],
+            "retrieval_categories": [
+              "current-vs-historical",
+              "decision-lineage",
+              "stale-superseded"
+            ]
+          },
+          "retrieval": {
+            "case_count": 5,
+            "hit_rate": 0.8,
+            "mrr": 0.6,
+            "recall_at_k": 0.7333333333333333
+          }
+        },
+        "lineage_correctness": {
+          "answer": {
+            "case_correctness": 1.0,
+            "case_count": 4,
+            "citation_correctness": 1.0,
+            "outcome_accuracy": 1.0,
+            "unsupported_claim_rate": 0.0
+          },
+          "basis": {
+            "answer_categories": [
+              "current-unresolved",
+              "historical-answer",
+              "historical-rejected",
+              "resolved-contradiction"
+            ],
+            "retrieval_categories": [
+              "conversation-lineage",
+              "decision-lineage"
+            ]
+          },
+          "retrieval": {
+            "case_count": 7,
+            "hit_rate": 1.0,
+            "mrr": 0.8571428571428571,
+            "recall_at_k": 0.9523809523809524
+          }
+        },
+        "pack_isolation": {
+          "preserved": true,
+          "violation_case_count": 0
+        },
+        "poisoning_context_security_compatibility": {
+          "comparable_receipt_count": 27,
+          "receipts_with_untrusted_context_resolver": 27,
+          "resolver_coverage": 1.0,
+          "unsupported_confidence_leakage": {
+            "applicable": false,
+            "observed": false,
+            "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+          }
+        }
+      },
+      "service": {
+        "estimated_cost_per_call_usd": 0.0,
+        "implementation": "reciprocal-rank-fusion",
+        "implementation_version": "fossil-graphrag-hybrid-v1",
+        "kind": "retriever",
+        "local": true,
+        "model_id": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+        "provider": "fossil",
+        "provider_version": "1",
+        "runtime": {
+          "candidate_multiplier": "4",
+          "components": "[{\"estimated_cost_per_call_usd\":0.0,\"implementation\":\"bm25\",\"implementation_version\":\"fossil-graphrag-bm25-v1\",\"kind\":\"retriever\",\"local\":true,\"model_id\":null,\"provider\":\"fossil\",\"provider_version\":\"1\",\"runtime\":{}},{\"estimated_cost_per_call_usd\":0.0,\"implementation\":\"semantic-in-memory-cosine\",\"implementation_version\":\"fossil-graphrag-d021-v1\",\"kind\":\"retriever\",\"local\":true,\"model_id\":\"BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\",\"provider\":\"sentence-transformers\",\"provider_version\":\"5.2.2\",\"runtime\":{\"embedding_implementation\":\"sentence-transformer-encode\",\"embedding_implementation_version\":\"1\",\"embedding_runtime\":\"{\\\"device\\\":\\\"cpu\\\",\\\"model_revision\\\":\\\"5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\\\",\\\"normalize_embeddings\\\":\\\"true\\\",\\\"torch_version\\\":\\\"2.13.0\\\",\\\"transformers_version\\\":\\\"5.16.1\\\"}\"}}]",
+          "rrf_k": "60",
+          "weights": "[1.0,1.0]"
+        }
+      }
+    },
+    "RERANKED": {
+      "answer": {
+        "metrics": {
+          "abstention_conflict_handling": 0.5,
+          "answer_correctness": 0.8333333333333334,
+          "citation_correctness": 1.0,
+          "outcome_accuracy": 0.8333333333333334,
+          "unsupported_claim_rate": 0.16666666666666666
+        },
+        "observations": [
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "current-durable-core",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "historical-sqlite-premise",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": true,
+            "case_correct": true,
+            "case_id": "current-stale-sqlite-prototype",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "current-graph-projection-not-canonical",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": null,
+            "case_correct": true,
+            "case_id": "historical-rejected-graph-canonical",
+            "citation_correct": true,
+            "outcome_match": true,
+            "unsupported_claim_rate": 0.0
+          },
+          {
+            "appropriate_abstention": false,
+            "case_correct": false,
+            "case_id": "insufficient-evidence-control",
+            "citation_correct": true,
+            "outcome_match": false,
+            "unsupported_claim_rate": 1.0
+          }
+        ]
+      },
+      "failure_taxonomy": {
+        "benchmark_id": "bench_e8acbdb26b5bdc8ba27e0272",
+        "counts": {
+          "bad_ranking": 5,
+          "incomplete_multi_target_recall": 0,
+          "pack_isolation_violation": 0,
+          "retrieval_miss": 0,
+          "stale_superseded_leakage": 0
+        },
+        "examples": {
+          "bad_ranking": [
+            {
+              "case_id": "current_architecture_after_reconsideration",
+              "category": "current-vs-historical",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_7f5c691c564c30e1b61f8dc0"
+              ],
+              "returned_ids": [
+                "clm_598efc81575e7662e451ec5050f829ba",
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_bdf2ed41fb11e6b1808d3df4",
+                "clm_76c6bead3d10df4ca7de8af4"
+              ]
+            },
+            {
+              "case_id": "former_sqlite_canonical_history",
+              "category": "current-vs-historical",
+              "reciprocal_rank": 0.3333333333333333,
+              "relevant_ids": [
+                "clm_643b698b7e9e6aee6a16c48c"
+              ],
+              "returned_ids": [
+                "clm_a047d79b8604fadbd44efdf4",
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ]
+            },
+            {
+              "case_id": "sqlite_dependent_staleness",
+              "category": "stale-superseded",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_a047d79b8604fadbd44efdf4"
+              ],
+              "returned_ids": [
+                "rel_0996c7d4b845cf3a3fc6bdf8",
+                "clm_a047d79b8604fadbd44efdf4",
+                "clm_643b698b7e9e6aee6a16c48c",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ]
+            },
+            {
+              "case_id": "graphiti_current_role",
+              "category": "exact-factual-lookup",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_f69dd23d961d485db1c53f0b"
+              ],
+              "returned_ids": [
+                "rel_c0e74317e7ff1ee59461b036",
+                "clm_f69dd23d961d485db1c53f0b",
+                "rel_e0102ade0b5fad5cc2668ccd",
+                "clm_7f5c691c564c30e1b61f8dc0",
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ]
+            },
+            {
+              "case_id": "do_not_invent_recovery_wording",
+              "category": "conversation-lineage",
+              "reciprocal_rank": 0.5,
+              "relevant_ids": [
+                "clm_841df02f01de69cafeb9c084"
+              ],
+              "returned_ids": [
+                "clm_677f372218d173f32ab6cb30",
+                "clm_841df02f01de69cafeb9c084",
+                "clm_1f4c5f053bd7dccac79c301c",
+                "clm_fabdddf47e97cdd1876329fe",
+                "clm_bdf2ed41fb11e6b1808d3df4"
+              ]
+            }
+          ],
+          "incomplete_multi_target_recall": [],
+          "pack_isolation_violation": [],
+          "retrieval_miss": [],
+          "stale_superseded_leakage": []
+        },
+        "service": {
+          "estimated_cost_per_call_usd": 0.0,
+          "implementation": "reranked-retriever",
+          "implementation_version": "fossil-graphrag-reranked-v1",
+          "kind": "retriever",
+          "local": true,
+          "model_id": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+          "provider": "fossil",
+          "provider_version": "1",
+          "runtime": {
+            "base_service": "{\"estimated_cost_per_call_usd\":0.0,\"implementation\":\"reciprocal-rank-fusion\",\"implementation_version\":\"fossil-graphrag-hybrid-v1\",\"kind\":\"retriever\",\"local\":true,\"model_id\":\"BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\",\"provider\":\"fossil\",\"provider_version\":\"1\",\"runtime\":{\"candidate_multiplier\":\"4\",\"components\":\"[{\\\"estimated_cost_per_call_usd\\\":0.0,\\\"implementation\\\":\\\"bm25\\\",\\\"implementation_version\\\":\\\"fossil-graphrag-bm25-v1\\\",\\\"kind\\\":\\\"retriever\\\",\\\"local\\\":true,\\\"model_id\\\":null,\\\"provider\\\":\\\"fossil\\\",\\\"provider_version\\\":\\\"1\\\",\\\"runtime\\\":{}},{\\\"estimated_cost_per_call_usd\\\":0.0,\\\"implementation\\\":\\\"semantic-in-memory-cosine\\\",\\\"implementation_version\\\":\\\"fossil-graphrag-d021-v1\\\",\\\"kind\\\":\\\"retriever\\\",\\\"local\\\":true,\\\"model_id\\\":\\\"BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\\\",\\\"provider\\\":\\\"sentence-transformers\\\",\\\"provider_version\\\":\\\"5.2.2\\\",\\\"runtime\\\":{\\\"embedding_implementation\\\":\\\"sentence-transformer-encode\\\",\\\"embedding_implementation_version\\\":\\\"1\\\",\\\"embedding_runtime\\\":\\\"{\\\\\\\"device\\\\\\\":\\\\\\\"cpu\\\\\\\",\\\\\\\"model_revision\\\\\\\":\\\\\\\"5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\\\\\\\",\\\\\\\"normalize_embeddings\\\\\\\":\\\\\\\"true\\\\\\\",\\\\\\\"torch_version\\\\\\\":\\\\\\\"2.13.0\\\\\\\",\\\\\\\"transformers_version\\\\\\\":\\\\\\\"5.16.1\\\\\\\"}\\\"}}]\",\"rrf_k\":\"60\",\"weights\":\"[1.0,1.0]\"}}",
+            "candidate_multiplier": "4",
+            "reranker_service": "{\"estimated_cost_per_call_usd\":0.0,\"implementation\":\"cross-encoder-pairwise-reranker\",\"implementation_version\":\"fossil-graphrag-reranker-v1\",\"kind\":\"reranker\",\"local\":true,\"model_id\":\"cross-encoder/ms-marco-MiniLM-L6-v2@ce0834f22110de6d9222af7a7a03628121708969\",\"provider\":\"sentence-transformers\",\"provider_version\":\"5.2.2\",\"runtime\":{\"batch_size\":\"16\",\"device\":\"cpu\",\"max_length\":\"512\",\"model_revision\":\"ce0834f22110de6d9222af7a7a03628121708969\",\"score_authority\":\"candidate-ordering-only\",\"torch_version\":\"2.13.0\",\"transformers_version\":\"5.16.1\"}}"
+          }
+        },
+        "unsupported_confidence_leakage": {
+          "applicable": false,
+          "observed": false,
+          "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+        }
+      },
+      "operational": {
+        "graph_query_count": null,
+        "mean_latency_ms": 172.18127142682317,
+        "p95_latency_ms": 214.7452998906374,
+        "peak_python_alloc_bytes": 300543,
+        "process_rss_bytes_after_route": 688812032
+      },
+      "receipt_count": 27,
+      "retrieval": {
+        "decision_critical_misses": 0,
+        "metrics": {
+          "estimated_cost_usd": 0.0,
+          "failure_rate_by_category": {
+            "contradiction-disagreement": 0.0,
+            "conversation-lineage": 0.0,
+            "cross-pack-isolation": 0.0,
+            "current-vs-historical": 0.0,
+            "decision-lineage": 0.0,
+            "exact-factual-lookup": 0.0,
+            "insufficient-evidence": 0.0,
+            "obscure-deep-evidence": 0.0,
+            "source-citation-recovery": 0.0,
+            "stale-superseded": 0.0
+          },
+          "hit_rate": 1.0,
+          "limit": 5,
+          "mean_latency_ms": 172.18127142682317,
+          "mean_recall_at_k": 1.0,
+          "mrr": 0.8730158730158729,
+          "p95_latency_ms": 214.7452998906374,
+          "peak_python_alloc_bytes": 300543
+        },
+        "query_class_metrics": {
+          "broad synthesis": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "conceptual": {
+            "case_count": 5,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "conflicting / superseded evidence": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          },
+          "current-state": {
+            "case_count": 3,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.4444444444444444,
+            "recall_at_k": 1.0
+          },
+          "exact / identifier": {
+            "case_count": 2,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.75,
+            "recall_at_k": 1.0
+          },
+          "historical / lineage": {
+            "case_count": 4,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 0.875,
+            "recall_at_k": 1.0
+          },
+          "relationship / multi-hop": {
+            "case_count": 3,
+            "decision_critical_misses": 0,
+            "hit_rate": 1.0,
+            "missed_case_ids": [],
+            "mrr": 1.0,
+            "recall_at_k": 1.0
+          }
+        }
+      },
+      "safety": {
+        "current_query_top1_superseded_leakage": [],
+        "current_query_top1_superseded_leakage_count": 0,
+        "pack_isolation_preserved": true,
+        "pack_isolation_violations": []
+      },
+      "semantic": {
+        "answer_evaluation": {
+          "abstention_conflict_handling": 0.5,
+          "answer_correctness": 0.8333333333333334,
+          "case_count": 6,
+          "citation_correctness": 1.0,
+          "unsupported_claim_rate": 0.16666666666666666
+        },
+        "current_vs_superseded_leakage": {
+          "current_query_count": 2,
+          "leakage_case_count": 0,
+          "leakage_rate": 0.0,
+          "top1_forbidden_id_leakage_case_count": 0
+        },
+        "historical_current_target_correctness": {
+          "answer": {
+            "case_correctness": 1.0,
+            "case_count": 3,
+            "citation_correctness": 1.0,
+            "outcome_accuracy": 1.0,
+            "unsupported_claim_rate": 0.0
+          },
+          "basis": {
+            "answer_categories": [
+              "current-answer",
+              "current-unresolved",
+              "historical-answer"
+            ],
+            "retrieval_categories": [
+              "current-vs-historical",
+              "decision-lineage",
+              "stale-superseded"
+            ]
+          },
+          "retrieval": {
+            "case_count": 5,
+            "hit_rate": 1.0,
+            "mrr": 0.6666666666666667,
+            "recall_at_k": 1.0
+          }
+        },
+        "lineage_correctness": {
+          "answer": {
+            "case_correctness": 1.0,
+            "case_count": 4,
+            "citation_correctness": 1.0,
+            "outcome_accuracy": 1.0,
+            "unsupported_claim_rate": 0.0
+          },
+          "basis": {
+            "answer_categories": [
+              "current-unresolved",
+              "historical-answer",
+              "historical-rejected",
+              "resolved-contradiction"
+            ],
+            "retrieval_categories": [
+              "conversation-lineage",
+              "decision-lineage"
+            ]
+          },
+          "retrieval": {
+            "case_count": 7,
+            "hit_rate": 1.0,
+            "mrr": 0.9285714285714286,
+            "recall_at_k": 1.0
+          }
+        },
+        "pack_isolation": {
+          "preserved": true,
+          "violation_case_count": 0
+        },
+        "poisoning_context_security_compatibility": {
+          "comparable_receipt_count": 27,
+          "receipts_with_untrusted_context_resolver": 27,
+          "resolver_coverage": 1.0,
+          "unsupported_confidence_leakage": {
+            "applicable": false,
+            "observed": false,
+            "reason": "retrieval/context strategies return ranked corpus objects and do not emit candidate truth authority or truth-changing claims"
+          }
+        }
+      },
+      "service": {
+        "estimated_cost_per_call_usd": 0.0,
+        "implementation": "reranked-retriever",
+        "implementation_version": "fossil-graphrag-reranked-v1",
+        "kind": "retriever",
+        "local": true,
+        "model_id": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+        "provider": "fossil",
+        "provider_version": "1",
+        "runtime": {
+          "base_service": "{\"estimated_cost_per_call_usd\":0.0,\"implementation\":\"reciprocal-rank-fusion\",\"implementation_version\":\"fossil-graphrag-hybrid-v1\",\"kind\":\"retriever\",\"local\":true,\"model_id\":\"BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\",\"provider\":\"fossil\",\"provider_version\":\"1\",\"runtime\":{\"candidate_multiplier\":\"4\",\"components\":\"[{\\\"estimated_cost_per_call_usd\\\":0.0,\\\"implementation\\\":\\\"bm25\\\",\\\"implementation_version\\\":\\\"fossil-graphrag-bm25-v1\\\",\\\"kind\\\":\\\"retriever\\\",\\\"local\\\":true,\\\"model_id\\\":null,\\\"provider\\\":\\\"fossil\\\",\\\"provider_version\\\":\\\"1\\\",\\\"runtime\\\":{}},{\\\"estimated_cost_per_call_usd\\\":0.0,\\\"implementation\\\":\\\"semantic-in-memory-cosine\\\",\\\"implementation_version\\\":\\\"fossil-graphrag-d021-v1\\\",\\\"kind\\\":\\\"retriever\\\",\\\"local\\\":true,\\\"model_id\\\":\\\"BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\\\",\\\"provider\\\":\\\"sentence-transformers\\\",\\\"provider_version\\\":\\\"5.2.2\\\",\\\"runtime\\\":{\\\"embedding_implementation\\\":\\\"sentence-transformer-encode\\\",\\\"embedding_implementation_version\\\":\\\"1\\\",\\\"embedding_runtime\\\":\\\"{\\\\\\\"device\\\\\\\":\\\\\\\"cpu\\\\\\\",\\\\\\\"model_revision\\\\\\\":\\\\\\\"5c38ec7c405ec4b44b94cc5a9bb96e735b38267a\\\\\\\",\\\\\\\"normalize_embeddings\\\\\\\":\\\\\\\"true\\\\\\\",\\\\\\\"torch_version\\\\\\\":\\\\\\\"2.13.0\\\\\\\",\\\\\\\"transformers_version\\\\\\\":\\\\\\\"5.16.1\\\\\\\"}\\\"}}]\",\"rrf_k\":\"60\",\"weights\":\"[1.0,1.0]\"}}",
+          "candidate_multiplier": "4",
+          "reranker_service": "{\"estimated_cost_per_call_usd\":0.0,\"implementation\":\"cross-encoder-pairwise-reranker\",\"implementation_version\":\"fossil-graphrag-reranker-v1\",\"kind\":\"reranker\",\"local\":true,\"model_id\":\"cross-encoder/ms-marco-MiniLM-L6-v2@ce0834f22110de6d9222af7a7a03628121708969\",\"provider\":\"sentence-transformers\",\"provider_version\":\"5.2.2\",\"runtime\":{\"batch_size\":\"16\",\"device\":\"cpu\",\"max_length\":\"512\",\"model_revision\":\"ce0834f22110de6d9222af7a7a03628121708969\",\"score_authority\":\"candidate-ordering-only\",\"torch_version\":\"2.13.0\",\"transformers_version\":\"5.16.1\"}}"
+        }
+      }
+    }
+  },
+  "routes": [
+    "BM25",
+    "D021",
+    "HYBRID",
+    "RERANKED",
+    "GRAPHITI"
+  ],
+  "schema_version": "fossil.graphrag-decision-report.v1",
+  "stable_pack_ids": {
+    "fossil-ai-systems": "pack_f024177f89a5442db84171c3dd7f58e5",
+    "fossil-common": "pack_269099f7b2ba43b7a99b9427d64092de"
+  },
+  "task": "FOSSIL-GRAPHRAG-BENCH-01"
+}

@@ -16,6 +16,12 @@ Verified pre-handoff `main`:
 
 Do **not** treat that SHA as a live lock. Re-fetch `main`, Issue #94, Issue #111, and Issue #176 before any mutation.
 
+## 2026-08-29 local GraphRAG decision benchmark
+
+`FOSSIL-GRAPHRAG-BENCH-01` was run against the frozen Gate-2/post-Gate-2 corpus using the exact pack revisions recorded in `benchmarks/post-gate2/graphrag-decision-v1.json`. Real local Graphiti/Neo4j projection validation passed for 51 events; 21 retrieval cases and 6 answer cases were run through BM25, D021, HYBRID, RERANKED, and bounded GRAPHITI expansion. The graph route had no pack or superseded-top-1 leakage, but materially underperformed RERANKED across every query class and in answer/citation correctness. The decision is `RETAIN_PROJECTION_NOT_RETRIEVAL`; Graphiti/Neo4j remains a replaceable projection only. The compact report and validated receipt sidecar are under `benchmarks/post-gate2/results/2026-08-29-graphrag-decision/`.
+
+The unavailable-graph control failed closed as `route_failed`, left canonical pack truth unchanged, and did not silently fall back. See the final #94 closeout and sanitized reconciliations on #47/#48 for exact source/evidence references.
+
 The detailed current-session transfer record is:
 
 `docs/handoffs/2026-08-19-pdd-semantic-freeze-session-handoff.md`
