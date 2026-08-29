@@ -1,0 +1,26 @@
+{
+  "contract_version": "dkg.pack.v1",
+  "pack_id": "pack_study_os_personal_6a90f29fc14c83e",
+  "name": "Personal Study OS methodology capture",
+  "kind": "personal",
+  "description": "Reconstructed, non-authoritative learner-methodology evidence from one shared Study OS conversation.",
+  "schema_version": "dkg.event.v1",
+  "ontology_requirements": [],
+  "dependencies": [],
+  "read_mounts": [
+    "pack_study_os_personal_6a90f29fc14c83e"
+  ],
+  "write_targets": [
+    "pack_study_os_personal_6a90f29fc14c83e"
+  ],
+  "event_roots": [
+    "events"
+  ],
+  "artifact_manifests": [
+    "artifacts/manifest.jsonl"
+  ],
+  "placement_hint": "dedicated",
+  "projection_namespace": "personal-study-os-methodology",
+  "source_policy_ref": null,
+  "created_at": "2026-08-29T02:06:48.854Z"
+}

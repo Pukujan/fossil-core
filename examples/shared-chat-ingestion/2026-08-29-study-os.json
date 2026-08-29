@@ -1,0 +1,173 @@
+{
+  "schema_version": "fossil.study-os-capture-import.v1",
+  "import_id": "study-os-shared-capture-2026-08-29",
+  "pack_id": "pack_study_os_personal_6a90f29fc14c83e",
+  "observed_at": "2026-08-29T02:06:48.854Z",
+  "actor": {
+    "actor_id": "study-os-shared-capture-importer",
+    "harness_version": "study-os-shared-capture-v1",
+    "skill_id": "skill_research-ingestion",
+    "skill_version": "1.0.0"
+  },
+  "capture_manifest_path": "docs/recovery/2026-08-29-study-os-source-capture.json",
+  "conversation_id": "conv_study_os_shared_6a90f29fc14c83e",
+  "title": "Study OS Tutor — reconstructed shared conversation",
+  "external_ref": "https://chatgpt.com/share/6a90f29f-c14c-83ea-a688-5ecdf6518933",
+  "source_path": "docs/recovery/2026-08-29-study-os-shared-conversation.md",
+  "source_label": "reconstructed readable projection of the ChatGPT Study OS shared-page payload",
+  "reconstruction_basis_refs": [
+    "https://chatgpt.com/share/6a90f29f-c14c-83ea-a688-5ecdf6518933",
+    "docs/recovery/2026-08-29-study-os-source-capture.json",
+    "docs/recovery/2026-08-29-study-os-shared-conversation.md"
+  ],
+  "lineage": {
+    "lineage_id": "lin_study_os_method_6a90f29fc14c83e",
+    "nodes": [
+      {
+        "node_id": "ln_study_os_workflow_question_20260829",
+        "kind": "question",
+        "label": "Preferred learning workflow",
+        "text": "The learner asked for a workflow in which they write code and receive guided help, with visual DSA explanations.",
+        "message_number": "0024",
+        "position_state": "current"
+      },
+      {
+        "node_id": "ln_study_os_guided_discovery_20260829",
+        "kind": "observation",
+        "label": "Guided discovery preference",
+        "text": "The shared conversation records a preference for learner-written code, hints and questions before full solutions, and visual traces for DSA.",
+        "message_number": "0024",
+        "position_state": "current"
+      },
+      {
+        "node_id": "ln_study_os_drill_challenge_20260829",
+        "kind": "challenge",
+        "label": "Isolated pattern drills did not click",
+        "text": "The learner reported that isolated DSA pattern study did not fit their personal study or engineering method.",
+        "message_number": "0691",
+        "position_state": "opposing"
+      },
+      {
+        "node_id": "ln_study_os_project_first_20260829",
+        "kind": "position_change",
+        "label": "Move to engineering-first learning",
+        "text": "The conversation proposed starting from realistic system behavior, then introducing a data structure when the engineering problem creates a genuine need for it.",
+        "message_number": "0698",
+        "position_state": "current"
+      },
+      {
+        "node_id": "ln_study_os_failure_versioning_20260829",
+        "kind": "observation",
+        "label": "Failure and versioning are part of the learner method",
+        "text": "The learner described stacking failures, versioning the program until it clicks, and tracing backward through what failed and what could improve.",
+        "message_number": "0715",
+        "position_state": "current"
+      },
+      {
+        "node_id": "ln_study_os_external_graph_challenge_20260829",
+        "kind": "challenge",
+        "label": "External retrieval can become the expert",
+        "text": "The learner identified a risk that a knowledge graph and retrieval pattern could perform the expertise externally without building unaided recall needed for interviews.",
+        "message_number": "0715",
+        "position_state": "opposing"
+      },
+      {
+        "node_id": "ln_study_os_internalization_rebuttal_20260829",
+        "kind": "rebuttal",
+        "label": "Add an internalization pass",
+        "text": "The proposed response was to retain the failure-driven workflow and add explicit internalization, retrieval, and no-scaffold reconstruction.",
+        "message_number": "0716",
+        "position_state": "current"
+      },
+      {
+        "node_id": "ln_study_os_scaffold_decay_decision_20260829",
+        "kind": "decision",
+        "label": "Decay scaffolding deliberately",
+        "text": "The proposed protocol closes the external graph, reconstructs from memory, explains failure causes, solves a transfer problem, and revisits later with fewer cues.",
+        "message_number": "0720",
+        "position_state": "current"
+      },
+      {
+        "node_id": "ln_study_os_simulation_conclusion_20260829",
+        "kind": "conclusion",
+        "label": "Use engineering simulation",
+        "text": "A realistic system scenario with requirements, failure cases, modifications, and debugging was proposed as a better fit than topic-by-topic drills.",
+        "message_number": "0724",
+        "position_state": "current"
+      },
+      {
+        "node_id": "ln_study_os_integrated_loop_decision_20260829",
+        "kind": "decision",
+        "label": "Run a dual-track learning loop",
+        "text": "The conversation proposed combining realistic engineering use, structure understanding, visual tracing, a stripped-down interview version, and later unaided reconstruction.",
+        "message_number": "0928",
+        "position_state": "current"
+      }
+    ],
+    "edges": [
+      {"edge_id": "le_study_os_001_20260829", "source_node_id": "ln_study_os_workflow_question_20260829", "target_node_id": "ln_study_os_guided_discovery_20260829", "relation_type": "leads_to"},
+      {"edge_id": "le_study_os_002_20260829", "source_node_id": "ln_study_os_guided_discovery_20260829", "target_node_id": "ln_study_os_drill_challenge_20260829", "relation_type": "challenges"},
+      {"edge_id": "le_study_os_003_20260829", "source_node_id": "ln_study_os_drill_challenge_20260829", "target_node_id": "ln_study_os_project_first_20260829", "relation_type": "reframes"},
+      {"edge_id": "le_study_os_004_20260829", "source_node_id": "ln_study_os_project_first_20260829", "target_node_id": "ln_study_os_failure_versioning_20260829", "relation_type": "depends_on"},
+      {"edge_id": "le_study_os_005_20260829", "source_node_id": "ln_study_os_failure_versioning_20260829", "target_node_id": "ln_study_os_external_graph_challenge_20260829", "relation_type": "leads_to"},
+      {"edge_id": "le_study_os_006_20260829", "source_node_id": "ln_study_os_external_graph_challenge_20260829", "target_node_id": "ln_study_os_internalization_rebuttal_20260829", "relation_type": "rebuts"},
+      {"edge_id": "le_study_os_007_20260829", "source_node_id": "ln_study_os_internalization_rebuttal_20260829", "target_node_id": "ln_study_os_scaffold_decay_decision_20260829", "relation_type": "leads_to"},
+      {"edge_id": "le_study_os_008_20260829", "source_node_id": "ln_study_os_scaffold_decay_decision_20260829", "target_node_id": "ln_study_os_simulation_conclusion_20260829", "relation_type": "supports"},
+      {"edge_id": "le_study_os_009_20260829", "source_node_id": "ln_study_os_simulation_conclusion_20260829", "target_node_id": "ln_study_os_integrated_loop_decision_20260829", "relation_type": "leads_to"}
+    ],
+    "current_conclusion_refs": [
+      "ln_study_os_simulation_conclusion_20260829",
+      "ln_study_os_integrated_loop_decision_20260829"
+    ]
+  },
+  "claims": [
+    {
+      "claim_id": "clm_study_os_guided_discovery_20260829",
+      "idempotency_key": "study-os-claim-guided-discovery-20260829",
+      "message_number": "0024",
+      "text": "The learner prefers to write code independently, paste it for guided reasoning and debugging, receive hints and questions before full solutions, and use visual traces for DSA."
+    },
+    {
+      "claim_id": "clm_study_os_visual_representation_20260829",
+      "idempotency_key": "study-os-claim-visual-representation-20260829",
+      "message_number": "0272",
+      "text": "A visual representation should frame an incomplete problem for the learner to solve; revealing the answer inside the diagram defeats the intended exercise."
+    },
+    {
+      "claim_id": "clm_study_os_drill_mismatch_20260829",
+      "idempotency_key": "study-os-claim-drill-mismatch-20260829",
+      "message_number": "0691",
+      "text": "The learner reported that isolated DSA pattern drills did not fit their personal study or engineering method."
+    },
+    {
+      "claim_id": "clm_study_os_project_first_20260829",
+      "idempotency_key": "study-os-claim-project-first-20260829",
+      "message_number": "0698",
+      "text": "An engineering-first approach may fit better: start from a real system behavior, build a naive version, observe the need, and then introduce the data structure that addresses it."
+    },
+    {
+      "claim_id": "clm_study_os_failure_versioning_20260829",
+      "idempotency_key": "study-os-claim-failure-versioning-20260829",
+      "message_number": "0715",
+      "text": "The learner's stated method uses successive failure scaffolding, repeated program versions, and retrospective tracing of what failed and what could have been done better."
+    },
+    {
+      "claim_id": "clm_study_os_external_retrieval_risk_20260829",
+      "idempotency_key": "study-os-claim-external-retrieval-risk-20260829",
+      "message_number": "0715",
+      "text": "External knowledge-graph retrieval may improve engineering efficiency while weakening unaided recall and interview readiness if it becomes the expert."
+    },
+    {
+      "claim_id": "clm_study_os_scaffold_decay_20260829",
+      "idempotency_key": "study-os-claim-scaffold-decay-20260829",
+      "message_number": "0720",
+      "text": "A proposed safeguard is to preserve the failure/versioning workflow, then close external aids, reconstruct from memory, explain failure causes, solve a transfer problem, and revisit with reduced cues."
+    },
+    {
+      "claim_id": "clm_study_os_integrated_loop_20260829",
+      "idempotency_key": "study-os-claim-integrated-loop-20260829",
+      "message_number": "0928",
+      "text": "For each topic, a proposed integrated loop is realistic engineering use, structure understanding, visual tracing, a simple interview reconstruction, and later solution from memory."
+    }
+  ]
+}

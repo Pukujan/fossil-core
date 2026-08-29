@@ -44,6 +44,19 @@ def publish_immutable(path: Path, data: bytes) -> bool:
             published = True
         except FileExistsError:
             published = False
+        except OSError as exc:
+            # Some Windows filesystems reject hard-link creation even when the
+            # temporary file and destination share a directory.  ``rename``
+            # is the Windows no-replace equivalent here: the file is fully
+            # fsynced before this point, and an existing destination remains a
+            # non-publishing race rather than being overwritten.
+            if os.name != "nt" or getattr(exc, "winerror", None) != 1:
+                raise
+            try:
+                os.rename(temp, path)
+                published = True
+            except FileExistsError:
+                published = False
         if published:
             fsync_directory(path.parent)
         return published

@@ -1,0 +1,31 @@
+{
+  "schema_version": "fossil.study-os-source-capture.v1",
+  "source_url": "https://chatgpt.com/share/6a90f29f-c14c-83ea-a688-5ecdf6518933",
+  "share_id": "6a90f29f-c14c-83ea-a688-5ecdf6518933",
+  "conversation_id": "6a90f29f-c14c-83ea-a688-5ecdf6518933",
+  "title": "Check Study OS health",
+  "evidence_status": "reconstructed",
+  "captured_at": "2026-08-29T02:06:48.854Z",
+  "raw_capture_storage": "local staging only; route and decoded payload are not committed because they include non-learner metadata",
+  "raw_route_stream": {
+    "sha256": "1900c1f3c09751a38aeb53ebfe108f258e5fecedcc0700b81ca52c55f0570f7a",
+    "chars": 1569274
+  },
+  "decoded_payload": {
+    "sha256": "b427f40364222a9a0e8891222aaafebe5d12a779bb247f9e0c21b2a47a55d94f",
+    "chars": 3800332
+  },
+  "readable_projection": {
+    "path": "docs/recovery/2026-08-29-study-os-shared-conversation.md",
+    "sha256": "7dcb8abccd4a77db32d382efae32c313528e78efa60091c190e821c708174108",
+    "chars": 252036
+  },
+  "serialized_node_count": 951,
+  "projected_message_count": 703,
+  "projected_roles": {
+    "user": 212,
+    "assistant": 292,
+    "tool": 199
+  },
+  "projection_policy": "Keep learner-facing user/assistant/tool records and redaction notices; exclude hidden system records and empty metadata-only nodes. All retained content remains reconstructed because the shared page is not an original export."
+}
