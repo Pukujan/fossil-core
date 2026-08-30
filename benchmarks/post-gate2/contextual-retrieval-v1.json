@@ -1,0 +1,63 @@
+{
+  "schema_version": "fossil.contextual-retrieval-benchmark.v1",
+  "benchmark_id": "FOSSIL-CONTEXTUAL-RETRIEVAL-BENCH-01",
+  "description": "Matched raw-document versus deterministic source-only contextualized retrieval benchmark. Context is a derived projection and cannot become canonical FOSSIL truth.",
+  "retrieval_plan": "benchmarks/post-gate2/retrieval-bakeoff-v1.json",
+  "retrieval_case_set": "benchmarks/gate2/real-corpus-history-v2.json",
+  "answer_case_set": "benchmarks/post-gate2/answer-reliability-v1.json",
+  "pack_pins": {
+    "fossil-common": "d583005dce06dbb499c3c0de5c22b899655eb8d2",
+    "fossil-ai-systems": "84accd2ee895663990e82ca5b79b592cb503db24"
+  },
+  "stable_pack_ids": {
+    "fossil-common": "pack_269099f7b2ba43b7a99b9427d64092de",
+    "fossil-ai-systems": "pack_f024177f89a5442db84171c3dd7f58e5"
+  },
+  "retrieval_limit": 5,
+  "candidate_multiplier": 4,
+  "contextualizer": {
+    "requested_model": "fossil-deterministic-source-contextualizer-v1",
+    "actual_model": "fossil-deterministic-source-contextualizer-v1",
+    "provider": "fossil",
+    "runtime": "local-deterministic-source-only",
+    "prompt_hash": "0532ef58ea65e620cbf21febdd2db44def3e9ae65cafdcd8c4eb2975510b96ee",
+    "query_specific": false,
+    "source_only": true,
+    "generated_context_token_target": "approximately 50-100"
+  },
+  "representations": {
+    "RAW": "original chunk",
+    "CONTEXTUAL": "<context> generated non-authoritative prefix </context> + <source_chunk> exact original chunk </source_chunk>"
+  },
+  "raw_routes": [
+    {"name": "RAW_BM25", "implementation": "contextual-bench-raw-bm25-v1"},
+    {"name": "RAW_D021", "implementation": "contextual-bench-raw-d021-v1"},
+    {"name": "RAW_HYBRID", "implementation": "contextual-bench-raw-hybrid-v1"},
+    {"name": "RAW_RERANKED", "implementation": "contextual-bench-raw-reranked-v1"}
+  ],
+  "contextual_routes": [
+    {"name": "CTX_BM25", "implementation": "contextual-bench-ctx-bm25-v1"},
+    {"name": "CTX_D021", "implementation": "contextual-bench-ctx-d021-v1"},
+    {"name": "CTX_HYBRID", "implementation": "contextual-bench-ctx-hybrid-v1"},
+    {"name": "CTX_RERANKED", "implementation": "contextual-bench-ctx-reranked-v1"}
+  ],
+  "fairness": {
+    "same_case_set": true,
+    "same_pack_revisions": true,
+    "same_final_candidate_limit": true,
+    "same_candidate_multiplier": true,
+    "same_d021_model_and_revision": true,
+    "same_cross_encoder_model_and_revision": true,
+    "same_answer_evaluator": true,
+    "same_lifecycle_resolver": true,
+    "same_lineage_resolver": true,
+    "same_context_security": true,
+    "contextualization_at_index_build_only": true,
+    "generated_context_is_answer_authority": false
+  },
+  "decision_rule": {
+    "retain_contextual": "Matched CTX_RERANKED produces meaningful ranking or end-to-end improvement with no decision-critical, lifecycle, lineage, citation, pack, or security regression and acceptable build/query cost.",
+    "retain_raw": "Contextual enrichment provides no meaningful quality improvement, or adds regression/complexity/cost without benchmark value.",
+    "no_prompt_tuning_after_results": true
+  }
+}
