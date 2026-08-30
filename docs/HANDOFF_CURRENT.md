@@ -22,6 +22,12 @@ Do **not** treat that SHA as a live lock. Re-fetch `main`, Issue #94, Issue #111
 
 The unavailable-graph control failed closed as `route_failed`, left canonical pack truth unchanged, and did not silently fall back. See the final #94 closeout and sanitized reconciliations on #47/#48 for exact source/evidence references.
 
+## 2026-08-30 contextual retrieval decision benchmark
+
+`FOSSIL-CONTEXTUAL-RETRIEVAL-BENCH-01` was run on the same frozen 27-document / 51-event Gate-2/post-Gate-2 corpus, with 21 retrieval cases and 6 answer cases through matched RAW and source-only CONTEXTUAL BM25, D021, HYBRID, and RERANKED routes. The contextual projection built 27 auditable records and preserved canonical source text/IDs; context audit, poisoning, pack, lifecycle, lineage, citation, and receipt checks passed. Against `RAW_RERANKED`, `CTX_RERANKED` improved 2 retrieval cases and regressed 4, left all 6 answer cases unchanged, and increased p95 latency from 206.66 ms to 569.43 ms. The decision is `RETAIN_RAW`; contextual enrichment does not earn a normal retrieval role under the matched benchmark. The report, context artifact, and 216-receipt sidecar are under `benchmarks/post-gate2/results/2026-08-30-contextual-retrieval/`.
+
+This result does not change canonical FOSSIL semantics or the earlier Graphiti/Neo4j projection-only decision. See the final #94 closeout and sanitized reconciliations on #47/#48 for exact source/evidence references.
+
 The detailed current-session transfer record is:
 
 `docs/handoffs/2026-08-19-pdd-semantic-freeze-session-handoff.md`

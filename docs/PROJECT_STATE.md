@@ -68,6 +68,12 @@ The local Graphiti/Neo4j projection was evaluated on the existing frozen Gate-2/
 
 Decision: `RETAIN_PROJECTION_NOT_RETRIEVAL`. Graphiti/Neo4j remains useful as a rebuildable projection/materialization surface, but it is not promoted into FOSSIL’s normal retrieval policy. The report and complete `fossil.query-execution-receipt.v1` sidecar are committed under `benchmarks/post-gate2/results/2026-08-29-graphrag-decision/`; this result does not change canonical FOSSIL semantics.
 
+## 2026-08-30 contextual retrieval decision
+
+The matched contextual-enrichment benchmark reused the same frozen Gate-2/post-Gate-2 corpus, pack revisions, 21 retrieval cases, and 6 answer cases. It compared RAW versus source-only CONTEXTUAL representations across BM25, D021, HYBRID, and the existing cross-encoder RERANKED route. The contextual projection contained 27 auditable records, preserved original source text and canonical IDs, and passed context-support, poisoning, pack-isolation, lifecycle/lineage, citation, and receipt checks. `CTX_RERANKED` improved 2 retrieval cases and regressed 4 against `RAW_RERANKED`; all 6 answer cases were unchanged. Retrieval p95 increased from `206.66 ms` to `569.43 ms`.
+
+Decision: `RETAIN_RAW`. Contextual enrichment remains a disposable projection experiment and is not added to normal retrieval policy. The report, frozen context artifact, and 216 validated `fossil.query-execution-receipt.v1` records are committed under `benchmarks/post-gate2/results/2026-08-30-contextual-retrieval/`; canonical FOSSIL semantics remain unchanged.
+
 ## 2026-08-15 baseline closeout anchors
 
 ### Graphiti / receipt / ingestion fan-in
