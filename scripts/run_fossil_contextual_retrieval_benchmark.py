@@ -6,10 +6,16 @@ import hashlib
 import json
 import platform
 import re
+import sys
 import time
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Iterable, Mapping
+
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(ROOT / "src"))
 
 from jsonschema import Draft202012Validator, FormatChecker
 
@@ -59,7 +65,6 @@ except ModuleNotFoundError:  # pragma: no cover - host dependent
     psutil = None
 
 
-ROOT = Path(__file__).resolve().parents[1]
 PLAN_PATH = ROOT / "benchmarks" / "post-gate2" / "contextual-retrieval-v1.json"
 CASE_SCHEMA = ROOT / "schemas" / "benchmark" / "case-set-v1.schema.json"
 RECEIPT_SCHEMA = ROOT / "schemas" / "query-execution-receipt" / "v1.schema.json"
@@ -789,8 +794,8 @@ def _load_or_build_contexts(
     started = time.perf_counter()
     records = build_context_records(documents, pack_revisions=pack_revisions)
     elapsed = (time.perf_counter() - started) * 1000.0
-    input_tokens = sum(len(_TOKEN_RE.findall(str(document.get("text", "")))) for document in documents)
-    output_tokens = sum(len(_TOKEN_RE.findall(str(record["generated_context"]))) for record in records)
+    input_tokens = sum(len(TOKEN_RE.findall(str(document.get("text", "")))) for document in documents)
+    output_tokens = sum(len(TOKEN_RE.findall(str(record["generated_context"]))) for record in records)
     build_metrics = {
         "status": "new_context_projection_built",
         "build_id": expected_build_id,
