@@ -1,0 +1,1177 @@
+{
+  "authorization_model": {
+    "allowed_sensitivity": [
+      "internal"
+    ],
+    "filtering": "before projection/index construction plus fail-closed result defense",
+    "missing_security_metadata": "fail_closed",
+    "principal": "alice",
+    "readable_pack_ids": [
+      "pack_security_a"
+    ]
+  },
+  "benchmark_id": "FOSSIL-RETRIEVAL-SECURITY-FINAL-01",
+  "canonical_semantics_unchanged": true,
+  "direct_boundary_checks": {
+    "allowed_export_count": 3,
+    "denied_citation": "blocked",
+    "denied_direct_read": "blocked",
+    "denied_export": "blocked",
+    "requested_foreign_pack": "blocked"
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "execution_sha": "7e69bdb955b74e7bfadb71b8ebf6cdbab77a295f",
+  "failures": [],
+  "fixture_counts": {
+    "case_count": 8,
+    "denial_reasons": {
+      "acl_denied": 3,
+      "pack_not_readable": 1,
+      "sensitivity_denied": 1,
+      "suppressed": 1
+    },
+    "denied_document_count": 6,
+    "document_count": 9,
+    "route_case_observation_count": 32,
+    "unfiltered_adversarial_probe_hits": 32,
+    "visible_document_count": 3
+  },
+  "implementation_change_required": true,
+  "next": "campaign-closeout-if-pass",
+  "observations": [
+    {
+      "case_id": "exact_identifier_acl",
+      "denied_ids": [
+        "sec_deny_exact"
+      ],
+      "expected_visible_found": [
+        "sec_allow_exact"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_exact"
+      ],
+      "returned_ids": [
+        "sec_allow_exact",
+        "sec_allow_current"
+      ],
+      "route": "bm25",
+      "surface": "lexical",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_exact"
+        ],
+        "ids": [
+          "sec_allow_exact",
+          "sec_deny_exact",
+          "sec_deny_stale",
+          "sec_deny_sensitive",
+          "sec_allow_current",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic"
+        ],
+        "top1": "sec_allow_exact"
+      }
+    },
+    {
+      "case_id": "exact_identifier_acl",
+      "denied_ids": [
+        "sec_deny_exact"
+      ],
+      "expected_visible_found": [
+        "sec_allow_exact"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_exact"
+      ],
+      "returned_ids": [
+        "sec_allow_exact",
+        "sec_allow_current",
+        "sec_allow_dense"
+      ],
+      "route": "d021_dense",
+      "surface": "lexical",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_exact"
+        ],
+        "ids": [
+          "sec_allow_exact",
+          "sec_deny_exact",
+          "sec_deny_sensitive",
+          "sec_deny_stale",
+          "sec_allow_current",
+          "sec_pack_b_same_topic",
+          "sec_deny_dense",
+          "sec_allow_dense"
+        ],
+        "top1": "sec_allow_exact"
+      }
+    },
+    {
+      "case_id": "exact_identifier_acl",
+      "denied_ids": [
+        "sec_deny_exact"
+      ],
+      "expected_visible_found": [
+        "sec_allow_exact"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_exact"
+      ],
+      "returned_ids": [
+        "sec_allow_exact",
+        "sec_allow_current",
+        "sec_allow_dense"
+      ],
+      "route": "hybrid_rrf",
+      "surface": "lexical",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_exact"
+        ],
+        "ids": [
+          "sec_allow_exact",
+          "sec_deny_exact",
+          "sec_deny_sensitive",
+          "sec_deny_stale",
+          "sec_allow_current",
+          "sec_pack_b_same_topic",
+          "sec_deny_suppressed",
+          "sec_deny_dense"
+        ],
+        "top1": "sec_allow_exact"
+      }
+    },
+    {
+      "case_id": "exact_identifier_acl",
+      "denied_ids": [
+        "sec_deny_exact"
+      ],
+      "expected_visible_found": [
+        "sec_allow_exact"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_exact"
+      ],
+      "returned_ids": [
+        "sec_allow_exact",
+        "sec_allow_current",
+        "sec_allow_dense"
+      ],
+      "route": "reranked_hybrid",
+      "surface": "lexical",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_exact"
+        ],
+        "ids": [
+          "sec_deny_exact",
+          "sec_allow_exact",
+          "sec_deny_stale",
+          "sec_allow_current",
+          "sec_deny_sensitive",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic",
+          "sec_allow_dense"
+        ],
+        "top1": "sec_deny_exact"
+      }
+    },
+    {
+      "case_id": "conceptual_dense_acl",
+      "denied_ids": [
+        "sec_deny_dense"
+      ],
+      "expected_visible_found": [
+        "sec_allow_dense"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_dense"
+      ],
+      "returned_ids": [
+        "sec_allow_dense",
+        "sec_allow_current"
+      ],
+      "route": "bm25",
+      "surface": "dense",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_dense"
+        ],
+        "ids": [
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_allow_current",
+          "sec_deny_sensitive",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic"
+        ],
+        "top1": "sec_allow_dense"
+      }
+    },
+    {
+      "case_id": "conceptual_dense_acl",
+      "denied_ids": [
+        "sec_deny_dense"
+      ],
+      "expected_visible_found": [
+        "sec_allow_dense"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_dense"
+      ],
+      "returned_ids": [
+        "sec_allow_dense",
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "route": "d021_dense",
+      "surface": "dense",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_dense"
+        ],
+        "ids": [
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_deny_sensitive",
+          "sec_allow_current",
+          "sec_pack_b_same_topic",
+          "sec_allow_exact",
+          "sec_deny_suppressed",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_allow_dense"
+      }
+    },
+    {
+      "case_id": "conceptual_dense_acl",
+      "denied_ids": [
+        "sec_deny_dense"
+      ],
+      "expected_visible_found": [
+        "sec_allow_dense"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_dense"
+      ],
+      "returned_ids": [
+        "sec_allow_dense",
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "route": "hybrid_rrf",
+      "surface": "dense",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_dense"
+        ],
+        "ids": [
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_allow_current",
+          "sec_deny_sensitive",
+          "sec_pack_b_same_topic",
+          "sec_deny_suppressed",
+          "sec_allow_exact",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_allow_dense"
+      }
+    },
+    {
+      "case_id": "conceptual_dense_acl",
+      "denied_ids": [
+        "sec_deny_dense"
+      ],
+      "expected_visible_found": [
+        "sec_allow_dense"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_dense"
+      ],
+      "returned_ids": [
+        "sec_allow_dense",
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "route": "reranked_hybrid",
+      "surface": "dense",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_dense"
+        ],
+        "ids": [
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_allow_current",
+          "sec_deny_sensitive",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic",
+          "sec_deny_exact",
+          "sec_allow_exact"
+        ],
+        "top1": "sec_allow_dense"
+      }
+    },
+    {
+      "case_id": "hybrid_component_acl",
+      "denied_ids": [
+        "sec_deny_exact",
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "returned_ids": [
+        "sec_allow_dense",
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "route": "bm25",
+      "surface": "hybrid",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_exact"
+        ],
+        "ids": [
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_deny_sensitive",
+          "sec_allow_current",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic",
+          "sec_allow_exact",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_allow_dense"
+      }
+    },
+    {
+      "case_id": "hybrid_component_acl",
+      "denied_ids": [
+        "sec_deny_exact",
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "returned_ids": [
+        "sec_allow_dense",
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "route": "d021_dense",
+      "surface": "hybrid",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_exact"
+        ],
+        "ids": [
+          "sec_deny_sensitive",
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_pack_b_same_topic",
+          "sec_deny_suppressed",
+          "sec_allow_current",
+          "sec_allow_exact",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_deny_sensitive"
+      }
+    },
+    {
+      "case_id": "hybrid_component_acl",
+      "denied_ids": [
+        "sec_deny_exact",
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "returned_ids": [
+        "sec_allow_dense",
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "route": "hybrid_rrf",
+      "surface": "hybrid",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_exact"
+        ],
+        "ids": [
+          "sec_allow_dense",
+          "sec_deny_sensitive",
+          "sec_deny_dense",
+          "sec_allow_current",
+          "sec_pack_b_same_topic",
+          "sec_deny_suppressed",
+          "sec_allow_exact",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_allow_dense"
+      }
+    },
+    {
+      "case_id": "hybrid_component_acl",
+      "denied_ids": [
+        "sec_deny_exact",
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_dense",
+        "sec_allow_exact"
+      ],
+      "route": "reranked_hybrid",
+      "surface": "hybrid",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_exact",
+          "sec_deny_stale"
+        ],
+        "ids": [
+          "sec_deny_sensitive",
+          "sec_allow_current",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic",
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_deny_stale",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_deny_sensitive"
+      }
+    },
+    {
+      "case_id": "reranked_acl",
+      "denied_ids": [
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "route": "bm25",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_stale"
+        ],
+        "ids": [
+          "sec_allow_current",
+          "sec_deny_stale",
+          "sec_deny_sensitive",
+          "sec_allow_exact",
+          "sec_deny_exact",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic"
+        ],
+        "top1": "sec_allow_current"
+      }
+    },
+    {
+      "case_id": "reranked_acl",
+      "denied_ids": [
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "d021_dense",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_stale"
+        ],
+        "ids": [
+          "sec_deny_stale",
+          "sec_allow_current",
+          "sec_allow_exact",
+          "sec_deny_sensitive",
+          "sec_deny_exact",
+          "sec_pack_b_same_topic",
+          "sec_deny_suppressed",
+          "sec_deny_dense"
+        ],
+        "top1": "sec_deny_stale"
+      }
+    },
+    {
+      "case_id": "reranked_acl",
+      "denied_ids": [
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "hybrid_rrf",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_stale"
+        ],
+        "ids": [
+          "sec_allow_current",
+          "sec_deny_stale",
+          "sec_allow_exact",
+          "sec_deny_sensitive",
+          "sec_deny_exact",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic",
+          "sec_deny_dense"
+        ],
+        "top1": "sec_allow_current"
+      }
+    },
+    {
+      "case_id": "reranked_acl",
+      "denied_ids": [
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "reranked_hybrid",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_stale"
+        ],
+        "ids": [
+          "sec_deny_stale",
+          "sec_allow_current",
+          "sec_deny_suppressed",
+          "sec_deny_exact",
+          "sec_deny_sensitive",
+          "sec_allow_exact",
+          "sec_pack_b_same_topic",
+          "sec_allow_dense"
+        ],
+        "top1": "sec_deny_stale"
+      }
+    },
+    {
+      "case_id": "same_topic_pack_isolation",
+      "denied_ids": [
+        "sec_pack_b_same_topic"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "bm25",
+      "surface": "hybrid",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_pack_b_same_topic"
+        ],
+        "ids": [
+          "sec_pack_b_same_topic",
+          "sec_deny_sensitive",
+          "sec_allow_current",
+          "sec_deny_suppressed",
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_allow_exact",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_pack_b_same_topic"
+      }
+    },
+    {
+      "case_id": "same_topic_pack_isolation",
+      "denied_ids": [
+        "sec_pack_b_same_topic"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_dense",
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "route": "d021_dense",
+      "surface": "hybrid",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_pack_b_same_topic"
+        ],
+        "ids": [
+          "sec_pack_b_same_topic",
+          "sec_deny_dense",
+          "sec_deny_sensitive",
+          "sec_allow_dense",
+          "sec_deny_suppressed",
+          "sec_allow_current",
+          "sec_allow_exact",
+          "sec_deny_stale"
+        ],
+        "top1": "sec_pack_b_same_topic"
+      }
+    },
+    {
+      "case_id": "same_topic_pack_isolation",
+      "denied_ids": [
+        "sec_pack_b_same_topic"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_dense",
+        "sec_allow_exact"
+      ],
+      "route": "hybrid_rrf",
+      "surface": "hybrid",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_pack_b_same_topic"
+        ],
+        "ids": [
+          "sec_pack_b_same_topic",
+          "sec_deny_sensitive",
+          "sec_deny_dense",
+          "sec_allow_current",
+          "sec_allow_dense",
+          "sec_deny_suppressed",
+          "sec_allow_exact",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_pack_b_same_topic"
+      }
+    },
+    {
+      "case_id": "same_topic_pack_isolation",
+      "denied_ids": [
+        "sec_pack_b_same_topic"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "reranked_hybrid",
+      "surface": "hybrid",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_pack_b_same_topic"
+        ],
+        "ids": [
+          "sec_pack_b_same_topic",
+          "sec_deny_sensitive",
+          "sec_allow_current",
+          "sec_deny_suppressed",
+          "sec_deny_stale",
+          "sec_deny_exact",
+          "sec_deny_dense",
+          "sec_allow_exact"
+        ],
+        "top1": "sec_pack_b_same_topic"
+      }
+    },
+    {
+      "case_id": "suppressed_projection",
+      "denied_ids": [
+        "sec_deny_suppressed"
+      ],
+      "expected_visible_found": [],
+      "expected_visible_ids": [],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "bm25",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_suppressed"
+        ],
+        "ids": [
+          "sec_deny_suppressed",
+          "sec_deny_sensitive",
+          "sec_allow_current",
+          "sec_pack_b_same_topic",
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_allow_exact",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_deny_suppressed"
+      }
+    },
+    {
+      "case_id": "suppressed_projection",
+      "denied_ids": [
+        "sec_deny_suppressed"
+      ],
+      "expected_visible_found": [],
+      "expected_visible_ids": [],
+      "returned_ids": [
+        "sec_allow_exact",
+        "sec_allow_dense",
+        "sec_allow_current"
+      ],
+      "route": "d021_dense",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_suppressed"
+        ],
+        "ids": [
+          "sec_deny_suppressed",
+          "sec_deny_sensitive",
+          "sec_pack_b_same_topic",
+          "sec_deny_exact",
+          "sec_allow_exact",
+          "sec_deny_dense",
+          "sec_allow_dense",
+          "sec_allow_current"
+        ],
+        "top1": "sec_deny_suppressed"
+      }
+    },
+    {
+      "case_id": "suppressed_projection",
+      "denied_ids": [
+        "sec_deny_suppressed"
+      ],
+      "expected_visible_found": [],
+      "expected_visible_ids": [],
+      "returned_ids": [
+        "sec_allow_exact",
+        "sec_allow_current",
+        "sec_allow_dense"
+      ],
+      "route": "hybrid_rrf",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_suppressed"
+        ],
+        "ids": [
+          "sec_deny_suppressed",
+          "sec_deny_sensitive",
+          "sec_pack_b_same_topic",
+          "sec_allow_current",
+          "sec_deny_exact",
+          "sec_allow_dense",
+          "sec_allow_exact",
+          "sec_deny_dense"
+        ],
+        "top1": "sec_deny_suppressed"
+      }
+    },
+    {
+      "case_id": "suppressed_projection",
+      "denied_ids": [
+        "sec_deny_suppressed"
+      ],
+      "expected_visible_found": [],
+      "expected_visible_ids": [],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "reranked_hybrid",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_suppressed"
+        ],
+        "ids": [
+          "sec_deny_suppressed",
+          "sec_deny_sensitive",
+          "sec_allow_current",
+          "sec_pack_b_same_topic",
+          "sec_deny_stale",
+          "sec_deny_exact",
+          "sec_allow_exact",
+          "sec_deny_dense"
+        ],
+        "top1": "sec_deny_suppressed"
+      }
+    },
+    {
+      "case_id": "restricted_sensitivity",
+      "denied_ids": [
+        "sec_deny_sensitive"
+      ],
+      "expected_visible_found": [],
+      "expected_visible_ids": [],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "bm25",
+      "surface": "dense",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_sensitive"
+        ],
+        "ids": [
+          "sec_deny_sensitive",
+          "sec_allow_current",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic",
+          "sec_allow_dense",
+          "sec_deny_dense",
+          "sec_allow_exact",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_deny_sensitive"
+      }
+    },
+    {
+      "case_id": "restricted_sensitivity",
+      "denied_ids": [
+        "sec_deny_sensitive"
+      ],
+      "expected_visible_found": [],
+      "expected_visible_ids": [],
+      "returned_ids": [
+        "sec_allow_dense",
+        "sec_allow_exact",
+        "sec_allow_current"
+      ],
+      "route": "d021_dense",
+      "surface": "dense",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_sensitive"
+        ],
+        "ids": [
+          "sec_deny_sensitive",
+          "sec_deny_suppressed",
+          "sec_allow_dense",
+          "sec_pack_b_same_topic",
+          "sec_allow_exact",
+          "sec_deny_dense",
+          "sec_deny_exact",
+          "sec_allow_current"
+        ],
+        "top1": "sec_deny_sensitive"
+      }
+    },
+    {
+      "case_id": "restricted_sensitivity",
+      "denied_ids": [
+        "sec_deny_sensitive"
+      ],
+      "expected_visible_found": [],
+      "expected_visible_ids": [],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_dense",
+        "sec_allow_exact"
+      ],
+      "route": "hybrid_rrf",
+      "surface": "dense",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_sensitive"
+        ],
+        "ids": [
+          "sec_deny_sensitive",
+          "sec_deny_suppressed",
+          "sec_allow_dense",
+          "sec_pack_b_same_topic",
+          "sec_allow_current",
+          "sec_allow_exact",
+          "sec_deny_dense",
+          "sec_deny_exact"
+        ],
+        "top1": "sec_deny_sensitive"
+      }
+    },
+    {
+      "case_id": "restricted_sensitivity",
+      "denied_ids": [
+        "sec_deny_sensitive"
+      ],
+      "expected_visible_found": [],
+      "expected_visible_ids": [],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "reranked_hybrid",
+      "surface": "dense",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_sensitive"
+        ],
+        "ids": [
+          "sec_deny_sensitive",
+          "sec_deny_suppressed",
+          "sec_allow_current",
+          "sec_pack_b_same_topic",
+          "sec_deny_exact",
+          "sec_deny_stale",
+          "sec_allow_exact",
+          "sec_allow_dense"
+        ],
+        "top1": "sec_deny_sensitive"
+      }
+    },
+    {
+      "case_id": "stale_unauthorized",
+      "denied_ids": [
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact"
+      ],
+      "route": "bm25",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_stale"
+        ],
+        "ids": [
+          "sec_deny_stale",
+          "sec_allow_current",
+          "sec_deny_sensitive",
+          "sec_allow_exact",
+          "sec_deny_exact",
+          "sec_deny_suppressed",
+          "sec_pack_b_same_topic"
+        ],
+        "top1": "sec_deny_stale"
+      }
+    },
+    {
+      "case_id": "stale_unauthorized",
+      "denied_ids": [
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "d021_dense",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_stale"
+        ],
+        "ids": [
+          "sec_deny_stale",
+          "sec_allow_current",
+          "sec_pack_b_same_topic",
+          "sec_deny_suppressed",
+          "sec_allow_exact",
+          "sec_deny_sensitive",
+          "sec_deny_exact",
+          "sec_deny_dense"
+        ],
+        "top1": "sec_deny_stale"
+      }
+    },
+    {
+      "case_id": "stale_unauthorized",
+      "denied_ids": [
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "hybrid_rrf",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_stale"
+        ],
+        "ids": [
+          "sec_deny_stale",
+          "sec_allow_current",
+          "sec_deny_sensitive",
+          "sec_allow_exact",
+          "sec_pack_b_same_topic",
+          "sec_deny_suppressed",
+          "sec_deny_exact",
+          "sec_deny_dense"
+        ],
+        "top1": "sec_deny_stale"
+      }
+    },
+    {
+      "case_id": "stale_unauthorized",
+      "denied_ids": [
+        "sec_deny_stale"
+      ],
+      "expected_visible_found": [
+        "sec_allow_current"
+      ],
+      "expected_visible_ids": [
+        "sec_allow_current"
+      ],
+      "returned_ids": [
+        "sec_allow_current",
+        "sec_allow_exact",
+        "sec_allow_dense"
+      ],
+      "route": "reranked_hybrid",
+      "surface": "reranked",
+      "unfiltered_probe": {
+        "denied_candidate_ids": [
+          "sec_deny_stale"
+        ],
+        "ids": [
+          "sec_deny_stale",
+          "sec_allow_current",
+          "sec_deny_suppressed",
+          "sec_deny_sensitive",
+          "sec_deny_exact",
+          "sec_allow_exact",
+          "sec_pack_b_same_topic",
+          "sec_allow_dense"
+        ],
+        "top1": "sec_deny_stale"
+      }
+    }
+  ],
+  "projection_rebuild": {
+    "caller_visible_ids_stable": true,
+    "disposable_projection_contains_suppressed": true,
+    "route_leaks": []
+  },
+  "receipt_contract": {
+    "receipt_count": 4,
+    "schema_errors": [],
+    "schema_version": "fossil.query-execution-receipt.v1",
+    "sidecar_sha256": "d18744f61a8d338701a2db4ca083a6493a5392a6889e0daf93c21232d28c559e",
+    "valid": true
+  },
+  "residual_risks": [
+    "This proof establishes structural caller-boundary enforcement; it does not claim that natural-language model behavior is universally safe.",
+    "Graphiti/Neo4j remains a disposable projection and is not granted evidence authority."
+  ],
+  "retained_policy": {
+    "contextual_enrichment": "RETAIN_RAW / not promoted",
+    "embedding": "D021 / BAAI bge-small-en-v1.5 pinned revision",
+    "embedding_ladder": "STOP_MODEL_LADDER",
+    "fusion": "deterministic hybrid/RRF",
+    "graphiti": "RETAIN_PROJECTION_NOT_RETRIEVAL",
+    "lexical": "BM25",
+    "llm_planner": "DISABLED",
+    "normal_policy": "RAW_RERANKED",
+    "representation": "RAW",
+    "reranker": "retained pinned cross-encoder",
+    "routing": "REJECT_ROUTING",
+    "security_boundary": "PASS"
+  },
+  "routes_exercised": [
+    "bm25",
+    "d021_dense",
+    "hybrid_rrf",
+    "reranked_hybrid"
+  ],
+  "schema_version": "fossil.retrieval-security-proof.v1",
+  "starting_sha": "31a6644040db97a71baaf80778845d4a70df68da",
+  "status": "PASS"
+}

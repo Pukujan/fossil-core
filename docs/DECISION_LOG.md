@@ -227,6 +227,17 @@ The router compared exact/identifier, conceptual, current/latest, lineage/histor
 
 **Reconsider only if:** the frozen corpus/case set or retained fixed policy materially changes, or a separately authorized deterministic policy proves a material quality/latency gain with zero regressions and no decision-critical misses.
 
+## D030 — Final retrieval visibility boundary passes and RAG campaign closes
+
+**State:** accepted / security gate passed / campaign closed
+**Decision:** every retained retrieval surface is caller-filtered before projection/index construction and checked again at its result boundary. BM25, D021 dense, deterministic hybrid/RRF, pinned reranked hybrid, direct reads, citations, exports, receipts, answer context, and projection rebuilds cannot expose unauthorized, sensitivity-restricted, suppressed, or redacted evidence under the tested policy.
+
+**Why:** the unfiltered control returned adversarial denied material in all 32 route/case probes, while the caller-scoped routes produced zero unauthorized IDs, text, citations, reranker promotions, cross-pack results, or receipt/export leaks. Missing security metadata fails closed. Lifecycle and lineage remain canonical semantics and are not encoded into ACL or ranking scores.
+
+**Evidence:** `docs/implementation/2026-08-31-final-retrieval-security-proof.md`; `benchmarks/post-gate2/results/retrieval-security-final-v1.json`; receipt sidecar SHA-256 `d18744f61a8d338701a2db4ca083a6493a5392a6889e0daf93c21232d28c559e`; Issue #47; Issue #48; Issue #94.
+
+**Reconsider only if:** a new retrieval or export surface is introduced, the authorization/redaction contract changes, or a new adversarial proof demonstrates a boundary failure. This decision does not authorize new RAG experiments, model ladders, GraphRAG retrieval, contextual enrichment, or an LLM planner.
+
 ## How to add a decision
 
 When implementation or evidence changes an architectural conclusion:
