@@ -214,6 +214,20 @@ The queue may select a local `verifier_action`, but cannot provide an executable
 
 **Evidence/contract:** Issue #94 `INFRA-09`; `docs/architecture/2026-08-12-trusted-local-broker-supervisor-boundary.md`; `docs/decisions/2026-08-12-D027-broker-host-supervisor.md`.
 
+## D028 — Qwen3-Embedding 0.6B does not replace D021 on the final matched RAW benchmark
+
+**State:** accepted, replaceable evidence-based retrieval policy
+
+**Decision:** retain D021's pinned `BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a` as the normal RAW dense embedding and stop the model ladder. Qwen3-Embedding 0.6B is retained as evaluated negative/non-promoting evidence; do not run Qwen3-Embedding 4B/8B from this result.
+
+**Evidence:** `FOSSIL-EMBEDDING-FINAL-01` on the frozen 27-document/51-event corpus with 21 retrieval and 6 answer cases, exact pack pins `fossil-common@d583005dce06dbb499c3c0de5c22b899655eb8d2` and `fossil-ai-systems@84accd2ee895663990e82ca5b79b592cb503db24`. The matched RAW reranked route produced identical D021/Qwen hit rate `1.0`, recall@5 `1.0`, MRR `0.873`, answer correctness `0.833`, citation correctness `1.0`, and unsupported-claim rate `0.167`. Qwen's retrieval p95 was `1691.41 ms` versus D021 `250.81 ms`; Qwen used 1024 dimensions and approximately `1009 MiB` process RSS growth versus D021's 384 dimensions and approximately `114 MiB`. All 189 receipts validated and the shared poisoning/context-security control passed.
+
+**Interpretation:** Qwen did not materially improve the decision-critical matched route, while adding substantial local latency and memory cost. Retrieval scores remain candidate ordering only; durable evidence, lifecycle/lineage, citation identity, pack scope, and context-security semantics remain authoritative. A stale candidate before the relevant current target remains a recorded ranking diagnostic, not an authority change, because the existing lifecycle/lineage resolver governs the answer path.
+
+**Reconsider when:** the frozen corpus/case set or D021 identity materially changes, or a separately authorized candidate addresses the observed decision-critical and operational tradeoff without weakening FOSSIL invariants.
+
+**Evidence artifact:** `benchmarks/post-gate2/results/2026-08-31-embedding-final/report.json` and `receipts.jsonl`; plan/runner `benchmarks/post-gate2/embedding-final-v1.json` and `scripts/run_fossil_embedding_final.py`; Issue #47, Issue #48, and Issue #94.
+
 ## How to add a decision
 
 When implementation or evidence changes an architectural conclusion:

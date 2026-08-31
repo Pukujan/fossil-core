@@ -118,6 +118,14 @@ If required live configuration/credentials are absent, the result is `BLOCKED_CR
 
 Ordinary secretless PR CI proves the harness/code contract only; it is not `OBJECT_STORE_LIVE PASS`.
 
+## Final embedding decision — 2026-08-31
+
+The final Issue #47 embedding gate is complete. `FOSSIL-EMBEDDING-FINAL-01` used 27 documents, 51 events, 21 retrieval cases, 6 answer cases, retrieval limit 5, and exact pack pins common `d583005dce06dbb499c3c0de5c22b899655eb8d2` plus AI systems `84accd2ee895663990e82ca5b79b592cb503db24`.
+
+The matched RAW reranked D021 and Qwen3-Embedding 0.6B routes both achieved hit rate `1.000`, recall@5 `1.000`, MRR `0.873`, answer correctness `0.833`, citation correctness `1.000`, and unsupported-claim rate `0.167`. Qwen's retrieval p95 was `1691.41 ms` versus `250.81 ms` for D021, with approximately `1009 MiB` versus `114 MiB` process RSS growth. The 189 receipt sidecar validated fully; pack isolation, top-1 superseded leakage, lifecycle/lineage checks on the compared routes, and the shared poisoning/context-security control passed.
+
+Durable decision: `RETAIN_D021` and `STOP_MODEL_LADDER`. Qwen3-Embedding 4B/8B must not be run from this evidence. Models, scores, projections, receipts, and reranker output remain replaceable/candidate evidence; canonical FOSSIL evidence, stable IDs, lifecycle/lineage, citation, pack, and security semantics are unchanged. See `docs/DECISION_LOG.md` D028 and `benchmarks/post-gate2/results/2026-08-31-embedding-final/`.
+
 ## Current harness checkpoint
 
 At the 2026-08-15 review checkpoint, draft PR #125 was open on exact head:

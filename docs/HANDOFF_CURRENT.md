@@ -38,6 +38,14 @@ The required post-freeze implementation sequence is:
 
 Promotion mutation/Lean work under #176 must wait until the Promotion law and its prerequisites are implemented. Do not skip directly to formal/mutation evidence merely because the semantic freeze is accepted.
 
+## 2026-08-31 final embedding gate
+
+`FOSSIL-EMBEDDING-FINAL-01` completed as a local matched benchmark from the live `main` source head recorded in its report. It reused the exact 27-document/51-event, 21-retrieval/6-answer corpus and exact pack revisions `fossil-common@d583005dce06dbb499c3c0de5c22b899655eb8d2` plus `fossil-ai-systems@84accd2ee895663990e82ca5b79b592cb503db24`.
+
+RAW D021 versus RAW Qwen3-Embedding 0.6B had identical reranked hit/recall/MRR (`1.000/1.000/0.873`) and identical answer/citation/unsupported metrics (`0.833/1.000/0.167`). Qwen was materially more expensive locally: retrieval p95 `1691.41 ms` versus `250.81 ms`, 1024 versus 384 dimensions, and approximately `1009 MiB` versus `114 MiB` process RSS growth. Pack isolation, current top-1 superseded leakage, lifecycle/lineage target checks for the compared reranked routes, poisoning/context security, citation identity, and all 189 receipt schema validations passed. The stale-before-relevant ranking diagnostic remained visible and was not promoted to authority.
+
+Decision: `RETAIN_D021`; `STOP_MODEL_LADDER`; no Qwen 4B/8B work is authorized by this result. Evidence is in `benchmarks/post-gate2/results/2026-08-31-embedding-final/`. The next substantive tasks are the deterministic routing check and ACL/redaction/security sweep, followed by decision-log/handoff reconciliation and campaign close. Do not broaden this benchmark into hosting, GraphRAG, contextual enrichment, Cortex V5, LiteLLM, or canonical-semantic changes.
+
 ## Exact stop point
 
 The previous session briefly claimed Step 1, characterized the current event envelope / event store / agent boundary, then the user requested a session stop and durable handoff.

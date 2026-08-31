@@ -1,0 +1,55 @@
+{
+  "schema_version": "fossil.embedding-benchmark-plan.v1",
+  "benchmark_id": "FOSSIL-EMBEDDING-FINAL-01",
+  "description": "Final matched RAW D021 versus Qwen3-Embedding 0.6B benchmark on the frozen Gate-2/post-Gate-2 corpus.",
+  "pack_pins": {
+    "fossil-common": "d583005dce06dbb499c3c0de5c22b899655eb8d2",
+    "fossil-ai-systems": "84accd2ee895663990e82ca5b79b592cb503db24"
+  },
+  "stable_pack_ids": {
+    "fossil-common": "pack_269099f7b2ba43b7a99b9427d64092de",
+    "fossil-ai-systems": "pack_f024177f89a5442db84171c3dd7f58e5"
+  },
+  "retrieval_case_set": "benchmarks/gate2/real-corpus-history-v2.json",
+  "answer_case_set": "benchmarks/post-gate2/answer-reliability-v1.json",
+  "retrieval_limit": 5,
+  "candidate_multiplier": 4,
+  "rrf_k": 60,
+  "reranker": {
+    "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "revision": "ce0834f22110de6d9222af7a7a03628121708969",
+    "device": "cpu",
+    "batch_size": 16,
+    "max_length": 512
+  },
+  "embeddings": {
+    "d021": {
+      "model": "BAAI/bge-small-en-v1.5",
+      "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+      "device": "cpu"
+    },
+    "qwen3-0p6b": {
+      "model": "Qwen/Qwen3-Embedding-0.6B",
+      "revision": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+      "device": "cpu"
+    }
+  },
+  "routes": [
+    {"route_id": "raw-bm25-control-v1", "name": "bm25-control", "embedding": null},
+    {"route_id": "raw-d021-dense-v1", "name": "d021-dense", "embedding": "d021"},
+    {"route_id": "raw-d021-hybrid-rrf-v1", "name": "d021-hybrid-rrf", "embedding": "d021"},
+    {"route_id": "raw-d021-reranked-v1", "name": "d021-reranked", "embedding": "d021"},
+    {"route_id": "raw-qwen3-0p6b-dense-v1", "name": "qwen3-0p6b-dense", "embedding": "qwen3-0p6b"},
+    {"route_id": "raw-qwen3-0p6b-hybrid-rrf-v1", "name": "qwen3-0p6b-hybrid-rrf", "embedding": "qwen3-0p6b"},
+    {"route_id": "raw-qwen3-0p6b-reranked-v1", "name": "qwen3-0p6b-reranked", "embedding": "qwen3-0p6b"}
+  ],
+  "guardrails": {
+    "retrieval_scores_are_truth": false,
+    "reranker_scores_are_truth": false,
+    "receipt_is_truth_authority": false,
+    "canonical_source_and_ids_unchanged": true,
+    "decision_critical_misses_are_hard_constraint": true,
+    "lifecycle_lineage_citation_security_are_hard_constraints": true,
+    "stop_model_ladder_if_not_materially_better": true
+  }
+}
