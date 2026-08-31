@@ -1,0 +1,107 @@
+{
+  "schema_version": "fossil.routing-benchmark-plan.v1",
+  "benchmark_id": "FOSSIL-ROUTING-FINAL-01",
+  "description": "Matched fixed RAW_RERANKED versus a minimal deterministic query-class router over the frozen post-Gate-2 corpus.",
+  "pack_pins": {
+    "fossil-common": "d583005dce06dbb499c3c0de5c22b899655eb8d2",
+    "fossil-ai-systems": "84accd2ee895663990e82ca5b79b592cb503db24"
+  },
+  "stable_pack_ids": {
+    "fossil-common": "pack_269099f7b2ba43b7a99b9427d64092de",
+    "fossil-ai-systems": "pack_f024177f89a5442db84171c3dd7f58e5"
+  },
+  "retrieval_case_set": "benchmarks/gate2/real-corpus-history-v2.json",
+  "answer_case_set": "benchmarks/post-gate2/answer-reliability-v1.json",
+  "retrieval_limit": 5,
+  "candidate_multiplier": 4,
+  "rrf_k": 60,
+  "models": {
+    "incumbent_embedding": {
+      "model": "BAAI/bge-small-en-v1.5",
+      "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+      "device": "cpu"
+    },
+    "cross_encoder": {
+      "model": "cross-encoder/ms-marco-MiniLM-L6-v2",
+      "revision": "ce0834f22110de6d9222af7a7a03628121708969",
+      "device": "cpu",
+      "batch_size": 16,
+      "max_length": 512
+    }
+  },
+  "routes": [
+    {
+      "name": "bm25",
+      "route_id": "d021-bm25-degraded-v1",
+      "role": "explicit-degraded-fallback"
+    },
+    {
+      "name": "bge-dense",
+      "route_id": "d021-bge-dense-v1",
+      "role": "incumbent-primary"
+    },
+    {
+      "name": "bge-bm25-rrf",
+      "route_id": "workstream-d-bge-bm25-rrf-v1",
+      "role": "hybrid-candidate"
+    },
+    {
+      "name": "bge-bm25-rrf-lifecycle",
+      "route_id": "workstream-d-bge-bm25-rrf-lifecycle-v1",
+      "role": "hybrid-deterministic-lifecycle-candidate"
+    },
+    {
+      "name": "bge-dense-crossencoder",
+      "route_id": "workstream-d-bge-dense-crossencoder-v1",
+      "role": "real-reranker-candidate"
+    },
+    {
+      "name": "bge-bm25-rrf-crossencoder",
+      "route_id": "workstream-d-bge-bm25-rrf-crossencoder-v1",
+      "role": "fixed-best-raw-reranked"
+    }
+  ],
+  "fixed_policy": {
+    "policy_id": "RAW_RERANKED_FIXED_V1",
+    "route_name": "bge-bm25-rrf-crossencoder",
+    "route_id": "workstream-d-bge-bm25-rrf-crossencoder-v1"
+  },
+  "router": {
+    "policy_id": "DETERMINISTIC_QUERY_CLASS_ROUTER_V1",
+    "classifier": "fossil-deterministic-query-classifier-v1",
+    "classes": [
+      "exact-identifier",
+      "conceptual",
+      "current-latest",
+      "lineage-history",
+      "broad-synthesis",
+      "direct-source-read"
+    ],
+    "route_by_class": {
+      "exact-identifier": "bge-dense-crossencoder",
+      "conceptual": "bge-dense-crossencoder",
+      "current-latest": "bge-bm25-rrf-lifecycle",
+      "lineage-history": "bge-bm25-rrf-lifecycle",
+      "broad-synthesis": "bge-bm25-rrf-crossencoder",
+      "direct-source-read": "bm25"
+    },
+    "unknown_class_route": "bge-bm25-rrf-crossencoder"
+  },
+  "decision_rule": {
+    "no_regressions": "Every routed retrieval and answer/citation/security metric and every decision-critical case must be no worse than fixed RAW_RERANKED.",
+    "material_quality_gain": "At least 0.05 absolute improvement in hit rate, recall@5, MRR, or final-answer correctness, or a reduction in decision-critical misses.",
+    "material_latency_gain": "At least 10 percent lower policy p95 latency including deterministic classification overhead, with no quality regression.",
+    "accept_only_if": "no_regressions and (material_quality_gain or material_latency_gain)",
+    "otherwise": "REJECT_ROUTING or DEFER_ROUTING; do not build an LLM planner"
+  },
+  "guardrails": {
+    "retrieval_scores_are_truth": false,
+    "reranker_scores_are_truth": false,
+    "router_is_truth_authority": false,
+    "d021_changes_from_this_plan_alone": false,
+    "decision_critical_misses_are_hard_constraint": true,
+    "lifecycle_lineage_safety_is_hard_constraint": true,
+    "answer_context_security": "fossil-untrusted-context-v1",
+    "answer_lineage_resolution": "fossil-lineage-context-v1"
+  }
+}

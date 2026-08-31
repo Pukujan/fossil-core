@@ -107,3 +107,11 @@ Before merge, re-check exact head, exact-head CI, current main, changed-file sco
 5. If another owner exists, do not duplicate it.
 
 If live GitHub state differs from this document, live GitHub wins.
+
+## 2026-08-31 retrieval campaign continuation
+
+The final embedding gate retained D021 and stopped the Qwen ladder. Graphiti/Neo4j remains projection-only and contextual enrichment was rejected. The deterministic routing gate `FOSSIL-ROUTING-FINAL-01` is now complete from live `main` at `c8217bbd978b7a3005f94fcb772d86568ea33d11` on branch `codex/fossil-routing-final-01-20260830`.
+
+Routing compared fixed `RAW_RERANKED` against a six-class lexical router over 27 documents, 51 events, 21 retrieval cases, and 6 answer cases. Fixed hit/recall@5/MRR was `1.000/1.000/0.873` with zero decision-critical misses. The router was `0.952/0.937/0.867`, introduced one decision-critical current-architecture miss, and reduced retrieval p95 only from `173.40 ms` to `164.34 ms`, below the 10% material-latency threshold. Answer/citation/unsupported behavior was unchanged. Decision: `REJECT_ROUTING`; keep fixed `RAW_RERANKED`; do not build an LLM planner.
+
+Evidence is in `docs/implementation/2026-08-31-final-routing-benchmark-proof.md`, `benchmarks/post-gate2/results/2026-08-31-routing-final/report.json`, and `receipts.jsonl`. The next and final RAG campaign task is `FOSSIL-RETRIEVAL-SECURITY-FINAL-01`: prove BM25, dense, hybrid, and reranked routes cannot bypass sensitivity/ACL/redaction/suppression filters. Do not close #47 or #48 until that security gate and final reconciliation are complete.

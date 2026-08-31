@@ -223,3 +223,11 @@ The immediate next state is mechanical, not aspirational:
 6. do not automatically mutate Cortex V5 or LiteLLM/CKFF.
 
 No production promotion is authorized by this document.
+
+## Final deterministic routing gate — 2026-08-31
+
+`FOSSIL-ROUTING-FINAL-01` compared the fixed retained `RAW_RERANKED` policy with a six-class deterministic lexical router over the frozen 27-document/51-event/21-retrieval/6-answer corpus. The router selected only existing BM25, D021 dense, hybrid/RRF, lifecycle-aware, and pinned reranked routes; it introduced no planner, model, Graphiti, contextual, canonical, Cortex V5, LiteLLM, hosting, or production changes.
+
+The fixed policy produced hit/recall@5/MRR `1.000/1.000/0.873` with zero decision-critical misses. The router produced `0.952/0.937/0.867`, with one decision-critical miss. Retrieval p95 improved only `173.40 ms` to `164.34 ms` (5.2%, below the 10% threshold); answer correctness/citation/unsupported behavior remained unchanged at `0.833/1.000/0.167`. All 12 query receipts validated; pack isolation and current-top-1 superseded leakage remained zero.
+
+Decision: `REJECT_ROUTING`. Keep fixed `RAW_RERANKED`, do not build an LLM planner. The next and final RAG gate is `FOSSIL-RETRIEVAL-SECURITY-FINAL-01`; #47/#48 remain open until routing and ACL/redaction/security closeout are reconciled.

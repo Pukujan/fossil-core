@@ -214,6 +214,19 @@ The queue may select a local `verifier_action`, but cannot provide an executable
 
 **Evidence/contract:** Issue #94 `INFRA-09`; `docs/architecture/2026-08-12-trusted-local-broker-supervisor-boundary.md`; `docs/decisions/2026-08-12-D027-broker-host-supervisor.md`.
 
+## D029 — Deterministic query-class routing is rejected after matched regression
+
+**State:** rejected, evidence-based retrieval policy decision
+**Decision:** retain the fixed `RAW_RERANKED` policy. Do not promote the tested six-class deterministic router and do not build an LLM planner from this result.
+
+The router compared exact/identifier, conceptual, current/latest, lineage/history, broad-synthesis, and direct-source-read classes over the frozen 27-document/51-event/21-retrieval/6-answer corpus. It selected only existing BM25, D021 dense, hybrid/RRF, lifecycle-aware, and pinned reranked routes. The fixed policy had hit/recall@5/MRR `1.000/1.000/0.873` and zero decision-critical misses. The router had `0.952/0.937/0.867` and one decision-critical miss, while its retrieval p95 was only `164.34 ms` versus `173.40 ms`, below the predeclared 10% material-latency threshold. Answer correctness/citation/unsupported-claim behavior remained `0.833/1.000/0.167` for both.
+
+**Why:** the small latency reduction does not compensate for a current-architecture retrieval miss. Routing remains a replaceable candidate policy; it cannot weaken durable lifecycle/lineage, citation, pack, redaction, or security controls.
+
+**Evidence:** `FOSSIL-ROUTING-FINAL-01`; `docs/implementation/2026-08-31-final-routing-benchmark-proof.md`; `benchmarks/post-gate2/results/2026-08-31-routing-final/report.json`; `receipts.jsonl`; Issue #47, Issue #48, and Issue #94.
+
+**Reconsider only if:** the frozen corpus/case set or retained fixed policy materially changes, or a separately authorized deterministic policy proves a material quality/latency gain with zero regressions and no decision-critical misses.
+
 ## How to add a decision
 
 When implementation or evidence changes an architectural conclusion:

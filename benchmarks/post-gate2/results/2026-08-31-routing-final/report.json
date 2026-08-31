@@ -1,0 +1,2069 @@
+{
+  "acceptance_weakened": false,
+  "answer_case_count": 6,
+  "authority": "Routing and retrieval scores are evaluation evidence only; durable evidence, lifecycle/lineage, citation, pack, and security semantics remain authoritative.",
+  "benchmark_id": "FOSSIL-ROUTING-FINAL-01",
+  "comparison": {
+    "answer_high_confidence_error_delta": 0.0,
+    "answer_p95_total_latency_delta_ms": -22.830799920484424,
+    "answer_quality_deltas": {
+      "appropriate_abstention_rate": 0.0,
+      "citation_correctness_rate": 0.0,
+      "final_answer_correctness_rate": 0.0,
+      "unsupported_claim_rate_reduction": 0.0
+    },
+    "p95_policy_latency_delta_ms": -9.055400034412742,
+    "p95_policy_latency_ratio": 0.9477765197282811,
+    "quality_deltas": {
+      "hit_rate": -0.04761904761904767,
+      "mean_recall_at_k": -0.06349206349206349,
+      "mrr": -0.006349206349206327
+    },
+    "retrieval_critical_miss_delta": 1
+  },
+  "corpus_document_count": 27,
+  "decision": {
+    "accepted": false,
+    "decision": "REJECT_ROUTING",
+    "material_latency_gain": false,
+    "material_quality_gain": false,
+    "no_regressions": false,
+    "quality_regressions": {
+      "citation_correctness_rate": false,
+      "critical_misses": true,
+      "current_top1_superseded_leakage": false,
+      "final_answer_correctness_rate": false,
+      "hit_rate": true,
+      "mean_recall_at_k": true,
+      "mrr": true,
+      "pack_isolation": false,
+      "unsupported_claim_rate": false
+    },
+    "reason": "router does not materially improve matched quality or latency without regressions",
+    "rule": {
+      "accept_only_if": "no_regressions and (material_quality_gain or material_latency_gain)",
+      "material_latency_gain": "At least 10 percent lower policy p95 latency including deterministic classification overhead, with no quality regression.",
+      "material_quality_gain": "At least 0.05 absolute improvement in hit rate, recall@5, MRR, or final-answer correctness, or a reduction in decision-critical misses.",
+      "no_regressions": "Every routed retrieval and answer/citation/security metric and every decision-critical case must be no worse than fixed RAW_RERANKED.",
+      "otherwise": "REJECT_ROUTING or DEFER_ROUTING; do not build an LLM planner"
+    }
+  },
+  "environment": {
+    "machine": "AMD64",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "sentence_transformers": "5.2.2",
+    "torch": "2.13.0",
+    "transformers": "5.16.1"
+  },
+  "fixed_policy": {
+    "answers": {
+      "metrics": {
+        "appropriate_abstention_rate": 0.5,
+        "case_count": 6,
+        "citation_correctness_rate": 1.0,
+        "completeness_rate": 1.0,
+        "final_answer_correctness_rate": 0.8333333333333334,
+        "high_confidence_error_rate": 0.16666666666666666,
+        "mean_total_latency_ms": 173.26313334827623,
+        "mean_unsupported_claim_rate": 0.16666666666666666,
+        "outcome_accuracy": 0.8333333333333334,
+        "overabstention_rate": 0.0,
+        "p95_total_latency_ms": 189.47699991986156,
+        "router_selection_mean_latency_ms": 0.0,
+        "router_selection_p95_latency_ms": 0.0
+      },
+      "observations": [
+        {
+          "appropriate_abstention": null,
+          "case_correct": true,
+          "case_id": "current-durable-core",
+          "category": "current-answer",
+          "citation_checks": [
+            {
+              "claim_id": "clm_7f5c691c564c30e1b61f8dc0",
+              "exact_match": true,
+              "expected_citation_id": "cite_94733f286d230834c9cf63ac",
+              "observed_citation_id": "cite_94733f286d230834c9cf63ac"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "10b54a3598a863465f03c3f97a24fc89c7177921570881024b81bff363ae9631",
+          "expected_outcome": "answer",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_7f5c691c564c30e1b61f8dc0"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "What is the current durable truth using immutable evidence and append-only knowledge events?",
+          "query_class": "current-latest",
+          "receipt_id": "qrx_4ac8a7de5df073d74e3d2910",
+          "required_citation_ids": [
+            "cite_94733f286d230834c9cf63ac"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_7f5c691c564c30e1b61f8dc0"
+          ],
+          "result_sha256": "92c032f20088a59ed67f807357af113974f431c193cfc682db33f2857504301b",
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "total_latency_ms": 178.52750001475215,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": null,
+          "case_correct": true,
+          "case_id": "historical-sqlite-premise",
+          "category": "historical-answer",
+          "citation_checks": [
+            {
+              "claim_id": "clm_643b698b7e9e6aee6a16c48c",
+              "exact_match": true,
+              "expected_citation_id": "cite_b4e13e4e1a809f76527311ba",
+              "observed_citation_id": "cite_b4e13e4e1a809f76527311ba"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "9c464ff4bffd9606966bd6d46a116fada18b7d41cbb5cc124d10f962d8f57cda",
+          "expected_outcome": "answer",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_643b698b7e9e6aee6a16c48c"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "What was the former canonical corpus database SQLite premise?",
+          "query_class": "lineage-history",
+          "receipt_id": "qrx_9ba1cb5b606120ba8ee8ea4f",
+          "required_citation_ids": [
+            "cite_b4e13e4e1a809f76527311ba"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_643b698b7e9e6aee6a16c48c"
+          ],
+          "result_sha256": "6df032a219bafca70c7dbb617009df4018f04a5f411c73d45e0bcda018e0003d",
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "total_latency_ms": 155.91099997982383,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": true,
+          "case_correct": true,
+          "case_id": "current-stale-sqlite-prototype",
+          "category": "current-unresolved",
+          "citation_checks": [
+            {
+              "claim_id": "clm_a047d79b8604fadbd44efdf4",
+              "exact_match": true,
+              "expected_citation_id": "cite_b4e13e4e1a809f76527311ba",
+              "observed_citation_id": "cite_b4e13e4e1a809f76527311ba"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "3201c2a5a482ee3516df2767417b74585fff4ff5891269509224f876a10eaee3",
+          "expected_outcome": "current_state_unresolved",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_a047d79b8604fadbd44efdf4"
+          ],
+          "observed_outcome": "current_state_unresolved",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "Is the first SQLite prototype the current canonical architecture implementation?",
+          "query_class": "lineage-history",
+          "receipt_id": "qrx_49cee70cc47e9585f650f3ca",
+          "required_citation_ids": [
+            "cite_b4e13e4e1a809f76527311ba"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_a047d79b8604fadbd44efdf4"
+          ],
+          "result_sha256": "a35e1e9b92c678d379a238a67d1ea6ffeec7ac2591f3b577b0d50cae23f7d240",
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "total_latency_ms": 179.89120003767312,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": null,
+          "case_correct": true,
+          "case_id": "current-graph-projection-not-canonical",
+          "category": "resolved-contradiction",
+          "citation_checks": [
+            {
+              "claim_id": "clm_f69dd23d961d485db1c53f0b",
+              "exact_match": true,
+              "expected_citation_id": "cite_5b49c675e5e0d086e7b5dd46",
+              "observed_citation_id": "cite_5b49c675e5e0d086e7b5dd46"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "1fb9f547ff7a023871706c920fba3ddd015ba36ba730121d31e39834a049a5e1",
+          "expected_outcome": "answer",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_f69dd23d961d485db1c53f0b"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "What is the current truth about Graphiti Neo4j being the deepest source of truth?",
+          "query_class": "direct-source-read",
+          "receipt_id": "qrx_8d184d58235ef5ae3da05c45",
+          "required_citation_ids": [
+            "cite_5b49c675e5e0d086e7b5dd46"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_f69dd23d961d485db1c53f0b"
+          ],
+          "result_sha256": "398fb7c1a4861a571a19b86a3f2924fc25083de1d91a49b55674638f944adfd9",
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "total_latency_ms": 189.47699991986156,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": null,
+          "case_correct": true,
+          "case_id": "historical-rejected-graph-canonical",
+          "category": "historical-rejected",
+          "citation_checks": [
+            {
+              "claim_id": "clm_bdf2ed41fb11e6b1808d3df4",
+              "exact_match": true,
+              "expected_citation_id": "cite_a7a3bfd1996a33857e073335",
+              "observed_citation_id": "cite_a7a3bfd1996a33857e073335"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "b14de62dfbd61e4a764efa265cb1094fb17578e2d35c0e3c1cae154d78a25679",
+          "expected_outcome": "answer",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "What was the rejected graph database canonical storage claim?",
+          "query_class": "lineage-history",
+          "receipt_id": "qrx_9e2a163adefe037999ba3203",
+          "required_citation_ids": [
+            "cite_a7a3bfd1996a33857e073335"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "result_sha256": "582b86650114537ab6a9df955d130738af47fecd00a5952d066fcae1a3ed2ca5",
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "total_latency_ms": 159.50089995749295,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": false,
+          "case_correct": false,
+          "case_id": "insufficient-evidence-control",
+          "category": "insufficient-evidence",
+          "citation_checks": [
+            {
+              "claim_id": "clm_7fee179225b3ef0c4d413917",
+              "exact_match": true,
+              "expected_citation_id": "cite_728e3d95a48f62c4752a6813",
+              "observed_citation_id": "cite_728e3d95a48f62c4752a6813"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "83f307a01ff987490b65ecd710d66b6f1acee001c3da4fca00b1bc5437c866cb",
+          "expected_outcome": "insufficient_evidence",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_7fee179225b3ef0c4d413917"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": false,
+          "overabstention": false,
+          "query": "quasar zebrafish magnetotail authorization",
+          "query_class": "conceptual",
+          "receipt_id": "qrx_0a1491cd6a12e04945060ad9",
+          "required_citation_ids": [],
+          "required_citations_present": true,
+          "required_claim_ids": [],
+          "result_sha256": "cb4fdf93cecc115fb933e11b630fdf5665e7b33e0f78a585cf0dbf216f5c8d46",
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "total_latency_ms": 176.2712001800537,
+          "unsupported_claim_ids": [
+            "clm_7fee179225b3ef0c4d413917"
+          ],
+          "unsupported_claim_rate": 1.0
+        }
+      ]
+    },
+    "policy": {
+      "policy_id": "RAW_RERANKED_FIXED_V1",
+      "route_id": "workstream-d-bge-bm25-rrf-crossencoder-v1",
+      "route_name": "bge-bm25-rrf-crossencoder"
+    },
+    "retrieval": {
+      "metrics": {
+        "by_query_class": {
+          "broad-synthesis": {
+            "by_query_class": {},
+            "case_count": 2,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 154.86390003934503,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 154.86390003934503,
+            "mrr": 1.0,
+            "p95_policy_latency_ms": 158.95120007917285,
+            "p95_retrieval_latency_ms": 158.95120007917285,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.0,
+            "router_selection_p95_latency_ms": 0.0
+          },
+          "conceptual": {
+            "by_query_class": {},
+            "case_count": 2,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 96.21200000401586,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 96.21200000401586,
+            "mrr": 1.0,
+            "p95_policy_latency_ms": 145.82329988479614,
+            "p95_retrieval_latency_ms": 145.82329988479614,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.0,
+            "router_selection_p95_latency_ms": 0.0
+          },
+          "current-latest": {
+            "by_query_class": {},
+            "case_count": 3,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 150.09496655936042,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 150.09496655936042,
+            "mrr": 0.6666666666666666,
+            "p95_policy_latency_ms": 155.1687999162823,
+            "p95_retrieval_latency_ms": 155.1687999162823,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.0,
+            "router_selection_p95_latency_ms": 0.0
+          },
+          "direct-source-read": {
+            "by_query_class": {},
+            "case_count": 4,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 140.28125000186265,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 140.28125000186265,
+            "mrr": 1.0,
+            "p95_policy_latency_ms": 173.3971000649035,
+            "p95_retrieval_latency_ms": 173.3971000649035,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.0,
+            "router_selection_p95_latency_ms": 0.0
+          },
+          "exact-identifier": {
+            "by_query_class": {},
+            "case_count": 2,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 119.12285001017153,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 119.12285001017153,
+            "mrr": 1.0,
+            "p95_policy_latency_ms": 182.6526999939233,
+            "p95_retrieval_latency_ms": 182.6526999939233,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.0,
+            "router_selection_p95_latency_ms": 0.0
+          },
+          "lineage-history": {
+            "by_query_class": {},
+            "case_count": 8,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 141.02666248800233,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 141.02666248800233,
+            "mrr": 0.7916666666666666,
+            "p95_policy_latency_ms": 163.2331998553127,
+            "p95_retrieval_latency_ms": 163.2331998553127,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.0,
+            "router_selection_p95_latency_ms": 0.0
+          }
+        },
+        "case_count": 21,
+        "critical_miss_count": 0,
+        "current_top1_superseded_leakage_count": 0,
+        "estimated_cost_usd": 0.0,
+        "hit_rate": 1.0,
+        "mean_policy_latency_ms": 137.14384284269596,
+        "mean_recall_at_k": 1.0,
+        "mean_retrieval_latency_ms": 137.14384284269596,
+        "mrr": 0.8730158730158729,
+        "p95_policy_latency_ms": 173.3971000649035,
+        "p95_retrieval_latency_ms": 173.3971000649035,
+        "pack_isolation_violation_count": 0,
+        "router_selection_mean_latency_ms": 0.0,
+        "router_selection_p95_latency_ms": 0.0
+      },
+      "observations": [
+        {
+          "case_id": "source_quality_claim_specific",
+          "category": "source-citation-recovery",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 69.88409999758005,
+          "query": "Is source quality one universal tier, or evaluated for the claim at hand?",
+          "query_class": "direct-source-read",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_32f20bd13ce2ffc9d2ac1606"
+          ],
+          "retrieval_latency_ms": 69.88409999758005,
+          "returned_ids": [
+            "clm_32f20bd13ce2ffc9d2ac1606",
+            "clm_7fee179225b3ef0c4d413917",
+            "clm_041fdd3cc6542b6dca47b183"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "model_agreement_not_evidence",
+          "category": "insufficient-evidence",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 55.59300002641976,
+          "query": "Several models agree on a claim. Is that agreement itself external evidence?",
+          "query_class": "exact-identifier",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_7fee179225b3ef0c4d413917"
+          ],
+          "retrieval_latency_ms": 55.59300002641976,
+          "returned_ids": [
+            "clm_7fee179225b3ef0c4d413917",
+            "clm_041fdd3cc6542b6dca47b183",
+            "clm_32f20bd13ce2ffc9d2ac1606"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "insufficient_evidence_keeps_uncertainty",
+          "category": "insufficient-evidence",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 46.60070012323558,
+          "query": "What state should FOSSIL preserve when evidence is insufficient?",
+          "query_class": "conceptual",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_041fdd3cc6542b6dca47b183"
+          ],
+          "retrieval_latency_ms": 46.60070012323558,
+          "returned_ids": [
+            "clm_041fdd3cc6542b6dca47b183",
+            "clm_7fee179225b3ef0c4d413917",
+            "clm_32f20bd13ce2ffc9d2ac1606"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "gate1_controls_not_winners",
+          "category": "exact-factual-lookup",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 182.6526999939233,
+          "query": "Did Gate 1 choose BM25, hash embeddings, or token overlap as the production winner?",
+          "query_class": "exact-identifier",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_6542963629260bde4e67d660"
+          ],
+          "retrieval_latency_ms": 182.6526999939233,
+          "returned_ids": [
+            "clm_6542963629260bde4e67d660",
+            "clm_b9cec2a2d1753db24f59ff1309d31656",
+            "clm_19ace7d34212e6eda5245c2a570e0e4b",
+            "clm_817f4efaa5c9e51be4647ff2312494ff",
+            "clm_a568c87b8a2deb8ad9f752299c2bca80"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "fresh_build_scoped_ledger",
+          "category": "obscure-deep-evidence",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 145.82329988479614,
+          "query": "What ledger rule prevents an empty rebuild after destructive graph replacement?",
+          "query_class": "conceptual",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_62b7f9c6184b14371338ca36"
+          ],
+          "retrieval_latency_ms": 145.82329988479614,
+          "returned_ids": [
+            "clm_62b7f9c6184b14371338ca36",
+            "clm_76c6bead3d10df4ca7de8af4",
+            "clm_7f5c691c564c30e1b61f8dc0",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "candidate_authority_cross_pack_dependency",
+          "category": "cross-pack-isolation",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 159.6337000373751,
+          "query": "What cross-pack relation connects candidate-model authority to the common model-evidence rule?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "rel_04b8861fde6b22abcae58ef4"
+          ],
+          "retrieval_latency_ms": 159.6337000373751,
+          "returned_ids": [
+            "rel_04b8861fde6b22abcae58ef4",
+            "clm_1ca1ee32e949eccdea16beb9",
+            "clm_7fee179225b3ef0c4d413917",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_041fdd3cc6542b6dca47b183"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "current_architecture_after_reconsideration",
+          "category": "current-vs-historical",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 155.1687999162823,
+          "query": "What is the current accepted durable architecture after storage alternatives were reconsidered?",
+          "query_class": "current-latest",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "relevant_ids": [
+            "clm_7f5c691c564c30e1b61f8dc0"
+          ],
+          "retrieval_latency_ms": 155.1687999162823,
+          "returned_ids": [
+            "clm_598efc81575e7662e451ec5050f829ba",
+            "clm_7f5c691c564c30e1b61f8dc0",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_bdf2ed41fb11e6b1808d3df4",
+            "clm_76c6bead3d10df4ca7de8af4"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "former_sqlite_canonical_history",
+          "category": "current-vs-historical",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 136.7676998488605,
+          "query": "What earlier SQLite-canonical conclusion was later demoted?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.3333333333333333,
+          "relevant_ids": [
+            "clm_643b698b7e9e6aee6a16c48c"
+          ],
+          "retrieval_latency_ms": 136.7676998488605,
+          "returned_ids": [
+            "clm_a047d79b8604fadbd44efdf4",
+            "rel_0996c7d4b845cf3a3fc6bdf8",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "sqlite_supersession_lineage",
+          "category": "decision-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 156.74999984912574,
+          "query": "Which durable relation connects the replacement architecture to the former SQLite-canonical claim?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "rel_e0102ade0b5fad5cc2668ccd"
+          ],
+          "retrieval_latency_ms": 156.74999984912574,
+          "returned_ids": [
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "rel_0996c7d4b845cf3a3fc6bdf8",
+            "clm_a047d79b8604fadbd44efdf4",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "sqlite_dependent_staleness",
+          "category": "stale-superseded",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 163.2331998553127,
+          "query": "What happens to the dependent SQLite-prototype claim after its canonical SQLite premise is superseded?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "relevant_ids": [
+            "clm_a047d79b8604fadbd44efdf4"
+          ],
+          "retrieval_latency_ms": 163.2331998553127,
+          "returned_ids": [
+            "rel_0996c7d4b845cf3a3fc6bdf8",
+            "clm_a047d79b8604fadbd44efdf4",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "graph_canonical_rejected",
+          "category": "contradiction-disagreement",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 146.81859989650548,
+          "query": "Was graph database as canonical storage retained as the accepted conclusion?",
+          "query_class": "current-latest",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "retrieval_latency_ms": 146.81859989650548,
+          "returned_ids": [
+            "clm_bdf2ed41fb11e6b1808d3df4",
+            "rel_c0e74317e7ff1ee59461b036",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "rel_0996c7d4b845cf3a3fc6bdf8"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "graphiti_current_role",
+          "category": "exact-factual-lookup",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 148.2974998652935,
+          "query": "What is Graphiti/Neo4j's current role relative to deepest truth?",
+          "query_class": "current-latest",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "relevant_ids": [
+            "clm_f69dd23d961d485db1c53f0b"
+          ],
+          "retrieval_latency_ms": 148.2974998652935,
+          "returned_ids": [
+            "rel_c0e74317e7ff1ee59461b036",
+            "clm_f69dd23d961d485db1c53f0b",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_7f5c691c564c30e1b61f8dc0",
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "graph_disagreement_relation",
+          "category": "contradiction-disagreement",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 147.5988000165671,
+          "query": "What relation preserves disagreement between graph-as-canonical and operational Graphiti?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "rel_c0e74317e7ff1ee59461b036"
+          ],
+          "retrieval_latency_ms": 147.5988000165671,
+          "returned_ids": [
+            "rel_c0e74317e7ff1ee59461b036",
+            "clm_f69dd23d961d485db1c53f0b",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_bdf2ed41fb11e6b1808d3df4",
+            "clm_7f5c691c564c30e1b61f8dc0"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "logical_packs_over_physical_shards",
+          "category": "obscure-deep-evidence",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 150.7765999995172,
+          "query": "Were knowledge boundaries reframed as immediate physical shards or logical packs/namespaces?",
+          "query_class": "broad-synthesis",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_783ff75008ce760e0a227fa9"
+          ],
+          "retrieval_latency_ms": 150.7765999995172,
+          "returned_ids": [
+            "clm_783ff75008ce760e0a227fa9",
+            "clm_7f5c691c564c30e1b61f8dc0",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_62b7f9c6184b14371338ca36",
+            "clm_1f4c5f053bd7dccac79c301c"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "recovery_is_reconstructed",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 162.40400006063282,
+          "query": "Is the 2026-08-09 recovery checkpoint a verbatim transcript of the missing UI messages?",
+          "query_class": "direct-source-read",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_fabdddf47e97cdd1876329fe"
+          ],
+          "retrieval_latency_ms": 162.40400006063282,
+          "returned_ids": [
+            "clm_fabdddf47e97cdd1876329fe",
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_841df02f01de69cafeb9c084",
+            "clm_b9cec2a2d1753db24f59ff1309d31656",
+            "clm_a568c87b8a2deb8ad9f752299c2bca80"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "lost_chat_exact_wording_unavailable",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 158.95120007917285,
+          "query": "What does the corpus say about the exact lost conversation and its precise wording?",
+          "query_class": "broad-synthesis",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_1f4c5f053bd7dccac79c301c"
+          ],
+          "retrieval_latency_ms": 158.95120007917285,
+          "returned_ids": [
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_841df02f01de69cafeb9c084",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "rel_0996c7d4b845cf3a3fc6bdf8"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "do_not_invent_recovery_wording",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 146.15000016056,
+          "query": "Should missing chat wording be filled in from memory?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "relevant_ids": [
+            "clm_841df02f01de69cafeb9c084"
+          ],
+          "retrieval_latency_ms": 146.15000016056,
+          "returned_ids": [
+            "clm_677f372218d173f32ab6cb30",
+            "clm_841df02f01de69cafeb9c084",
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_fabdddf47e97cdd1876329fe",
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "later_primary_evidence_preferred",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 173.3971000649035,
+          "query": "If screenshots, copied text, exported chat, or a local package later appears, how should it be treated?",
+          "query_class": "direct-source-read",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_677f372218d173f32ab6cb30"
+          ],
+          "retrieval_latency_ms": 173.3971000649035,
+          "returned_ids": [
+            "clm_677f372218d173f32ab6cb30",
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_fabdddf47e97cdd1876329fe",
+            "clm_841df02f01de69cafeb9c084",
+            "clm_b9cec2a2d1753db24f59ff1309d31656"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "false_premise_quote_missing_chat",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 155.4397998843342,
+          "query": "Quote the exact wording from the missing UI conversation that established the architecture.",
+          "query_class": "direct-source-read",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_841df02f01de69cafeb9c084"
+          ],
+          "retrieval_latency_ms": 155.4397998843342,
+          "returned_ids": [
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_841df02f01de69cafeb9c084",
+            "clm_fabdddf47e97cdd1876329fe",
+            "clm_a047d79b8604fadbd44efdf4",
+            "rel_0996c7d4b845cf3a3fc6bdf8"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "historical_current_supersession_bundle",
+          "category": "decision-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 160.3399000596255,
+          "query": "Retrieve the former SQLite conclusion, current durable architecture, and their supersession lineage.",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_643b698b7e9e6aee6a16c48c",
+            "clm_7f5c691c564c30e1b61f8dc0",
+            "rel_e0102ade0b5fad5cc2668ccd"
+          ],
+          "retrieval_latency_ms": 160.3399000596255,
+          "returned_ids": [
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_a047d79b8604fadbd44efdf4",
+            "rel_0996c7d4b845cf3a3fc6bdf8",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "clm_7f5c691c564c30e1b61f8dc0"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "common_mount_isolation",
+          "category": "cross-pack-isolation",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 57.74000007659197,
+          "query": "When only the common pack is mounted, what model-evidence rule is retrievable without AI-only history?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_7fee179225b3ef0c4d413917"
+          ],
+          "retrieval_latency_ms": 57.74000007659197,
+          "returned_ids": [
+            "clm_7fee179225b3ef0c4d413917",
+            "clm_041fdd3cc6542b6dca47b183",
+            "clm_32f20bd13ce2ffc9d2ac1606"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0,
+          "top1_leakage": false
+        }
+      ]
+    }
+  },
+  "invariants": {
+    "citation_and_answer_controls": true,
+    "current_top1_superseded_leakage": true,
+    "decision_critical_misses_not_increased": false,
+    "no_model_or_graphiti_change": true,
+    "pack_isolation": true
+  },
+  "next": "FOSSIL-RETRIEVAL-SECURITY-FINAL-01",
+  "no_llm_planner": true,
+  "pack_audit": {
+    "artifact_count": 6,
+    "citation_count": 47,
+    "claim_count": 23,
+    "event_count": 51,
+    "pack_ids": [
+      "pack_269099f7b2ba43b7a99b9427d64092de",
+      "pack_f024177f89a5442db84171c3dd7f58e5"
+    ],
+    "relation_count": 4,
+    "snapshot_count": 6
+  },
+  "pack_mounts": {
+    "pack_269099f7b2ba43b7a99b9427d64092de": "d583005dce06dbb499c3c0de5c22b899655eb8d2",
+    "pack_f024177f89a5442db84171c3dd7f58e5": "84accd2ee895663990e82ca5b79b592cb503db24"
+  },
+  "projection": {
+    "build_id": "packfix_ee7c25bce9e03c6cab254fe4",
+    "name": "pack-fixture-retrieval-documents",
+    "version": "1"
+  },
+  "receipt_contract": {
+    "receipt_count": 12,
+    "schema_errors": [],
+    "schema_version": "fossil.query-execution-receipt.v1",
+    "sidecar_sha256": "bfb15c7673d371240fe1d254d491d5207ea36a1f91437840a43355abd9f733df",
+    "valid": true
+  },
+  "repo_pack_pins": {
+    "fossil-ai-systems": "84accd2ee895663990e82ca5b79b592cb503db24",
+    "fossil-common": "d583005dce06dbb499c3c0de5c22b899655eb8d2"
+  },
+  "retrieval_case_count": 21,
+  "routed_policy": {
+    "answers": {
+      "metrics": {
+        "appropriate_abstention_rate": 0.5,
+        "case_count": 6,
+        "citation_correctness_rate": 1.0,
+        "completeness_rate": 1.0,
+        "final_answer_correctness_rate": 0.8333333333333334,
+        "high_confidence_error_rate": 0.16666666666666666,
+        "mean_total_latency_ms": 51.42228336383899,
+        "mean_unsupported_claim_rate": 0.16666666666666666,
+        "outcome_accuracy": 0.8333333333333334,
+        "overabstention_rate": 0.0,
+        "p95_total_latency_ms": 166.64619999937713,
+        "router_selection_mean_latency_ms": 0.0295999925583601,
+        "router_selection_p95_latency_ms": 0.04739989526569843
+      },
+      "observations": [
+        {
+          "appropriate_abstention": null,
+          "case_correct": true,
+          "case_id": "current-durable-core",
+          "category": "current-answer",
+          "citation_checks": [
+            {
+              "claim_id": "clm_7f5c691c564c30e1b61f8dc0",
+              "exact_match": true,
+              "expected_citation_id": "cite_94733f286d230834c9cf63ac",
+              "observed_citation_id": "cite_94733f286d230834c9cf63ac"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "1866b0f45abd460c8474d5fbc82ab2c74ad3ad96f535be29ec7be1a6f2edf8d2",
+          "expected_outcome": "answer",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_7f5c691c564c30e1b61f8dc0"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "What is the current durable truth using immutable evidence and append-only knowledge events?",
+          "query_class": "current-latest",
+          "receipt_id": "qrx_33827b1d6212d95ec4185805",
+          "required_citation_ids": [
+            "cite_94733f286d230834c9cf63ac"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_7f5c691c564c30e1b61f8dc0"
+          ],
+          "result_sha256": "eb56e031631822f81aa9fb4f1b34975c15d1de39a467fc7da194e569a6453a7b",
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.031300121918320656,
+          "total_latency_ms": 34.946100087836385,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": null,
+          "case_correct": true,
+          "case_id": "historical-sqlite-premise",
+          "category": "historical-answer",
+          "citation_checks": [
+            {
+              "claim_id": "clm_643b698b7e9e6aee6a16c48c",
+              "exact_match": true,
+              "expected_citation_id": "cite_b4e13e4e1a809f76527311ba",
+              "observed_citation_id": "cite_b4e13e4e1a809f76527311ba"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "5c601ae13ca575acc48376ea6331f159ceefed14dcab64e68ea170ef7e604d9e",
+          "expected_outcome": "answer",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_643b698b7e9e6aee6a16c48c"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "What was the former canonical corpus database SQLite premise?",
+          "query_class": "lineage-history",
+          "receipt_id": "qrx_4061b8fd6a32b659373d3c1f",
+          "required_citation_ids": [
+            "cite_b4e13e4e1a809f76527311ba"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_643b698b7e9e6aee6a16c48c"
+          ],
+          "result_sha256": "8667745e32f91928bef5e1718df8857efcbf22942de7c32cd6240f917d89826c",
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.02210005186498165,
+          "total_latency_ms": 31.348600052297115,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": true,
+          "case_correct": true,
+          "case_id": "current-stale-sqlite-prototype",
+          "category": "current-unresolved",
+          "citation_checks": [
+            {
+              "claim_id": "clm_a047d79b8604fadbd44efdf4",
+              "exact_match": true,
+              "expected_citation_id": "cite_b4e13e4e1a809f76527311ba",
+              "observed_citation_id": "cite_b4e13e4e1a809f76527311ba"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "24ceac20cf3967d94ff6ba834eca64048d8ebda490c4316b363a6487399526d4",
+          "expected_outcome": "current_state_unresolved",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_a047d79b8604fadbd44efdf4"
+          ],
+          "observed_outcome": "current_state_unresolved",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "Is the first SQLite prototype the current canonical architecture implementation?",
+          "query_class": "lineage-history",
+          "receipt_id": "qrx_9816e2ad8c935d041b5066ed",
+          "required_citation_ids": [
+            "cite_b4e13e4e1a809f76527311ba"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_a047d79b8604fadbd44efdf4"
+          ],
+          "result_sha256": "66b9b344dc74929c1e1fa1251aaed5539a64ef6a3fe1a58af0470c0e37723bb0",
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.02219993621110916,
+          "total_latency_ms": 32.51169994473457,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": null,
+          "case_correct": true,
+          "case_id": "current-graph-projection-not-canonical",
+          "category": "resolved-contradiction",
+          "citation_checks": [
+            {
+              "claim_id": "clm_f69dd23d961d485db1c53f0b",
+              "exact_match": true,
+              "expected_citation_id": "cite_5b49c675e5e0d086e7b5dd46",
+              "observed_citation_id": "cite_5b49c675e5e0d086e7b5dd46"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "c3332e18039d3a5497d717d8b77e620639f414b62dd36c9c913167f699ffb116",
+          "expected_outcome": "answer",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_f69dd23d961d485db1c53f0b"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "What is the current truth about Graphiti Neo4j being the deepest source of truth?",
+          "query_class": "direct-source-read",
+          "receipt_id": "qrx_2ed8ba35619944c1b1018976",
+          "required_citation_ids": [
+            "cite_5b49c675e5e0d086e7b5dd46"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_f69dd23d961d485db1c53f0b"
+          ],
+          "result_sha256": "ac01c5ba39bb7f0e395bce1674904a38e59e331560359f2b5c86d57ccd9ae607",
+          "route_name": "bm25",
+          "selection_latency_ms": 0.024900073185563087,
+          "total_latency_ms": 4.337300080806017,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": null,
+          "case_correct": true,
+          "case_id": "historical-rejected-graph-canonical",
+          "category": "historical-rejected",
+          "citation_checks": [
+            {
+              "claim_id": "clm_bdf2ed41fb11e6b1808d3df4",
+              "exact_match": true,
+              "expected_citation_id": "cite_a7a3bfd1996a33857e073335",
+              "observed_citation_id": "cite_a7a3bfd1996a33857e073335"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "1e6858a132b59ce920b8defd7b8cf6e6ab87d488101e7226fa0e306fda17eb9c",
+          "expected_outcome": "answer",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": true,
+          "overabstention": false,
+          "query": "What was the rejected graph database canonical storage claim?",
+          "query_class": "lineage-history",
+          "receipt_id": "qrx_7e9f3714cc785cfbbc2c8b5a",
+          "required_citation_ids": [
+            "cite_a7a3bfd1996a33857e073335"
+          ],
+          "required_citations_present": true,
+          "required_claim_ids": [
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "result_sha256": "225163d02a515d141ae36b20bf7794377279f08dc719900e47e6dad24f5b45a5",
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.04739989526569843,
+          "total_latency_ms": 38.74380001798272,
+          "unsupported_claim_ids": [],
+          "unsupported_claim_rate": 0.0
+        },
+        {
+          "appropriate_abstention": false,
+          "case_correct": false,
+          "case_id": "insufficient-evidence-control",
+          "category": "insufficient-evidence",
+          "citation_checks": [
+            {
+              "claim_id": "clm_7fee179225b3ef0c4d413917",
+              "exact_match": true,
+              "expected_citation_id": "cite_728e3d95a48f62c4752a6813",
+              "observed_citation_id": "cite_728e3d95a48f62c4752a6813"
+            }
+          ],
+          "citation_correct": true,
+          "completeness": 1.0,
+          "confidence": 1.0,
+          "contradiction_handled": true,
+          "execution_identity_sha256": "e246e277685487f99193b9c0e39e6e4c362ca07dda84ed6bfc8621fbf749db81",
+          "expected_outcome": "insufficient_evidence",
+          "forbidden_claim_ids_present": [],
+          "observed_claim_ids": [
+            "clm_7fee179225b3ef0c4d413917"
+          ],
+          "observed_outcome": "answer",
+          "outcome_match": false,
+          "overabstention": false,
+          "query": "quasar zebrafish magnetotail authorization",
+          "query_class": "conceptual",
+          "receipt_id": "qrx_fdaf343a9116b9ea88954a15",
+          "required_citation_ids": [],
+          "required_citations_present": true,
+          "required_claim_ids": [],
+          "result_sha256": "74e2a2c229435489ee28a6823fc2bd23b7f6981f71265586b4f9c509cb741d0c",
+          "route_name": "bge-dense-crossencoder",
+          "selection_latency_ms": 0.02969987690448761,
+          "total_latency_ms": 166.64619999937713,
+          "unsupported_claim_ids": [
+            "clm_7fee179225b3ef0c4d413917"
+          ],
+          "unsupported_claim_rate": 1.0
+        }
+      ]
+    },
+    "policy": {
+      "classes": [
+        "exact-identifier",
+        "conceptual",
+        "current-latest",
+        "lineage-history",
+        "broad-synthesis",
+        "direct-source-read"
+      ],
+      "classifier": "fossil-deterministic-query-classifier-v1",
+      "policy_id": "DETERMINISTIC_QUERY_CLASS_ROUTER_V1",
+      "route_by_class": {
+        "broad-synthesis": "bge-bm25-rrf-crossencoder",
+        "conceptual": "bge-dense-crossencoder",
+        "current-latest": "bge-bm25-rrf-lifecycle",
+        "direct-source-read": "bm25",
+        "exact-identifier": "bge-dense-crossencoder",
+        "lineage-history": "bge-bm25-rrf-lifecycle"
+      },
+      "unknown_class_route": "bge-bm25-rrf-crossencoder"
+    },
+    "query_class_counts": {
+      "broad-synthesis": 2,
+      "conceptual": 2,
+      "current-latest": 3,
+      "direct-source-read": 4,
+      "exact-identifier": 2,
+      "lineage-history": 8
+    },
+    "retrieval": {
+      "metrics": {
+        "by_query_class": {
+          "broad-synthesis": {
+            "by_query_class": {},
+            "case_count": 2,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 158.98865007329732,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 158.94865000154823,
+            "mrr": 1.0,
+            "p95_policy_latency_ms": 164.34170003049076,
+            "p95_retrieval_latency_ms": 164.30459986440837,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.04000007174909115,
+            "router_selection_p95_latency_ms": 0.042899977415800095
+          },
+          "conceptual": {
+            "by_query_class": {},
+            "case_count": 2,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 94.40399997401983,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 94.34864996001124,
+            "mrr": 1.0,
+            "p95_policy_latency_ms": 138.55569995939732,
+            "p95_retrieval_latency_ms": 138.50659993477166,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.05535001400858164,
+            "router_selection_p95_latency_ms": 0.06160000339150429
+          },
+          "current-latest": {
+            "by_query_class": {},
+            "case_count": 3,
+            "critical_miss_count": 1,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 0.6666666666666666,
+            "mean_policy_latency_ms": 35.070700105279684,
+            "mean_recall_at_k": 0.6666666666666666,
+            "mean_retrieval_latency_ms": 35.03826671900848,
+            "mrr": 0.6666666666666666,
+            "p95_policy_latency_ms": 38.08940015733242,
+            "p95_retrieval_latency_ms": 38.05370000191033,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.03243338627119859,
+            "router_selection_p95_latency_ms": 0.035700155422091484
+          },
+          "direct-source-read": {
+            "by_query_class": {},
+            "case_count": 4,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 1.355424930807203,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 1.3301499420776963,
+            "mrr": 1.0,
+            "p95_policy_latency_ms": 2.0858999341726303,
+            "p95_retrieval_latency_ms": 2.0471999887377024,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.02527498872950673,
+            "router_selection_p95_latency_ms": 0.03869994543492794
+          },
+          "exact-identifier": {
+            "by_query_class": {},
+            "case_count": 2,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 111.54145014006644,
+            "mean_recall_at_k": 1.0,
+            "mean_retrieval_latency_ms": 111.50695011019707,
+            "mrr": 1.0,
+            "p95_policy_latency_ms": 176.37960007414222,
+            "p95_retrieval_latency_ms": 176.33270006626844,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.03450002986937761,
+            "router_selection_p95_latency_ms": 0.046900007873773575
+          },
+          "lineage-history": {
+            "by_query_class": {},
+            "case_count": 8,
+            "critical_miss_count": 0,
+            "current_top1_superseded_leakage_count": 0,
+            "estimated_cost_usd": 0.0,
+            "hit_rate": 1.0,
+            "mean_policy_latency_ms": 32.42722499999218,
+            "mean_recall_at_k": 0.9583333333333334,
+            "mean_retrieval_latency_ms": 32.39653748460114,
+            "mrr": 0.775,
+            "p95_policy_latency_ms": 36.72549966722727,
+            "p95_retrieval_latency_ms": 36.69579979032278,
+            "pack_isolation_violation_count": 0,
+            "router_selection_mean_latency_ms": 0.030687515391036868,
+            "router_selection_p95_latency_ms": 0.04269997589290142
+          }
+        },
+        "case_count": 21,
+        "critical_miss_count": 1,
+        "current_top1_superseded_leakage_count": 0,
+        "estimated_cost_usd": 0.0,
+        "hit_rate": 0.9523809523809523,
+        "mean_policy_latency_ms": 52.37713335303678,
+        "mean_recall_at_k": 0.9365079365079365,
+        "mean_retrieval_latency_ms": 52.34362856884088,
+        "mrr": 0.8666666666666666,
+        "p95_policy_latency_ms": 164.34170003049076,
+        "p95_retrieval_latency_ms": 164.30459986440837,
+        "pack_isolation_violation_count": 0,
+        "router_selection_mean_latency_ms": 0.03350478419590564,
+        "router_selection_p95_latency_ms": 0.04910002462565899
+      },
+      "observations": [
+        {
+          "case_id": "source_quality_claim_specific",
+          "category": "source-citation-recovery",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 0.16660010442137718,
+          "query": "Is source quality one universal tier, or evaluated for the claim at hand?",
+          "query_class": "direct-source-read",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_32f20bd13ce2ffc9d2ac1606"
+          ],
+          "retrieval_latency_ms": 0.1385000068694353,
+          "returned_ids": [
+            "clm_32f20bd13ce2ffc9d2ac1606",
+            "clm_041fdd3cc6542b6dca47b183",
+            "clm_7fee179225b3ef0c4d413917"
+          ],
+          "route_name": "bm25",
+          "selection_latency_ms": 0.02810009755194187,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "model_agreement_not_evidence",
+          "category": "insufficient-evidence",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 46.70330020599067,
+          "query": "Several models agree on a claim. Is that agreement itself external evidence?",
+          "query_class": "exact-identifier",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_7fee179225b3ef0c4d413917"
+          ],
+          "retrieval_latency_ms": 46.68120015412569,
+          "returned_ids": [
+            "clm_7fee179225b3ef0c4d413917",
+            "clm_041fdd3cc6542b6dca47b183",
+            "clm_32f20bd13ce2ffc9d2ac1606"
+          ],
+          "route_name": "bge-dense-crossencoder",
+          "selection_latency_ms": 0.02210005186498165,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "insufficient_evidence_keeps_uncertainty",
+          "category": "insufficient-evidence",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 50.252299988642335,
+          "query": "What state should FOSSIL preserve when evidence is insufficient?",
+          "query_class": "conceptual",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_041fdd3cc6542b6dca47b183"
+          ],
+          "retrieval_latency_ms": 50.19069998525083,
+          "returned_ids": [
+            "clm_041fdd3cc6542b6dca47b183",
+            "clm_7fee179225b3ef0c4d413917",
+            "clm_32f20bd13ce2ffc9d2ac1606"
+          ],
+          "route_name": "bge-dense-crossencoder",
+          "selection_latency_ms": 0.06160000339150429,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "gate1_controls_not_winners",
+          "category": "exact-factual-lookup",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 176.37960007414222,
+          "query": "Did Gate 1 choose BM25, hash embeddings, or token overlap as the production winner?",
+          "query_class": "exact-identifier",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_6542963629260bde4e67d660"
+          ],
+          "retrieval_latency_ms": 176.33270006626844,
+          "returned_ids": [
+            "clm_6542963629260bde4e67d660",
+            "clm_b9cec2a2d1753db24f59ff1309d31656",
+            "clm_19ace7d34212e6eda5245c2a570e0e4b",
+            "clm_817f4efaa5c9e51be4647ff2312494ff",
+            "clm_a568c87b8a2deb8ad9f752299c2bca80"
+          ],
+          "route_name": "bge-dense-crossencoder",
+          "selection_latency_ms": 0.046900007873773575,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "fresh_build_scoped_ledger",
+          "category": "obscure-deep-evidence",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 138.55569995939732,
+          "query": "What ledger rule prevents an empty rebuild after destructive graph replacement?",
+          "query_class": "conceptual",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_62b7f9c6184b14371338ca36"
+          ],
+          "retrieval_latency_ms": 138.50659993477166,
+          "returned_ids": [
+            "clm_62b7f9c6184b14371338ca36",
+            "clm_76c6bead3d10df4ca7de8af4",
+            "clm_7f5c691c564c30e1b61f8dc0",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "route_name": "bge-dense-crossencoder",
+          "selection_latency_ms": 0.04910002462565899,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "candidate_authority_cross_pack_dependency",
+          "category": "cross-pack-isolation",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 28.92270009033382,
+          "query": "What cross-pack relation connects candidate-model authority to the common model-evidence rule?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "rel_04b8861fde6b22abcae58ef4"
+          ],
+          "retrieval_latency_ms": 28.880000114440918,
+          "returned_ids": [
+            "rel_04b8861fde6b22abcae58ef4",
+            "clm_1ca1ee32e949eccdea16beb9",
+            "clm_7fee179225b3ef0c4d413917",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "rel_0996c7d4b845cf3a3fc6bdf8"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.04269997589290142,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "current_architecture_after_reconsideration",
+          "category": "current-vs-historical",
+          "critical_miss": true,
+          "failed": true,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 38.08940015733242,
+          "query": "What is the current accepted durable architecture after storage alternatives were reconsidered?",
+          "query_class": "current-latest",
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "relevant_ids": [
+            "clm_7f5c691c564c30e1b61f8dc0"
+          ],
+          "retrieval_latency_ms": 38.05370000191033,
+          "returned_ids": [
+            "clm_76c6bead3d10df4ca7de8af4",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_62b7f9c6184b14371338ca36",
+            "rel_0996c7d4b845cf3a3fc6bdf8",
+            "clm_598efc81575e7662e451ec5050f829ba"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.035700155422091484,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "former_sqlite_canonical_history",
+          "category": "current-vs-historical",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 32.731500221416354,
+          "query": "What earlier SQLite-canonical conclusion was later demoted?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_643b698b7e9e6aee6a16c48c"
+          ],
+          "retrieval_latency_ms": 32.70200011320412,
+          "returned_ids": [
+            "clm_643b698b7e9e6aee6a16c48c",
+            "clm_a047d79b8604fadbd44efdf4",
+            "clm_bdf2ed41fb11e6b1808d3df4",
+            "rel_0996c7d4b845cf3a3fc6bdf8",
+            "rel_e0102ade0b5fad5cc2668ccd"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.02950010821223259,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "sqlite_supersession_lineage",
+          "category": "decision-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 36.49610001593828,
+          "query": "Which durable relation connects the replacement architecture to the former SQLite-canonical claim?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.2,
+          "relevant_ids": [
+            "rel_e0102ade0b5fad5cc2668ccd"
+          ],
+          "retrieval_latency_ms": 36.463099997490644,
+          "returned_ids": [
+            "clm_a047d79b8604fadbd44efdf4",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "rel_0996c7d4b845cf3a3fc6bdf8",
+            "clm_bdf2ed41fb11e6b1808d3df4",
+            "rel_e0102ade0b5fad5cc2668ccd"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.03300001844763756,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "sqlite_dependent_staleness",
+          "category": "stale-superseded",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 36.72549966722727,
+          "query": "What happens to the dependent SQLite-prototype claim after its canonical SQLite premise is superseded?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_a047d79b8604fadbd44efdf4"
+          ],
+          "retrieval_latency_ms": 36.69579979032278,
+          "returned_ids": [
+            "clm_a047d79b8604fadbd44efdf4",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "clm_bdf2ed41fb11e6b1808d3df4",
+            "rel_0996c7d4b845cf3a3fc6bdf8",
+            "rel_e0102ade0b5fad5cc2668ccd"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.02969987690448761,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "graph_canonical_rejected",
+          "category": "contradiction-disagreement",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 34.29610002785921,
+          "query": "Was graph database as canonical storage retained as the accepted conclusion?",
+          "query_class": "current-latest",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_bdf2ed41fb11e6b1808d3df4"
+          ],
+          "retrieval_latency_ms": 34.26390001550317,
+          "returned_ids": [
+            "clm_bdf2ed41fb11e6b1808d3df4",
+            "rel_c0e74317e7ff1ee59461b036",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "rel_0996c7d4b845cf3a3fc6bdf8"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.03220001235604286,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "graphiti_current_role",
+          "category": "exact-factual-lookup",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 32.82660013064742,
+          "query": "What is Graphiti/Neo4j's current role relative to deepest truth?",
+          "query_class": "current-latest",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_f69dd23d961d485db1c53f0b"
+          ],
+          "retrieval_latency_ms": 32.79720013961196,
+          "returned_ids": [
+            "clm_f69dd23d961d485db1c53f0b",
+            "rel_c0e74317e7ff1ee59461b036",
+            "clm_7f5c691c564c30e1b61f8dc0",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "rel_0996c7d4b845cf3a3fc6bdf8"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.029399991035461426,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "graph_disagreement_relation",
+          "category": "contradiction-disagreement",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 35.74789990670979,
+          "query": "What relation preserves disagreement between graph-as-canonical and operational Graphiti?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "relevant_ids": [
+            "rel_c0e74317e7ff1ee59461b036"
+          ],
+          "retrieval_latency_ms": 35.72419984266162,
+          "returned_ids": [
+            "clm_f69dd23d961d485db1c53f0b",
+            "rel_c0e74317e7ff1ee59461b036",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_bdf2ed41fb11e6b1808d3df4",
+            "clm_7f5c691c564c30e1b61f8dc0"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.023700064048171043,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "logical_packs_over_physical_shards",
+          "category": "obscure-deep-evidence",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 164.34170003049076,
+          "query": "Were knowledge boundaries reframed as immediate physical shards or logical packs/namespaces?",
+          "query_class": "broad-synthesis",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_783ff75008ce760e0a227fa9"
+          ],
+          "retrieval_latency_ms": 164.30459986440837,
+          "returned_ids": [
+            "clm_783ff75008ce760e0a227fa9",
+            "clm_7f5c691c564c30e1b61f8dc0",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "clm_62b7f9c6184b14371338ca36",
+            "clm_1f4c5f053bd7dccac79c301c"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.0371001660823822,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "recovery_is_reconstructed",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 2.0858999341726303,
+          "query": "Is the 2026-08-09 recovery checkpoint a verbatim transcript of the missing UI messages?",
+          "query_class": "direct-source-read",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_fabdddf47e97cdd1876329fe"
+          ],
+          "retrieval_latency_ms": 2.0471999887377024,
+          "returned_ids": [
+            "clm_fabdddf47e97cdd1876329fe",
+            "clm_841df02f01de69cafeb9c084",
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_f69dd23d961d485db1c53f0b",
+            "rel_c0e74317e7ff1ee59461b036"
+          ],
+          "route_name": "bm25",
+          "selection_latency_ms": 0.03869994543492794,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "lost_chat_exact_wording_unavailable",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 153.6356001161039,
+          "query": "What does the corpus say about the exact lost conversation and its precise wording?",
+          "query_class": "broad-synthesis",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_1f4c5f053bd7dccac79c301c"
+          ],
+          "retrieval_latency_ms": 153.5927001386881,
+          "returned_ids": [
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_841df02f01de69cafeb9c084",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "rel_0996c7d4b845cf3a3fc6bdf8"
+          ],
+          "route_name": "bge-bm25-rrf-crossencoder",
+          "selection_latency_ms": 0.042899977415800095,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "do_not_invent_recovery_wording",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 31.51510003954172,
+          "query": "Should missing chat wording be filled in from memory?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "relevant_ids": [
+            "clm_841df02f01de69cafeb9c084"
+          ],
+          "retrieval_latency_ms": 31.48110001347959,
+          "returned_ids": [
+            "clm_677f372218d173f32ab6cb30",
+            "clm_841df02f01de69cafeb9c084",
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_a568c87b8a2deb8ad9f752299c2bca80",
+            "clm_b9cec2a2d1753db24f59ff1309d31656"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.03400002606213093,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "later_primary_evidence_preferred",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 1.8171998672187328,
+          "query": "If screenshots, copied text, exported chat, or a local package later appears, how should it be treated?",
+          "query_class": "direct-source-read",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_677f372218d173f32ab6cb30"
+          ],
+          "retrieval_latency_ms": 1.794199924916029,
+          "returned_ids": [
+            "clm_677f372218d173f32ab6cb30",
+            "clm_62b7f9c6184b14371338ca36",
+            "clm_b9cec2a2d1753db24f59ff1309d31656",
+            "clm_fabdddf47e97cdd1876329fe",
+            "clm_a568c87b8a2deb8ad9f752299c2bca80"
+          ],
+          "route_name": "bm25",
+          "selection_latency_ms": 0.022999942302703857,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "false_premise_quote_missing_chat",
+          "category": "conversation-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 1.351999817416072,
+          "query": "Quote the exact wording from the missing UI conversation that established the architecture.",
+          "query_class": "direct-source-read",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_841df02f01de69cafeb9c084"
+          ],
+          "retrieval_latency_ms": 1.3406998477876186,
+          "returned_ids": [
+            "clm_1f4c5f053bd7dccac79c301c",
+            "clm_841df02f01de69cafeb9c084",
+            "clm_fabdddf47e97cdd1876329fe",
+            "clm_a047d79b8604fadbd44efdf4",
+            "clm_b9cec2a2d1753db24f59ff1309d31656"
+          ],
+          "route_name": "bm25",
+          "selection_latency_ms": 0.011299969628453255,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "historical_current_supersession_bundle",
+          "category": "decision-lineage",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 33.021399984136224,
+          "query": "Retrieve the former SQLite conclusion, current durable architecture, and their supersession lineage.",
+          "query_class": "lineage-history",
+          "recall_at_k": 0.6666666666666666,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_643b698b7e9e6aee6a16c48c",
+            "clm_7f5c691c564c30e1b61f8dc0",
+            "rel_e0102ade0b5fad5cc2668ccd"
+          ],
+          "retrieval_latency_ms": 33.00089994445443,
+          "returned_ids": [
+            "rel_e0102ade0b5fad5cc2668ccd",
+            "rel_0996c7d4b845cf3a3fc6bdf8",
+            "clm_a047d79b8604fadbd44efdf4",
+            "clm_643b698b7e9e6aee6a16c48c",
+            "clm_598efc81575e7662e451ec5050f829ba"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.02050003968179226,
+          "top1_leakage": false
+        },
+        {
+          "case_id": "common_mount_isolation",
+          "category": "cross-pack-isolation",
+          "critical_miss": false,
+          "failed": false,
+          "pack_violation_count": 0,
+          "pack_violation_ids": [],
+          "policy_latency_ms": 24.257600074633956,
+          "query": "When only the common pack is mounted, what model-evidence rule is retrievable without AI-only history?",
+          "query_class": "lineage-history",
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "relevant_ids": [
+            "clm_7fee179225b3ef0c4d413917"
+          ],
+          "retrieval_latency_ms": 24.225200060755014,
+          "returned_ids": [
+            "clm_7fee179225b3ef0c4d413917",
+            "clm_041fdd3cc6542b6dca47b183",
+            "clm_32f20bd13ce2ffc9d2ac1606"
+          ],
+          "route_name": "bge-bm25-rrf-lifecycle",
+          "selection_latency_ms": 0.032400013878941536,
+          "top1_leakage": false
+        }
+      ]
+    },
+    "route_counts": {
+      "bge-bm25-rrf-crossencoder": 2,
+      "bge-bm25-rrf-lifecycle": 11,
+      "bge-dense-crossencoder": 4,
+      "bm25": 4
+    }
+  },
+  "schema_version": "fossil.routing-benchmark-proof.v1",
+  "status": "PASS"
+}
