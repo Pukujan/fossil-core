@@ -1,225 +1,254 @@
-# FOSSIL Project State
+# FOSSIL project state
 
-**Project:** **FOSSIL — Fault-tolerant Open Semantic Store for Intellectual Lineage**  
-**Durable substrate:** **DICS — Durable Intellectual Corpus System**  
+**Project:** FOSSIL — Fault-tolerant Open Semantic Store for Intellectual Lineage  
+**Durable substrate:** DICS — Durable Intellectual Corpus System  
 **Architecture authority:** Issue #86  
-**Execution ledger:** Issue #94  
-**Active FOSSIL durability track:** Issue #87  
-**Current live candidate gate:** Issue #124 / `OBJECT_STORE_LIVE`  
-**Last updated:** 2026-08-15
+**Execution/claim ledger:** Issue #94  
+**Last reconciled:** 2026-08-31
 
 ## Current state
 
-FOSSIL operates under the invariant:
+FOSSIL's core semantic and retrieval architecture is now substantially settled.
+
+The governing invariant remains:
 
 > **Compute may disappear; truth must not.**
 
-Canonical FOSSIL knowledge remains **immutable evidence + stable corpus IDs + append-only validated knowledge events + versioned pack/ontology contracts + provenance/history**.
+Canonical FOSSIL knowledge is:
+
+- immutable evidence/source snapshots;
+- stable corpus-owned IDs;
+- append-only validated knowledge events;
+- versioned pack/ontology/contracts;
+- provenance and exact citations;
+- lifecycle and lineage history;
+- explicit authorization/redaction semantics.
+
+Graphiti/Neo4j, lexical/vector indexes, embedding/reranking models, MCP/HTTP transports, machines, observability systems, Cortex, LiteLLM, and future databases remain replaceable infrastructure/projections.
+
+## v1 capability status
+
+### Durable evidence and knowledge semantics — complete
+
+FOSSIL has implemented/tested:
+
+- content-addressed immutable artifacts;
+- source snapshots and exact citations;
+- deterministic event identity/idempotency;
+- append-only event history;
+- claim/relation lifecycle and temporal replay;
+- disagreement/supersession/retraction/staleness;
+- knowledge-pack read/write boundaries;
+- provenance-preserving promotion;
+- proposal -> validate -> commit authority;
+- exceptional redaction with tombstone-before-delete and non-resurrection.
 
-Cortex V5, LiteLLM/CKFF, Graphiti/Neo4j, lexical/vector indexes, models, Skills, MCP, dashboards, and CI infrastructure are replaceable execution/transport/projection systems around that durable truth.
+### Projection/rebuild — complete for the current architecture
 
-Do not use an exact SHA embedded in this document as a live queue pointer. Issue #94 and current GitHub state are authoritative for active heads, claims, review state, and execution evidence.
+The Graphiti/Neo4j projection is explicitly noncanonical and rebuildable.
 
-## Repository family
+Evidence includes:
 
-- `Pukujan/fossil-core` — architecture, contracts, durable core, projections, storage adapters, rebuild machinery, benchmarks, and control-plane docs;
-- `Pukujan/fossil-common` — stable pack `pack_269099f7b2ba43b7a99b9427d64092de`;
-- `Pukujan/fossil-ai-systems` — stable pack `pack_f024177f89a5442db84171c3dd7f58e5`, depending on common.
+- real Graphiti + Neo4j materialization;
+- idempotent projection ledger behavior;
+- projection failure without durable-event rollback;
+- destructive rebuild with fresh build identity;
+- semantic reconstruction from durable events;
+- redaction purge + fresh-rebuild non-resurrection.
 
-Repository/database/graph placement is physical placement, not knowledge identity.
+### Persistent node / MCP boundary — implemented on main
 
-## Continuation order
+The merged node runtime provides:
 
-1. `AGENTS.md`
-2. `ARCHITECTURE.md`
-3. Issue #86
-4. latest Issue #94 comments
-5. `docs/HANDOFF_CURRENT.md`
-6. this file
-7. `docs/operations/EXTERNAL-RUNTIME-RECONCILIATION-2026-08-15.md`
-8. Issue #87
-9. Issue #124
-10. `docs/DECISION_LOG.md`
-11. the focused issue/PR for the eligible task
+- filesystem canonical stores separated from operational projection state;
+- restartable projector worker;
+- `CorpusService` composition;
+- reviewed ingestion;
+- MCP Streamable HTTP `/mcp`;
+- `/healthz` and `/readyz`;
+- the frozen seven-tool MCP surface:
+  - `fossil.search`
+  - `fossil.read`
+  - `fossil.lineage`
+  - `fossil.propose`
+  - `fossil.validate`
+  - `fossil.commit`
+  - `fossil.manage`.
 
-The chat UI is source material, not the control plane.
+Public Internet ingress/bearer deployment is a separate operational lane and is not required for local v1 core completion.
 
-## Completed foundation
+### S3-compatible storage — contract and real-service fixture complete
 
-The durable/evidence foundation remains complete, including:
+FOSSIL has provider-neutral S3-compatible artifact/event adapters with the same semantic contract as the filesystem path.
 
-- immutable validated events and content-addressed evidence;
-- deterministic idempotency and stable corpus identity;
-- portable pack boundaries and provenance-preserving promotion;
-- disagreement, lifecycle, supersession, and lineage replay;
-- exact source/citation integrity;
-- exceptional privacy/legal redaction with tombstone-before-delete and non-resurrection;
-- replaceable Graphiti/Neo4j projection plus destructive rebuild/migration proof;
-- conversation ingestion with explicit verbatim-vs-reconstructed provenance;
-- safe Agent Skill/API/MCP boundary;
-- cognitive-service interfaces and benchmark/receipt contracts;
-- post-Gate-2 temporal, answer/citation, poisoning/untrusted-context, and replay hardening evidence.
+A real disposable MinIO HTTP service proof passed:
 
-Historical Gate 1/Gate 2/workstream proof detail remains in the implementation, research, handoff, decision-log, issue, and git records. This current-state document does not replace those records.
+- immutable creation and byte-identical replay;
+- loud stable-key conflicts;
+- corruption detection;
+- redaction tombstone-before-delete;
+- non-republication/non-resurrection;
+- fresh-client restart;
+- zero-local-state rebuild;
+- fail-closed endpoint outage.
 
-## 2026-08-15 baseline closeout anchors
+A real-cloud R2/S3 activation remains an optional operational durability decision unless the owner explicitly makes off-machine provider proof a v1 release requirement. Provider selection is not semantic architecture truth.
 
-### Graphiti / receipt / ingestion fan-in
+## Post-Gate-2 retrieval campaign — complete
 
-The earlier #112–#115 campaign is complete:
+Issues #47 and #48 are closed completed.
 
-- PR #115 merged after exact-head Graphiti live proof plus deterministic, assurance, dependency, and security checks passed;
-- PR #112 refreshed, verified, and merged;
-- PR #113 refreshed, verified, and merged;
-- final-main Graphiti materialization plus redaction/non-resurrection remained green.
+The final retained retrieval path is:
 
-### Provider-neutral S3-compatible storage
+```text
+RAW canonical source representation
+        -> BM25 + revision-pinned D021 dense
+        -> deterministic hybrid/RRF
+        -> pinned cross-encoder reranker
+        -> caller ACL/redaction boundary
+        -> lifecycle/lineage resolution
+        -> exact cited evidence
+```
 
-The storage foundation advanced through:
+Final decisions:
 
-- PR #121 — provider-neutral `S3ArtifactStore` / `S3DurableEventStore` adapters with fail-closed immutable/idempotent/conflict/redaction semantics;
-- PR #123 — real disposable S3-compatible service-fixture proof with no cloud credential and no provider selection.
+```text
+representation = RETAIN_RAW
+embedding = RETAIN_D021
+embedding_ladder = STOP_MODEL_LADDER
+Graphiti retrieval = RETAIN_PROJECTION_NOT_RETRIEVAL
+routing = REJECT_ROUTING
+LLM planner = DISABLED / not justified
+security boundary = PASS
+```
 
-Historical runtime/storage anchor after PR #123:
+### Graph retrieval
 
-`ea1d88fc114981915603ec46a401dca45acd5a11`
+Current Graphiti route vs reranked route:
 
-### Current-state documentation reconciliation
+- hit/recall/MRR: `0.048/0.016/0.024` vs `1.000/1.000/0.873`;
+- answer/citation correctness: `0.333/0.333` vs `0.833/1.000`;
+- no query class produced a graph-quality win.
 
-PR #126 reconciled FOSSIL continuation/operational docs against the then-current Cortex V5 and LiteLLM/CKFF implementations and merged as:
+Decision: Graphiti stays a relationship/inspection/rebuild projection, not the normal retrieval route.
 
-`771216d79bdaaf324dff30c970c11be65d47d890`
+### Contextual representation
 
-That SHA is a documentation closeout anchor, not a permanent assertion about the repository's current HEAD.
+Raw vs deterministic source-contextualized representation:
 
-## Active durability gate — Issue #124 / OBJECT_STORE_LIVE
+- raw `1.000/1.000/0.873` hit/recall/MRR;
+- contextual `1.000/0.984/0.889`;
+- answer/citation unchanged `0.833/1.000`;
+- contextual improved 2 retrieval cases and regressed 4;
+- p95 increased from `206.66 ms` to `569.43 ms`.
 
-The next durability gate is a **separately credentialed, non-production R2 candidate proof**.
+Decision: retain raw.
 
-R2 is the first live candidate only. The provider-neutral S3-compatible storage contract remains architecture truth and provider selection remains open.
+### Final embedding decision
 
-Required acceptance includes:
+D021 vs Qwen3-Embedding 0.6B:
 
-- exact-SHA checkout/fail-closed guard;
-- real live artifact/event immutable creation;
-- byte-identical replay/idempotency;
-- stable-key/stable-identity conflict rejection;
-- artifact and event redaction tombstone-before-delete;
-- same-identity non-resurrection;
-- independent hosted runner rebuilding from zero local FOSSIL state;
-- exact surviving fixture identity/content verification from durable storage;
-- a second fresh rebuild/restartability pass;
-- explicit dead-endpoint/auth/partial-response fail-closed controls;
-- sanitized receipts with no credential material;
-- same-head normal DKG green;
-- no provider-specific weakening of domain semantics.
+- identical retrieval quality: `1.000/1.000/0.873`;
+- identical answer/citation correctness: `0.833/1.000`;
+- D021 p95 `232.85 ms` vs Qwen `510.03 ms`;
+- D021 RSS about `140 MiB` vs Qwen about `1066 MiB`.
 
-If required live configuration/credentials are absent, the result is `BLOCKED_CREDENTIAL`, not simulated PASS.
+Decision: `RETAIN_D021`; no Qwen 4B/8B escalation.
 
-Ordinary secretless PR CI proves the harness/code contract only; it is not `OBJECT_STORE_LIVE PASS`.
+### Routing decision
 
-## Current harness checkpoint
+Fixed RAW_RERANKED vs deterministic six-class router:
 
-At the 2026-08-15 review checkpoint, draft PR #125 was open on exact head:
+- fixed `1.000/1.000/0.873`, critical misses `0`;
+- router `0.952/0.937/0.867`, critical misses `1`;
+- latency improvement was only about 9 ms p95.
 
-`9d8ad737d0778075a98232df7ddb2c43fb4156fb`
+Decision: reject routing and retain the simple fixed policy.
 
-Exact-head DKG run `31899262413` was SUCCESS.
+### Final security proof
 
-Independent review found acceptance/configuration items that must be reconciled before live dispatch; re-read the latest PR because the branch may have moved:
+The final retrieval security closeout passed:
 
-1. the reviewed fresh-runner rebuild independently reconstructed durable events but did not independently re-read/verify the surviving canonical artifact or prove redacted-artifact non-resurrection on runner B;
-2. #124 asks writer A to publish non-secret proof prefix/fixture identity as job outputs for runner B, while the reviewed workflow recomputed those values instead;
-3. the reviewed workflow targeted GitHub Environment `object-store-live`, while the repository environment list observed during review contained only `r2-proof`.
+- 32 adversarial route cases;
+- zero unauthorized IDs/text/citations;
+- zero cross-pack leaks;
+- zero suppression/redaction resurrection;
+- zero reranker/projection/receipt/export boundary leaks;
+- 23 focused tests passed;
+- full non-network suite: 709 passed, 1 skipped;
+- four valid query-execution receipts.
 
-The GitHub integration could list environment names but was not allowed to inspect the environment/repository variable or secret metadata. No secret values were read or requested. Credential/config placement therefore must be reconciled deliberately rather than guessed.
+See [`BENCHMARKS.md`](BENCHMARKS.md) and [`SECURITY_MODEL.md`](SECURITY_MODEL.md).
 
-## External execution/transport posture — read only
+## Important branch/main reconciliation fact
 
-The owner explicitly requested that Cortex V5 and LiteLLM/CKFF remain read-only during this FOSSIL continuation.
+At the start of the 2026-08-31 documentation task, default `main` was still:
 
-Detailed exact-SHA inspection snapshot:
+`c8217bbd978b7a3005f94fcb772d86568ea33d11` — NODE-02 MCP/HTTP network boundary.
 
-`docs/operations/EXTERNAL-RUNTIME-RECONCILIATION-2026-08-15.md`
+The accepted final retrieval evidence was produced later on dedicated branches:
 
-### Cortex V5 snapshot
+- `task/fossil-graphrag-bench-01`;
+- `task/fossil-contextual-retrieval-bench-01`;
+- `codex/fossil-embedding-final-01-20260830`;
+- `codex-fossil-routing-final-01-20260830`;
+- `codex/fossil-retrieval-security-final-20260831`.
 
-Observed `Pukujan/cortex-v5` main at reconciliation:
+The campaign issues are closed, but those accepted evidence artifacts are not automatically assumed to be merged into `main` merely because the decisions were accepted.
 
-`f29e7a2fa0584577765bfe3f437695a2cbaefcf2`
+**The next repository-finalization task is a bounded v1 consolidation/reconciliation, not another RAG experiment.** It should deliberately bring the accepted evidence/tests/decision records onto the current main lineage without blindly merging independent benchmark branches.
 
-Key observed posture:
+## What is actually left for “FOSSIL v1 finished”
 
-- V5 is the active execution runtime; V4/SSC are not runtime dependencies;
-- strict streamed LiteLLM Chat Completions transport;
-- default LiteLLM client timeout 120 seconds;
-- deterministic live-catalog seating;
-- research-grounded `MODEL_TIERS` prior replaced undocumented `PREFERENCE_HINTS`;
-- deterministic checker remains completion authority;
-- retry/model switching creates distinct attempts/receipts;
-- first real V5 acceptance is already closed/completed.
+### Required repository closeout
 
-Do not change Cortex V5 code or workflows from the current FOSSIL lane without separate owner authorization.
+1. Merge/reconcile the current v1 documentation update.
+2. Run a bounded `FOSSIL-V1-CONSOLIDATION` from live `main`:
+   - inventory accepted benchmark/security artifacts;
+   - reconcile only the intended evidence/tests/decision records;
+   - preserve current runtime semantics;
+   - run exact-head full CI/assurance;
+   - update/close stale issue/PR state where mechanically justified.
+3. Record the final v1 release boundary and current handoff.
 
-### LiteLLM / CKFF snapshot
+### Owner decision: off-machine durability
 
-Observed `Pukujan/litellm-ckff-ops` main at reconciliation:
+Decide explicitly whether v1 requires a real-cloud S3/R2 proof.
 
-`9520e8dffe819d97a1557fe76022ed080f0eb8d6`
+If yes, run the existing live object-store gate with narrowly scoped credentials and zero-local-state recovery.
 
-Key executable/config posture:
+If no, record remote-provider activation as deferred operational work because provider-neutral storage plus real S3-compatible service behavior is already proven.
 
-- `ckffai.com` primary plus `ckff.dev` secondary deployments;
-- LiteLLM `request_timeout: 120`;
-- bounded retries/cooldown and `max_parallel_requests: 8`;
-- Responses bridge may use explicit cross-model fallback and records requested/actual identity;
-- exact-model evaluation should disable bridge fallbacks;
-- embeddings and reranking remain separate fail-closed service lanes;
-- CKFF is not established here as universal zero-data-retention.
+### Not v1 blockers by default
 
-Some dated LiteLLM documentation lags current source/config. When they conflict, current exact source/config is the operational fact source and the dated prose remains historical evidence.
+The following should not keep the core project permanently “unfinished” unless the owner explicitly promotes them to release requirements:
 
-Do not change LiteLLM code, workflows, routing, deployment, or model policy from the current FOSSIL lane without separate owner authorization.
+- new embedding/reranker sweeps;
+- new GraphRAG architecture;
+- contextual retrieval retesting;
+- LLM query planning;
+- public Internet MCP hosting;
+- ChatGPT-specific Action/OpenAPI integration;
+- dashboards/control rooms;
+- Kubernetes/Kafka/Redis;
+- full completion of every optional PDD/formal-methods research lane;
+- unrelated corpus-ingestion PRs.
 
-## Frozen authority rules
+## Current documentation
 
-- stable pack identity is independent of repository/database placement;
-- durable commit precedes replaceable projection;
-- new physical projection build gets a fresh build-scoped applied ledger;
-- rebuild order is `(recorded_at, event_id)`;
-- migration compares stable FOSSIL semantics, not graph-native UUIDs;
-- reconstructed evidence cannot silently become verbatim;
-- exact citations resolve to immutable observed bytes/spans;
-- source quality is multidimensional and derivation is explicit;
-- ordinary intellectual revision is append-only;
-- privacy/legal erasure is exceptional tombstone-before-delete with non-resurrection;
-- active projections/exports respect redaction;
-- Skills contain methodology, not canonical truth;
-- protocol adapters cannot become the durable knowledge model;
-- cognitive services expose provider/version metadata and compete behind interfaces;
-- retrieval rank, reranker score, model confidence, model tier, model agreement, transport health, and CI artifacts do not create truth authority;
-- retrieved/source text is untrusted data and cannot become executable policy merely because it was retrieved;
-- query execution receipts are replay/observability evidence, not canonical truth or mutation authority;
-- agents propose; deterministic validation/policy gates commit durable changes;
-- do not casually rename `src/fossil_core`; legacy `src/dkg` is only a deprecated compatibility shim.
+Use these instead of stale issue prose when learning the current system:
 
-## Claim / work-state rule
+- [`../README.md`](../README.md) — what FOSSIL does and why;
+- [`GETTING_STARTED.md`](GETTING_STARTED.md) — install and first operations;
+- [`USING_FOSSIL.md`](USING_FOSSIL.md) — practical usage and MCP surface;
+- [`BENCHMARKS.md`](BENCHMARKS.md) — matched evidence and decisions;
+- [`SECURITY_MODEL.md`](SECURITY_MODEL.md) — security/authorization boundary;
+- [`../ARCHITECTURE.md`](../ARCHITECTURE.md) — durable architecture contract;
+- [`architecture/public-api.md`](architecture/public-api.md) — versioned Python public API;
+- [`HANDOFF_CURRENT.md`](HANDOFF_CURRENT.md) — current implementation continuation.
 
-GitHub issues track live implementation state; repository docs track durable decisions/evidence/contracts.
+## Coordination rule
 
-Before mutation, claim in #94 and immediately re-fetch the ledger. Earliest valid unexpired claim wins. One mutating owner per repo lane unless explicit safe parallelism is declared.
+Before any mutating work, read live `main` plus Issue #94 and claim the bounded task. Live GitHub state overrides any stale embedded SHA or old tracker body.
 
-Close with exact `DONE`, `BLOCKED`, or `RELEASE` evidence.
-
-## Next-state rule
-
-The immediate next state is mechanical, not aspirational:
-
-1. resolve the current #125 review/configuration items under its existing owner/claim;
-2. obtain same-head secretless harness CI and owner-appropriate review state;
-3. only then run the explicit credentialed #124 workflow against an exact approved SHA when configuration exists;
-4. classify the live result as PASS / `BLOCKED_CREDENTIAL` / `BLOCKED_PROVIDER_COMPATIBILITY` from evidence;
-5. reconcile #87 and select the next **FOSSIL-only** gate from live #94;
-6. do not automatically mutate Cortex V5 or LiteLLM/CKFF.
-
-No production promotion is authorized by this document.
+Do not manufacture a new task merely because an old umbrella issue still has unchecked boxes. Reconcile it against current code/evidence first.
