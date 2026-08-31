@@ -1,0 +1,128 @@
+{
+  "schema_version": "fossil.retrieval-security-fixtures.v1",
+  "fixture_id": "retrieval-security-fixtures-v1",
+  "pack_ids": {
+    "pack_a": "pack_security_a",
+    "pack_b": "pack_security_b"
+  },
+  "documents": [
+    {
+      "id": "sec_allow_exact",
+      "pack_id": "pack_security_a",
+      "text": "ALPHA exact identifier authorization policy is visible to Alice.",
+      "document_type": "claim",
+      "current_state": "supported",
+      "acl": ["alice"],
+      "sensitivity": "internal",
+      "suppressed": false,
+      "redacted": false,
+      "citation": {"schema_version": "fossil.citation.v1", "citation_id": "cite_sec_allow_exact", "snapshot_id": "snap_sec_allow_exact", "artifact_id": "art_sec_allow_exact", "byte_start": 0, "byte_end": 64, "passage_hash": {"algorithm": "sha256", "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}}
+    },
+    {
+      "id": "sec_deny_exact",
+      "pack_id": "pack_security_a",
+      "text": "ALPHA exact identifier authorization policy is secret and Bob-only.",
+      "document_type": "claim",
+      "current_state": "supported",
+      "acl": ["bob"],
+      "sensitivity": "internal",
+      "suppressed": false,
+      "redacted": false,
+      "citation": {"schema_version": "fossil.citation.v1", "citation_id": "cite_sec_deny_exact", "snapshot_id": "snap_sec_deny_exact", "artifact_id": "art_sec_deny_exact", "byte_start": 0, "byte_end": 67, "passage_hash": {"algorithm": "sha256", "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}}
+    },
+    {
+      "id": "sec_allow_dense",
+      "pack_id": "pack_security_a",
+      "text": "Authorized conceptual evidence explains the durable boundary and review process.",
+      "document_type": "claim",
+      "current_state": "supported",
+      "acl": ["alice"],
+      "sensitivity": "internal",
+      "suppressed": false,
+      "redacted": false,
+      "citation": {"schema_version": "fossil.citation.v1", "citation_id": "cite_sec_allow_dense", "snapshot_id": "snap_sec_allow_dense", "artifact_id": "art_sec_allow_dense", "byte_start": 0, "byte_end": 78, "passage_hash": {"algorithm": "sha256", "digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}}
+    },
+    {
+      "id": "sec_deny_dense",
+      "pack_id": "pack_security_a",
+      "text": "Unauthorized conceptual evidence explains the durable boundary and review process with stronger semantic wording.",
+      "document_type": "claim",
+      "current_state": "supported",
+      "acl": ["bob"],
+      "sensitivity": "internal",
+      "suppressed": false,
+      "redacted": false,
+      "citation": {"schema_version": "fossil.citation.v1", "citation_id": "cite_sec_deny_dense", "snapshot_id": "snap_sec_deny_dense", "artifact_id": "art_sec_deny_dense", "byte_start": 0, "byte_end": 108, "passage_hash": {"algorithm": "sha256", "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"}}
+    },
+    {
+      "id": "sec_allow_current",
+      "pack_id": "pack_security_a",
+      "text": "The current ALPHA architecture is authorized durable evidence for Alice.",
+      "document_type": "claim",
+      "current_state": "supported",
+      "acl": ["alice"],
+      "sensitivity": "internal",
+      "suppressed": false,
+      "redacted": false,
+      "citation": {"schema_version": "fossil.citation.v1", "citation_id": "cite_sec_allow_current", "snapshot_id": "snap_sec_allow_current", "artifact_id": "art_sec_allow_current", "byte_start": 0, "byte_end": 70, "passage_hash": {"algorithm": "sha256", "digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"}}
+    },
+    {
+      "id": "sec_deny_stale",
+      "pack_id": "pack_security_a",
+      "text": "The current ALPHA architecture is a superseded stale unauthorized alternative with attractive exact terms.",
+      "document_type": "claim",
+      "current_state": "superseded",
+      "acl": ["bob"],
+      "sensitivity": "internal",
+      "suppressed": false,
+      "redacted": false,
+      "citation": {"schema_version": "fossil.citation.v1", "citation_id": "cite_sec_deny_stale", "snapshot_id": "snap_sec_deny_stale", "artifact_id": "art_sec_deny_stale", "byte_start": 0, "byte_end": 105, "passage_hash": {"algorithm": "sha256", "digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"}}
+    },
+    {
+      "id": "sec_deny_sensitive",
+      "pack_id": "pack_security_a",
+      "text": "ALPHA restricted sensitivity evidence must not be disclosed.",
+      "document_type": "claim",
+      "current_state": "supported",
+      "acl": ["alice"],
+      "sensitivity": "restricted",
+      "suppressed": false,
+      "redacted": false,
+      "citation": {"schema_version": "fossil.citation.v1", "citation_id": "cite_sec_deny_sensitive", "snapshot_id": "snap_sec_deny_sensitive", "artifact_id": "art_sec_deny_sensitive", "byte_start": 0, "byte_end": 61, "passage_hash": {"algorithm": "sha256", "digest": "9999999999999999999999999999999999999999999999999999999999999999"}}
+    },
+    {
+      "id": "sec_deny_suppressed",
+      "pack_id": "pack_security_a",
+      "text": "ALPHA suppressed redacted evidence remains in the disposable projection only.",
+      "document_type": "claim",
+      "current_state": "supported",
+      "acl": ["alice"],
+      "sensitivity": "internal",
+      "suppressed": true,
+      "redacted": true,
+      "citation": {"schema_version": "fossil.citation.v1", "citation_id": "cite_sec_deny_suppressed", "snapshot_id": "snap_sec_deny_suppressed", "artifact_id": "art_sec_deny_suppressed", "byte_start": 0, "byte_end": 78, "passage_hash": {"algorithm": "sha256", "digest": "1212121212121212121212121212121212121212121212121212121212121212"}}
+    },
+    {
+      "id": "sec_pack_b_same_topic",
+      "pack_id": "pack_security_b",
+      "text": "ALPHA same topic evidence exists in another pack and is not mounted for Alice.",
+      "document_type": "claim",
+      "current_state": "supported",
+      "acl": ["alice"],
+      "sensitivity": "internal",
+      "suppressed": false,
+      "redacted": false,
+      "citation": {"schema_version": "fossil.citation.v1", "citation_id": "cite_sec_pack_b", "snapshot_id": "snap_sec_pack_b", "artifact_id": "art_sec_pack_b", "byte_start": 0, "byte_end": 78, "passage_hash": {"algorithm": "sha256", "digest": "1313131313131313131313131313131313131313131313131313131313131313"}}
+    }
+  ],
+  "cases": [
+    {"case_id": "exact_identifier_acl", "surface": "lexical", "query": "ALPHA exact identifier authorization policy", "expected_visible_ids": ["sec_allow_exact"], "denied_ids": ["sec_deny_exact"]},
+    {"case_id": "conceptual_dense_acl", "surface": "dense", "query": "conceptual durable boundary evidence review process", "expected_visible_ids": ["sec_allow_dense"], "denied_ids": ["sec_deny_dense"]},
+    {"case_id": "hybrid_component_acl", "surface": "hybrid", "query": "ALPHA boundary evidence", "expected_visible_ids": ["sec_allow_current", "sec_allow_exact"], "denied_ids": ["sec_deny_exact", "sec_deny_stale"]},
+    {"case_id": "reranked_acl", "surface": "reranked", "query": "current ALPHA architecture", "expected_visible_ids": ["sec_allow_current"], "denied_ids": ["sec_deny_stale"]},
+    {"case_id": "same_topic_pack_isolation", "surface": "hybrid", "query": "ALPHA same topic evidence", "expected_visible_ids": ["sec_allow_current"], "denied_ids": ["sec_pack_b_same_topic"]},
+    {"case_id": "suppressed_projection", "surface": "reranked", "query": "ALPHA suppressed redacted evidence", "expected_visible_ids": [], "denied_ids": ["sec_deny_suppressed"]},
+    {"case_id": "restricted_sensitivity", "surface": "dense", "query": "ALPHA restricted sensitivity evidence", "expected_visible_ids": [], "denied_ids": ["sec_deny_sensitive"]},
+    {"case_id": "stale_unauthorized", "surface": "reranked", "query": "current ALPHA architecture superseded stale", "expected_visible_ids": ["sec_allow_current"], "denied_ids": ["sec_deny_stale"]}
+  ]
+}
