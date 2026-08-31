@@ -574,7 +574,9 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.receipts_output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    args.receipts_output.write_text(sidecar_text, encoding="utf-8")
+    # The receipt hash covers the exact JSONL bytes.  Write bytes explicitly so
+    # Windows newline translation cannot change the committed sidecar.
+    args.receipts_output.write_bytes(sidecar_text.encode("utf-8"))
     print(json.dumps({"status": report["status"], "decision": report["decision"], "receipt_validation": receipt_validation, "sidecar_sha256": sidecar_hash}, indent=2, sort_keys=True))
     return 0 if report["status"] == "PASS" else 2
 
