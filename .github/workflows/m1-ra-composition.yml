@@ -1,0 +1,138 @@
+name: M1_RA_COMPOSITION
+
+on:
+  workflow_dispatch:
+    inputs:
+      fossil_ref:
+        description: "Exact accepted fossil-core revision to exercise"
+        required: true
+        type: string
+      ra_ref:
+        description: "Exact research-assurance revision containing the proof"
+        required: true
+        type: string
+      financial_ref:
+        description: "Exact accepted financial-analysis-demo revision to exercise"
+        required: true
+        type: string
+      confirmation:
+        description: "Type M1_RA_COMPOSITION to authorize the live composition proof"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fossil-m1-ra-composition
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate explicit composition dispatch
+        shell: bash
+        env:
+          FOSSIL_REF: ${{ inputs.fossil_ref }}
+          RA_REF: ${{ inputs.ra_ref }}
+          FINANCIAL_REF: ${{ inputs.financial_ref }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          set -euo pipefail
+          if [[ "$CONFIRMATION" != "M1_RA_COMPOSITION" ]]; then
+            echo "::error::Composition proof requires explicit M1_RA_COMPOSITION confirmation"
+            exit 2
+          fi
+          for name in FOSSIL_REF RA_REF FINANCIAL_REF; do
+            value="${!name}"
+            if [[ ! "$value" =~ ^[0-9a-f]{40}$ ]]; then
+              echo "::error::$name must be an exact 40-character lowercase commit SHA"
+              exit 2
+            fi
+          done
+
+  composition:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: r2-proof
+    env:
+      OBJECT_STORE_ENDPOINT: ${{ vars.R2_ENDPOINT || vars.FOSSIL_R2_ENDPOINT }}
+      OBJECT_STORE_BUCKET: ${{ vars.R2_BUCKET || vars.FOSSIL_R2_BUCKET }}
+      OBJECT_STORE_REGION: auto
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID || secrets.FOSSIL_R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY || secrets.FOSSIL_R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      AWS_EC2_METADATA_DISABLED: "true"
+      FOSSIL_PROOF_PREFIX: ra-m1-composition/${{ github.run_id }}/${{ github.run_attempt }}
+    steps:
+      - name: Check out accepted FOSSIL revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.fossil_ref }}
+          path: fossil
+          persist-credentials: false
+
+      - name: Check out Research Assurance proof revision
+        uses: actions/checkout@v4
+        with:
+          repository: Pukujan/research-assurance
+          ref: ${{ inputs.ra_ref }}
+          token: ${{ secrets.RA_COMPONENT_READ_TOKEN }}
+          path: research-assurance
+          persist-credentials: false
+
+      - name: Check out accepted Financial Intelligence revision
+        uses: actions/checkout@v4
+        with:
+          repository: Pukujan/financial-analysis-demo
+          ref: ${{ inputs.financial_ref }}
+          token: ${{ secrets.RA_COMPONENT_READ_TOKEN }}
+          path: financial-analysis-demo
+          persist-credentials: false
+
+      - name: Verify encrypted live configuration
+        shell: bash
+        env:
+          RA_COMPONENT_READ_TOKEN: ${{ secrets.RA_COMPONENT_READ_TOKEN }}
+        run: |
+          set -euo pipefail
+          missing=0
+          for name in OBJECT_STORE_ENDPOINT OBJECT_STORE_BUCKET AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY; do
+            if [[ -z "${!name:-}" ]]; then
+              echo "::error::BLOCKED_CREDENTIAL: required configuration $name is empty"
+              missing=1
+            fi
+          done
+          if [[ -z "${RA_COMPONENT_READ_TOKEN:-}" ]]; then
+            echo "::error::BLOCKED_CREDENTIAL: RA_COMPONENT_READ_TOKEN is empty"
+            missing=1
+          fi
+          test "$missing" -eq 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install FOSSIL S3 runtime
+        run: python -m pip install -e 'fossil[s3]'
+
+      - name: Run Financial Intelligence composition against durable FOSSIL
+        run: |
+          set -euo pipefail
+          python research-assurance/scripts/run_m1_sec_fossil_live_slice.py \
+            --data-root "$RUNNER_TEMP/m1-sec-fossil-live" \
+            --fossil-root "$GITHUB_WORKSPACE/fossil" \
+            --financial-root "$GITHUB_WORKSPACE/financial-analysis-demo" \
+            --fossil-sha "${{ inputs.fossil_ref }}" \
+            --financial-sha "${{ inputs.financial_ref }}" \
+            --receipt-path "$RUNNER_TEMP/m1-sec-fossil-live-receipt.json"
+
+      - name: Upload sanitized composition receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: m1-ra-composition-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/m1-sec-fossil-live-receipt.json
+          if-no-files-found: error
