@@ -79,7 +79,7 @@ jobs:
         with:
           repository: Pukujan/research-assurance
           ref: ${{ inputs.ra_ref }}
-          token: ${{ secrets.RA_COMPONENT_READ_TOKEN }}
+          token: ${{ secrets.M1_COMPOSITION_READ_TOKEN }}
           path: research-assurance
           persist-credentials: false
 
@@ -88,14 +88,14 @@ jobs:
         with:
           repository: Pukujan/financial-analysis-demo
           ref: ${{ inputs.financial_ref }}
-          token: ${{ secrets.RA_COMPONENT_READ_TOKEN }}
+          token: ${{ secrets.M1_COMPOSITION_READ_TOKEN }}
           path: financial-analysis-demo
           persist-credentials: false
 
       - name: Verify encrypted live configuration
         shell: bash
         env:
-          RA_COMPONENT_READ_TOKEN: ${{ secrets.RA_COMPONENT_READ_TOKEN }}
+          M1_COMPOSITION_READ_TOKEN: ${{ secrets.M1_COMPOSITION_READ_TOKEN }}
         run: |
           set -euo pipefail
           missing=0
@@ -105,8 +105,8 @@ jobs:
               missing=1
             fi
           done
-          if [[ -z "${RA_COMPONENT_READ_TOKEN:-}" ]]; then
-            echo "::error::BLOCKED_CREDENTIAL: RA_COMPONENT_READ_TOKEN is empty"
+          if [[ -z "${M1_COMPOSITION_READ_TOKEN:-}" ]]; then
+            echo "::error::BLOCKED_CREDENTIAL: M1_COMPOSITION_READ_TOKEN is empty"
             missing=1
           fi
           test "$missing" -eq 0
