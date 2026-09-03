@@ -2,6 +2,19 @@
 
 FOSSIL can be used as a Python library, as a persistent local node, or through its MCP capability surface. In all three forms, the same semantic rule applies: **canonical evidence/events and their authorization rules are authoritative; indexes and projections are not.**
 
+Before the mechanics, keep the intended workflow clear. FOSSIL is for human-led technical work where AI may help with research, comparison, coding, testing, critique, and retrieval. The human can remain the decision owner. FOSSIL's job is to preserve the captured evidence and reasoning trail so the project does not have to reconstruct that history from transcripts and tickets months later.
+
+A good FOSSIL workflow should make questions like these easy to answer:
+
+- Why did we make this decision?
+- What evidence changed the direction?
+- What alternatives did we already try?
+- What was true at the time?
+- What changed later?
+- Which dependent conclusions now need another look?
+
+See [`PROBLEM_STATEMENT.md`](PROBLEM_STATEMENT.md) for the canonical product intent.
+
 ## The main concepts
 
 ### Evidence
@@ -103,6 +116,8 @@ claim A proposed
 
 A query for current knowledge can resolve claim B while a historical/lineage query can still explain claim A, the evidence that supported it, and the event that superseded it.
 
+This is the practical difference between a preserved project history and a later reconstruction. A model can help phrase the answer, but the lifecycle and lineage should come from recorded durable state, not from the model guessing which old fragment was authoritative.
+
 This separation is why lifecycle/lineage resolution remains outside retrieval-model authority: a high similarity score cannot decide whether an item is current, historical, disputed, or superseded.
 
 ## The retained retrieval path
@@ -194,6 +209,8 @@ context = AgentContext(
 
 app = create_node_network_app(node, context=context)
 ```
+
+`AgentContext` is the current runtime name for provenance about the caller/model/harness. It does not imply that the agent owns the decision. Durable events separately record actor provenance so human, agent, service, importer, and system actions can remain distinguishable.
 
 The app provides:
 
