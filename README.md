@@ -2,53 +2,83 @@
 
 **Fault-tolerant Open Semantic Store for Intellectual Lineage**
 
-FOSSIL is a durable knowledge and evidence system for research, AI agents, and long-lived projects where **what you know changes over time, but the evidence and history must remain explainable**.
+FOSSIL is durable decision and intellectual-lineage infrastructure for human-led technical work.
+
+A programmer, architect, or researcher can spend days reading sources, testing alternatives, running benchmarks, and using AI to help search, compare, code, critique, and summarize. The human still guides the work and makes the consequential decision.
+
+Months later, the raw material usually still exists in transcripts, tickets, commits, benchmark output, source documents, notes, and review comments. What is often missing is the reasoning chain that connected those artifacts.
+
+FOSSIL preserves that chain so a project can later answer:
+
+- Why did we make this decision?
+- Which sources and tests mattered?
+- What did we try before?
+- What changed our mind?
+- What was believed then versus now?
+- Which later conclusions depend on an old premise?
+
+An AI can search old artifacts and reconstruct a plausible explanation. FOSSIL is built for a different standard: **preserve the captured evidence and recorded reasoning history so the answer can be inspected instead of invented from fragments at query time.**
 
 > **Compute may disappear; truth must not.**
 
 FOSSIL keeps original evidence, stable identities, provenance, lifecycle history, citations, pack authorization, and accepted knowledge events durable. Search indexes, graph databases, embedding models, rerankers, LLMs, runtimes, and machines are replaceable projections around that durable corpus.
 
-The durable substrate is **DICS — Durable Intellectual Corpus System**.
+The durable substrate is **DICS, Durable Intellectual Corpus System**.
+
+For the canonical product intent and problem framing, see [`docs/PROBLEM_STATEMENT.md`](docs/PROBLEM_STATEMENT.md).
 
 ## What problem does FOSSIL solve?
 
-A conventional RAG stack often treats its vector index or current document set as the practical source of truth. That becomes fragile when knowledge changes, sources disagree, an old claim is superseded, an agent must explain exactly where an answer came from, or an index/database has to be rebuilt.
+Modern technical work saves a lot of artifacts, but those artifacts do not automatically preserve what the work established.
 
-FOSSIL is designed for those cases. It provides:
+A transcript can show what was said. Git can show how code changed. Jira can show the work item. An ADR can record the final decision. Search or AI memory can retrieve useful prior context. None of those, by itself, guarantees a faithful history of why a position became justified, what evidence supported it, what alternatives failed, or how that position changed later.
 
-- **durable evidence** — immutable source bytes and content-addressed identities;
-- **exact provenance and citations** — conclusions can resolve back to observed source material;
-- **history instead of overwrite** — proposals, support, disputes, retractions, supersession, and stale state remain reconstructable;
-- **portable knowledge packs** — stable logical boundaries with explicit read/write authority;
-- **proposal-before-commit semantics** — agents propose; deterministic validation/policy gates own durable writes;
-- **replaceable retrieval and graph infrastructure** — losing Neo4j, Graphiti, a vector index, or an embedding model does not redefine canonical truth;
-- **redaction and non-resurrection** — exceptional erasure is explicit and projections/rebuilds must continue to respect it;
-- **reproducible retrieval evidence** — benchmark runs record exact models, routes, packs, receipts, latency, and failure behavior.
+That creates a practical problem months into a project. You may still know **what** the system does, but not be able to reliably answer **why** it ended up that way without reconstructing the story from scattered fragments.
 
-FOSSIL is therefore not primarily "a vector database" or "a knowledge graph." It is the **durable semantic/evidence layer underneath those replaceable tools**.
+FOSSIL is designed for that gap. It provides:
+
+- **durable evidence**: immutable source bytes and content-addressed identities;
+- **exact provenance and citations**: conclusions can resolve back to observed source material;
+- **history instead of overwrite**: proposals, support, disputes, retractions, supersession, and stale state remain reconstructable;
+- **current and historical lineage**: a project can distinguish what was believed then from what is believed now;
+- **portable knowledge packs**: stable logical boundaries with explicit read/write authority;
+- **proposal-before-commit semantics**: humans or assistants can propose; deterministic validation and policy gates own durable writes;
+- **replaceable retrieval and graph infrastructure**: losing Neo4j, Graphiti, a vector index, or an embedding model does not redefine canonical truth;
+- **redaction and non-resurrection**: exceptional erasure is explicit and projections or rebuilds must continue to respect it;
+- **reproducible retrieval evidence**: benchmark runs record exact models, routes, packs, receipts, latency, and failure behavior.
+
+FOSSIL is therefore not primarily a vector database, a knowledge graph, or an AI memory system. It is the **durable semantic and evidence layer that preserves how project knowledge changed over time**.
+
+A useful shorthand is:
+
+> Your transcripts remember what was said. FOSSIL preserves what the work established.
+
+For software projects:
+
+> Git tells you how the code changed. FOSSIL helps explain why the project's thinking changed.
 
 ## Architecture in one picture
 
 ```text
-                   humans / agents / MCP clients
-                              |
-                    proposal + query boundary
-                              |
-                 pack / capability authorization
-                              |
+                    humans + AI assistants
+                             |
+                  proposal + query boundary
+                             |
+                pack / capability authorization
+                             |
                     FOSSIL CorpusService
-                              |
-          +-------------------+-------------------+
-          |                                       |
-   CANONICAL DURABLE TRUTH                  REBUILDABLE VIEWS
-          |                                       |
+                             |
+         +-------------------+-------------------+
+         |                                       |
+  CANONICAL DURABLE TRUTH                  REBUILDABLE VIEWS
+         |                                       |
  immutable evidence                         BM25 / dense index
  stable corpus IDs                         hybrid / reranker
  append-only events                        Graphiti / Neo4j
  provenance + citations                    exports / analytics
  lifecycle + lineage                       future projections
  pack contracts
-          |
+         |
  filesystem or S3-compatible storage
 ```
 
@@ -175,7 +205,7 @@ For a practical walkthrough of durable events, packs, retrieval, node compositio
 - [`docs/USING_FOSSIL.md`](docs/USING_FOSSIL.md)
 - [`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md)
 
-## MCP / agent surface
+## MCP and assistant surface
 
 FOSSIL includes a real MCP Streamable HTTP server. The frozen tool surface is:
 
@@ -201,13 +231,13 @@ A real-cloud R2/S3 activation is an operational durability decision, not a chang
 
 ## Knowledge packs
 
-A **knowledge pack** is a logical portable unit, not a database shard. Packs let one agent read shared knowledge without automatically acquiring permission to modify it. Stable `pack_id` identity survives repository movement, projection rebuilds, and physical storage changes.
+A **knowledge pack** is a logical portable unit, not a database shard. Packs let one project or assistant read shared knowledge without automatically acquiring permission to modify it. Stable `pack_id` identity survives repository movement, projection rebuilds, and physical storage changes.
 
 Examples in this repository include:
 
-- `fossil-common` — shared research/engineering methods;
-- `fossil-ai-systems` — AI-systems knowledge that can read shared common knowledge;
-- project/personal packs — narrower evidence and proposals with explicit promotion into broader packs.
+- `fossil-common`: shared research/engineering methods;
+- `fossil-ai-systems`: AI-systems knowledge that can read shared common knowledge;
+- project/personal packs: narrower evidence and proposals with explicit promotion into broader packs.
 
 Cross-pack promotion creates new durable lineage; it does not mutate the source pack into a different history.
 
@@ -217,21 +247,23 @@ Cross-pack promotion creates new durable lineage; it does not mutate the source 
 - It does not treat model agreement as evidence.
 - It does not silently overwrite history when a claim changes.
 - It does not require Graphiti/Neo4j to preserve canonical knowledge.
-- It does not give agents arbitrary database mutation authority.
+- It does not give assistants arbitrary database mutation authority.
 - It does not automatically promote retrieved text into executable policy.
 - It does not require a large-model routing/planning layer when a fixed policy is empirically stronger.
+- It does not claim to recover reasoning that was never captured.
 
 ## Documentation map
 
-- [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md) — install and first durable operations.
-- [`docs/USING_FOSSIL.md`](docs/USING_FOSSIL.md) — packs, evidence, events, node composition, MCP tools, and common workflows.
-- [`docs/BENCHMARKS.md`](docs/BENCHMARKS.md) — retrieval/model/GraphRAG decisions and measured evidence.
-- [`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md) — pack isolation, ACL/redaction, untrusted context, proposal/commit authority.
-- [`ARCHITECTURE.md`](ARCHITECTURE.md) — durable architecture contract and non-goals.
-- [`docs/architecture/public-api.md`](docs/architecture/public-api.md) — versioned Python public API.
-- [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md) — current v1 state and remaining consolidation/operational work.
-- [`docs/HANDOFF_CURRENT.md`](docs/HANDOFF_CURRENT.md) — current continuation point for implementation agents.
-- [`docs/DECISION_LOG.md`](docs/DECISION_LOG.md) — durable architectural decisions.
+- [`docs/PROBLEM_STATEMENT.md`](docs/PROBLEM_STATEMENT.md): canonical product intent and human-led problem framing.
+- [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md): install and first durable operations.
+- [`docs/USING_FOSSIL.md`](docs/USING_FOSSIL.md): packs, evidence, events, node composition, MCP tools, and common workflows.
+- [`docs/BENCHMARKS.md`](docs/BENCHMARKS.md): retrieval/model/GraphRAG decisions and measured evidence.
+- [`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md): pack isolation, ACL/redaction, untrusted context, proposal/commit authority.
+- [`ARCHITECTURE.md`](ARCHITECTURE.md): durable architecture contract and non-goals.
+- [`docs/architecture/public-api.md`](docs/architecture/public-api.md): versioned Python public API.
+- [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md): current v1 state and remaining consolidation/operational work.
+- [`docs/HANDOFF_CURRENT.md`](docs/HANDOFF_CURRENT.md): current continuation point for implementation agents.
+- [`docs/DECISION_LOG.md`](docs/DECISION_LOG.md): durable architectural decisions.
 
 ## License and rights
 
