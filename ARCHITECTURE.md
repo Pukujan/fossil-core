@@ -3,6 +3,18 @@
 **Frozen:** 2026-08-09  
 **Meaning of frozen:** these are durable invariants. Runtime libraries may change when evidence or benchmarks justify it.
 
+## Product intent
+
+FOSSIL exists to preserve the evidence and reasoning behind human-led technical work.
+
+A programmer, architect, or researcher may use AI heavily while researching, testing, comparing, coding, and reviewing. The human can still be the decision owner. FOSSIL does not require agent autonomy and does not treat an agent-generated explanation as authoritative history.
+
+The durable problem is simpler: months later, the transcripts, tickets, commits, source documents, and benchmark logs may still exist, while the reasoning chain that connected them has become difficult to recover faithfully.
+
+FOSSIL therefore preserves captured evidence and recorded intellectual lineage so a project can answer why a decision was made, what changed, what was tried before, and how the current position emerged.
+
+See [`docs/PROBLEM_STATEMENT.md`](docs/PROBLEM_STATEMENT.md) for the canonical product framing. The invariants below define the technical contract that makes that framing durable.
+
 ## 1. What must survive
 
 The durable system is **not** a Neo4j database, a vector index, a Graphiti installation, an embedding model, or an LLM conversation.
@@ -21,7 +33,7 @@ Everything else must be reconstructable.
 ## 2. Architecture
 
 ```text
-                         AGENTS / HUMANS
+                    HUMANS + AI ASSISTANTS
                               |
                     Harness + Agent Skills
                               |
@@ -115,7 +127,7 @@ Pack identity is separate from physical placement. A pack may later move from sh
 
 ### Read/write rule
 
-Agents receive an explicit manifest of readable packs and writable pack(s). Shared knowledge can be read without granting the right to modify it.
+Callers receive an explicit manifest of readable packs and writable pack(s). A caller may be a human-operated tool, an assistant, a service, or an importer. Shared knowledge can be read without granting the right to modify it.
 
 Cross-boundary writes and promotion are explicit events. Search is restricted to mounted packs before results become context.
 
@@ -152,10 +164,10 @@ Model agreement is not external evidence.
 
 ## 9. Proposal before commit
 
-Agents do not receive arbitrary graph/database mutation as their normal interface.
+Humans, assistants, models, services, and importers do not receive arbitrary graph/database mutation as their normal interface.
 
 ```text
-agent/model
+caller
    -> structured proposal
    -> schema validation
    -> stable-reference validation
@@ -166,7 +178,7 @@ agent/model
    -> asynchronous projection update
 ```
 
-High-risk knowledge changes can require stronger external verification or cross-model review. The deterministic gate owns the final state-changing transaction.
+High-risk knowledge changes can require stronger external verification or independent review. The deterministic gate owns the final state-changing transaction.
 
 ## 10. Graph projection
 
@@ -261,9 +273,11 @@ MCP is an adapter, not the internal service contract. Local scripts/CLI can use 
 
 ## 14. Harness integration
 
-The corpus is intended to support a coding/research harness around Codex, Claude, or other agents.
+The corpus is intended to support human-led coding and research workflows around Codex, Claude, or other assistants.
 
-The harness may route difficult work into independent model lanes and require:
+The harness can help a human explore sources, run tests, compare alternatives, criticize assumptions, and prepare structured proposals. It may also route difficult work into independent model lanes. None of that changes the actor model: the corpus records who or what performed an action, and model-generated rationale does not become historical fact merely because it is fluent or confident.
+
+A harness may require:
 
 - provenance;
 - citations;
