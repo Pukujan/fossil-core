@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import inspect
+import os
+
+import pytest
 
 import fossil_core.adapters.filesystem.io as canonical_io
 import fossil_core.io as legacy_io
@@ -43,3 +46,25 @@ def test_canonical_and_legacy_immutable_publish_behavior_match(tmp_path):
         assert publish(path, b"first") is False
         assert publish(path, b"different") is False
         assert path.read_bytes() == b"first"
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows fallback only")
+def test_windows_publish_falls_back_when_hard_links_are_unavailable(tmp_path, monkeypatch):
+    path = tmp_path / "windows" / "item.bin"
+    original_rename = canonical_io.os.rename
+
+    def unavailable_link(source, destination):
+        raise OSError("hard links unavailable")
+
+    def windows_rename(source, destination):
+        if canonical_io.Path(destination).exists():
+            raise FileExistsError(destination)
+        original_rename(source, destination)
+
+    monkeypatch.setattr(canonical_io.os, "link", unavailable_link)
+    monkeypatch.setattr(canonical_io.os, "rename", windows_rename)
+
+    assert canonical_io.publish_immutable(path, b"first") is True
+    assert path.read_bytes() == b"first"
+    assert canonical_io.publish_immutable(path, b"different") is False
+    assert path.read_bytes() == b"first"
