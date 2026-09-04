@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   preflight:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, gravebuster, fossil-core]
     steps:
       - name: Validate explicit live dispatch
         shell: bash
@@ -41,7 +41,7 @@ jobs:
 
   writer:
     needs: preflight
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, gravebuster, fossil-core]
     timeout-minutes: 15
     environment: r2-proof
     outputs:
@@ -120,7 +120,7 @@ jobs:
 
   rebuild:
     needs: writer
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, gravebuster, fossil-core]
     timeout-minutes: 15
     environment: r2-proof
     env:

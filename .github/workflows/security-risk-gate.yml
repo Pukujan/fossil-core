@@ -31,7 +31,7 @@ permissions:
 
 jobs:
   risk-gate:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, gravebuster, fossil-core]
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4

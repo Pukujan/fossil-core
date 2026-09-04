@@ -26,7 +26,7 @@ permissions:
 
 jobs:
   filesystem-artifact-store:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, gravebuster, fossil-core]
     timeout-minutes: 25
     env:
       FOSSIL_SOFTWARE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
