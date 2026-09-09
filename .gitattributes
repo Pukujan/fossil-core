@@ -1,0 +1,3 @@
+# Byte identity matters for the reconstructed source and its content-addressed blob.
+/docs/recovery/2026-08-29-study-os-shared-conversation.md text eol=lf
+/examples/packs/study-os-personal/artifacts/blobs/** -text
