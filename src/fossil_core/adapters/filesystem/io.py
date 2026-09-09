@@ -44,6 +44,18 @@ def publish_immutable(path: Path, data: bytes) -> bool:
             published = True
         except FileExistsError:
             published = False
+        except OSError:
+            # Hard-link publication is unavailable on some Windows-backed
+            # workspaces. Windows rename refuses to replace an existing
+            # destination, so it preserves the same no-overwrite contract.
+            if os.name != "nt":
+                raise
+            try:
+                os.rename(temp, path)
+            except FileExistsError:
+                published = False
+            else:
+                published = True
         if published:
             fsync_directory(path.parent)
         return published
