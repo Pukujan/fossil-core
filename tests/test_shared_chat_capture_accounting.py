@@ -7,7 +7,6 @@ from fossil_core.application.ingest.shared_chat_capture import (
     build_shared_chat_capture_receipt,
 )
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "schemas" / "shared-chat-capture" / "receipt-v1.schema.json"
 
@@ -95,9 +94,35 @@ def test_long_fixture_accounts_for_every_node_not_a_viewport_subset() -> None:
     assert len(receipt["graph"]["discovered_node_ids"]) == 600
     assert len(receipt["graph"]["accounted_node_ids"]) == 600
     assert len(receipt["graph"]["message_node_ids"]) == 599
+    assert receipt["graph"]["root_node_ids"] == ["node_0000"]
+    assert receipt["graph"]["current_node_id"] == "node_0599"
     assert receipt["graph"]["active_branch_node_ids"] == _reference_active_branch(
         nodes, "node_0599"
     )
+
+
+def test_receipt_does_not_alias_nested_adapter_inputs() -> None:
+    nodes = _linear_nodes(3)
+    continuation = _terminal_continuation()
+    source = _source()
+    receipt = build_shared_chat_capture_receipt(
+        capture_id="capture_copy_fixture",
+        provider="fixture",
+        source=source,
+        fidelity="verbatim",
+        nodes=nodes,
+        current_node_id="node_0002",
+        continuation=continuation,
+        schema_path=SCHEMA,
+        adapter_version="fixture-v1",
+    )
+
+    continuation["attempts"].append({"ref": "/late", "outcome": "success"})
+    source["external_ref"] = "fixture://mutated-after-build"
+    nodes["node_0001"]["child_ids"].append("late-node")
+
+    assert receipt["continuation"]["attempts"] == []
+    assert receipt["source"]["external_ref"] == "fixture://shared-chat"
 
 
 def test_differential_reference_walker_matches_branch_accounting() -> None:

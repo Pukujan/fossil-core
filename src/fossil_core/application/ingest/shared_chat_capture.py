@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import copy
 import json
+from collections.abc import Mapping
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
-
 
 SHARED_CHAT_CAPTURE_RECEIPT_VERSION = "fossil.shared-chat-capture-receipt.v1"
 
@@ -17,6 +17,23 @@ class SharedChatCaptureError(ValueError):
 
 def _ids(graph: Mapping[str, Any], field: str) -> set[str]:
     return {str(value) for value in graph[field]}
+
+
+def _continuation_is_terminal_success(continuation: Mapping[str, Any]) -> bool:
+    """Return whether continuation accounting proves a successful terminal state."""
+
+    state = continuation.get("state")
+    termination_reason = continuation.get("termination_reason")
+    attempts = list(continuation.get("attempts", []))
+    if state == "not_present":
+        return termination_reason == "source_terminal" and not attempts
+    if state == "resolved":
+        return (
+            termination_reason == "continuation_exhausted"
+            and bool(attempts)
+            and all(attempt.get("outcome") == "success" for attempt in attempts)
+        )
+    return False
 
 
 def validate_shared_chat_capture_receipt(
@@ -101,6 +118,14 @@ def validate_shared_chat_capture_receipt(
             raise SharedChatCaptureError(
                 "complete capture requires at least one discovered node"
             )
+        if not messages:
+            raise SharedChatCaptureError(
+                "complete capture requires at least one message-bearing node"
+            )
+        if not roots:
+            raise SharedChatCaptureError(
+                "complete capture requires at least one root node"
+            )
         if accounted != discovered:
             raise SharedChatCaptureError(
                 "complete capture requires every discovered node to be accounted for"
@@ -109,9 +134,9 @@ def validate_shared_chat_capture_receipt(
             raise SharedChatCaptureError(
                 "complete capture cannot contain unresolved graph references"
             )
-        if candidate["continuation"]["state"] == "unresolved":
+        if not _continuation_is_terminal_success(candidate["continuation"]):
             raise SharedChatCaptureError(
-                "complete capture cannot contain an unresolved continuation"
+                "complete capture requires successful terminal continuation accounting"
             )
 
     return candidate
@@ -164,6 +189,37 @@ def _graph_unresolved_refs(nodes: Mapping[str, Mapping[str, Any]]) -> list[dict[
                         "target_node_id": child_id,
                     }
                 )
+
+    # Parent/child pairs can be internally consistent while still forming a
+    # cycle with no root. Such a graph cannot be exhausted by a finite
+    # conversation traversal and must not be treated as complete.
+    for start in sorted(discovered):
+        visited: set[str] = set()
+        cursor: str | None = start
+        steps = 0
+        while cursor is not None and cursor in nodes:
+            if cursor in visited:
+                unresolved.append(
+                    {
+                        "from_node_id": cursor,
+                        "relation": "other",
+                        "target_node_id": cursor,
+                    }
+                )
+                break
+            if steps >= len(nodes):
+                unresolved.append(
+                    {
+                        "from_node_id": cursor,
+                        "relation": "other",
+                        "target_node_id": cursor,
+                    }
+                )
+                break
+            visited.add(cursor)
+            steps += 1
+            parent = nodes[cursor].get("parent_id")
+            cursor = None if parent is None else str(parent)
     return unresolved
 
 
@@ -177,7 +233,7 @@ def _active_branch(
             return [], []
         return [], [
             {
-                "from_node_id": sorted(nodes)[0],
+                "from_node_id": min(nodes),
                 "relation": "other",
                 "target_node_id": current_node_id,
             }
@@ -187,6 +243,7 @@ def _active_branch(
     visited: set[str] = set()
     cursor: str | None = current_node_id
     unresolved: list[dict[str, str]] = []
+    steps = 0
     while cursor is not None:
         if cursor in visited:
             unresolved.append(
@@ -197,7 +254,17 @@ def _active_branch(
                 }
             )
             break
+        if steps >= len(nodes):
+            unresolved.append(
+                {
+                    "from_node_id": cursor,
+                    "relation": "other",
+                    "target_node_id": cursor,
+                }
+            )
+            break
         visited.add(cursor)
+        steps += 1
         reverse_path.append(cursor)
         parent = nodes[cursor].get("parent_id")
         if parent is None:
@@ -263,12 +330,13 @@ def build_shared_chat_capture_receipt(
     recorded_current = requested_current if requested_current in discovered else None
 
     continuation_copy = copy.deepcopy(dict(continuation))
-    terminal_continuation = continuation_copy.get("state") in {"not_present", "resolved"}
-    terminal_reason = continuation_copy.get("termination_reason") in {
-        "source_terminal",
-        "continuation_exhausted",
-    }
-    complete = bool(discovered) and not unresolved and terminal_continuation and terminal_reason
+    complete = (
+        bool(discovered)
+        and bool(message_nodes)
+        and bool(roots)
+        and not unresolved
+        and _continuation_is_terminal_success(continuation_copy)
+    )
 
     discovered_ids = sorted(discovered)
     receipt = {
