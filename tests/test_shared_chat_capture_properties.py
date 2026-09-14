@@ -39,6 +39,9 @@ def _complete_receipt(node_ids: list[str]) -> dict:
         "fidelity": "verbatim",
         "completeness": "complete",
         "graph": {
+            "discovered_node_count": len(node_ids),
+            "accounted_node_count": len(node_ids),
+            "message_node_count": len(node_ids),
             "discovered_node_ids": list(node_ids),
             "accounted_node_ids": list(node_ids),
             "message_node_ids": list(node_ids),
@@ -68,6 +71,7 @@ def test_complete_capture_requires_accounting_for_every_discovered_node(
     if len(node_ids) > 1:
         damaged = _complete_receipt(node_ids)
         damaged["graph"]["accounted_node_ids"] = node_ids[:-1]
+        damaged["graph"]["accounted_node_count"] = len(node_ids) - 1
         with pytest.raises(SharedChatCaptureError, match="every discovered node"):
             validate_shared_chat_capture_receipt(damaged, schema_path=SCHEMA)
 
