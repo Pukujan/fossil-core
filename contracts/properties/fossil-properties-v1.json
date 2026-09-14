@@ -19,6 +19,22 @@
       "source_refs": ["ARCHITECTURE.md", "docs/architecture/modularization-phase0.md"]
     },
     {
+      "property_id": "FOSSIL-PROP-CAPTURE-COMPLETENESS-001",
+      "statement": "A remote/shared conversation may be promoted as a complete conversation source only when every node/reference exposed by the captured representation is mechanically accounted for and no continuation or pagination obligation remains unresolved; partial or uncertain acquisition remains evidence but cannot silently become complete conversation truth.",
+      "criticality": "critical",
+      "semantic_owner": "application ingest / source acquisition",
+      "modules": ["src/fossil_core/application/ingest/shared_chat_capture.py", "scripts/ingest_shared_chat_reconstructions.py"],
+      "deterministic_oracles": ["tests/test_shared_chat_capture_completeness.py"],
+      "property_oracles": ["tests/test_shared_chat_capture_properties.py"],
+      "mutation_scope": ["src/fossil_core/application/ingest/shared_chat_capture.py", "scripts/ingest_shared_chat_reconstructions.py"],
+      "tla_refs": [],
+      "lean_refs": [],
+      "hidden_acceptance_required": false,
+      "status": "active",
+      "source_refs": ["docs/implementation/2026-09-14-shared-chat-capture-completeness-plan.md", "schemas/shared-chat-capture/receipt-v1.schema.json"],
+      "notes": "Issue #247 strengthens the acquisition-to-ingest boundary. Capture fidelity is independent of capture completeness; deterministic CI owns the completeness predicate and the live public-share regression remains integration evidence rather than the sole oracle."
+    },
+    {
       "property_id": "FOSSIL-PROP-CITATION-INTEGRITY-001",
       "statement": "A citation resolves to the intended immutable source snapshot and artifact, and any bounded passage hash matches the exact cited bytes.",
       "criticality": "critical",
