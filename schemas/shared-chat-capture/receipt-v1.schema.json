@@ -67,6 +67,9 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "discovered_node_count",
+        "accounted_node_count",
+        "message_node_count",
         "discovered_node_ids",
         "accounted_node_ids",
         "message_node_ids",
@@ -77,6 +80,9 @@
         "unresolved_refs"
       ],
       "properties": {
+        "discovered_node_count": {"type": "integer", "minimum": 0},
+        "accounted_node_count": {"type": "integer", "minimum": 0},
+        "message_node_count": {"type": "integer", "minimum": 0},
         "discovered_node_ids": {
           "$ref": "#/$defs/unique_ids"
         },
@@ -178,6 +184,8 @@
         "properties": {
           "graph": {
             "properties": {
+              "discovered_node_count": {"minimum": 1},
+              "accounted_node_count": {"minimum": 1},
               "discovered_node_ids": {"minItems": 1},
               "accounted_node_ids": {"minItems": 1},
               "unresolved_refs": {"maxItems": 0}
