@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 import pytest
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError
 
 from scripts.ingest_shared_chat_reconstructions import ingest_manifest
 
@@ -56,6 +56,29 @@ def _incomplete_receipt(external_ref: str) -> dict:
     }
 
 
+def _complete_receipt(external_ref: str) -> dict:
+    receipt = _incomplete_receipt(external_ref)
+    receipt["capture_id"] = "capture_complete_001"
+    receipt["completeness"] = "complete"
+    receipt["continuation"] = {
+        "state": "not_present",
+        "mechanism": None,
+        "attempts": [],
+        "termination_reason": "source_terminal",
+    }
+    return receipt
+
+
+def _single_conversation_manifest(tmp_path: Path, receipt: dict) -> Path:
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    manifest["import_id"] = "shared-chat-completeness-test"
+    manifest["conversations"] = manifest["conversations"][:1]
+    manifest["conversations"][0]["capture_receipt"] = receipt
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    return manifest_path
+
+
 def test_capture_receipt_schema_allows_accounted_graph_to_remain_incomplete() -> None:
     schema = json.loads(RECEIPT_SCHEMA.read_text(encoding="utf-8"))
     receipt = _incomplete_receipt("https://chatgpt.com/share/example")
@@ -70,19 +93,22 @@ def test_capture_receipt_schema_allows_accounted_graph_to_remain_incomplete() ->
     assert receipt["completeness"] == "incomplete"
 
 
+def test_capture_receipt_schema_rejects_complete_with_unresolved_continuation() -> None:
+    schema = json.loads(RECEIPT_SCHEMA.read_text(encoding="utf-8"))
+    receipt = _incomplete_receipt("https://chatgpt.com/share/example")
+    receipt["completeness"] = "complete"
+
+    with pytest.raises(ValidationError):
+        Draft202012Validator(schema, format_checker=FormatChecker()).validate(receipt)
+
+
 def test_shared_chat_import_refuses_explicit_incomplete_capture_before_writing(
     tmp_path: Path,
 ) -> None:
-    """RED for #247: current baseline silently ignores capture completeness."""
-
-    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    manifest["import_id"] = "shared-chat-completeness-red"
-    manifest["conversations"] = manifest["conversations"][:1]
-    conversation = manifest["conversations"][0]
-    conversation["capture_receipt"] = _incomplete_receipt(conversation["external_ref"])
-
-    manifest_path = tmp_path / "manifest.json"
-    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    receipt = _incomplete_receipt(
+        "https://chatgpt.com/share/6a7f2a03-f38c-83ea-b364-402c11090417?ogimg=plain"
+    )
+    manifest_path = _single_conversation_manifest(tmp_path, receipt)
     output_root = tmp_path / "output"
 
     with pytest.raises(ValueError, match="capture|completeness|incomplete"):
@@ -90,3 +116,33 @@ def test_shared_chat_import_refuses_explicit_incomplete_capture_before_writing(
 
     assert not list((output_root / "events").rglob("evt_*.json"))
     assert not list((output_root / "conversations").rglob("conv_*.json"))
+
+
+def test_shared_chat_import_refuses_unknown_capture_before_writing(tmp_path: Path) -> None:
+    receipt = _incomplete_receipt(
+        "https://chatgpt.com/share/6a7f2a03-f38c-83ea-b364-402c11090417?ogimg=plain"
+    )
+    receipt["capture_id"] = "capture_unknown_001"
+    receipt["completeness"] = "unknown"
+    receipt["continuation"]["termination_reason"] = "unknown"
+    manifest_path = _single_conversation_manifest(tmp_path, receipt)
+    output_root = tmp_path / "output"
+
+    with pytest.raises(ValueError, match="capture|completeness|unknown"):
+        ingest_manifest(manifest_path, output_root, repo_root=ROOT)
+
+    assert not list((output_root / "events").rglob("evt_*.json"))
+    assert not list((output_root / "conversations").rglob("conv_*.json"))
+
+
+def test_shared_chat_import_accepts_mechanically_complete_capture(tmp_path: Path) -> None:
+    external_ref = "https://chatgpt.com/share/6a7f2a03-f38c-83ea-b364-402c11090417?ogimg=plain"
+    receipt = _complete_receipt(external_ref)
+    manifest_path = _single_conversation_manifest(tmp_path, receipt)
+    output_root = tmp_path / "output"
+
+    results = ingest_manifest(manifest_path, output_root, repo_root=ROOT)
+
+    assert len(results) == 1
+    assert len(list((output_root / "events").rglob("evt_*.json"))) == 1
+    assert len(list((output_root / "conversations").rglob("conv_*.json"))) == 1
