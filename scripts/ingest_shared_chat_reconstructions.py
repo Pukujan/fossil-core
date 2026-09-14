@@ -14,6 +14,9 @@ import json
 from pathlib import Path
 from typing import Any
 
+from fossil_core.application.ingest.shared_chat_capture import (
+    require_complete_shared_chat_capture,
+)
 from fossil_core.artifact_store import ArtifactStore
 from fossil_core.conversation import ConversationLineage, ConversationStore
 from fossil_core.event_store import DurableEventStore
@@ -173,6 +176,16 @@ def ingest_manifest(
     actor = manifest["actor"]
     results: list[dict[str, Any]] = []
     for spec in manifest["conversations"]:
+        capture_receipt = spec.get("capture_receipt")
+        if capture_receipt is not None:
+            require_complete_shared_chat_capture(
+                capture_receipt,
+                schema_path=repo_root
+                / "schemas"
+                / "shared-chat-capture"
+                / "receipt-v1.schema.json",
+            )
+
         envelope, build_state = _build_envelope(
             spec, repo_root=repo_root, conversation_store=conversation_store
         )
