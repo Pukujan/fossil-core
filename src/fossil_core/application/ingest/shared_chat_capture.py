@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -31,8 +32,6 @@ def validate_shared_chat_capture_receipt(
 
     candidate = copy.deepcopy(dict(receipt))
     schema_path = Path(schema_path)
-    import json
-
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
     Draft202012Validator(schema, format_checker=FormatChecker()).validate(candidate)
@@ -69,6 +68,10 @@ def validate_shared_chat_capture_receipt(
         raise SharedChatCaptureError(
             "capture active and non-active exposed node sets must be disjoint"
         )
+    if active | non_active != discovered:
+        raise SharedChatCaptureError(
+            "capture active and non-active exposed node sets must partition discovered nodes"
+        )
 
     current_node_id = graph["current_node_id"]
     if current_node_id is not None and str(current_node_id) not in discovered:
@@ -101,6 +104,165 @@ def validate_shared_chat_capture_receipt(
             )
 
     return candidate
+
+
+def _graph_unresolved_refs(nodes: Mapping[str, Mapping[str, Any]]) -> list[dict[str, str]]:
+    discovered = set(nodes)
+    unresolved: list[dict[str, str]] = []
+    for node_id in sorted(discovered):
+        node = nodes[node_id]
+        parent_id = node.get("parent_id")
+        if parent_id is not None and str(parent_id) not in discovered:
+            unresolved.append(
+                {
+                    "from_node_id": node_id,
+                    "relation": "parent",
+                    "target_node_id": str(parent_id),
+                }
+            )
+        for child_id in node.get("child_ids", []):
+            child_id = str(child_id)
+            if child_id not in discovered:
+                unresolved.append(
+                    {
+                        "from_node_id": node_id,
+                        "relation": "child",
+                        "target_node_id": child_id,
+                    }
+                )
+                continue
+            child_parent = nodes[child_id].get("parent_id")
+            if child_parent is not None and str(child_parent) != node_id:
+                unresolved.append(
+                    {
+                        "from_node_id": node_id,
+                        "relation": "other",
+                        "target_node_id": child_id,
+                    }
+                )
+    return unresolved
+
+
+def _active_branch(
+    nodes: Mapping[str, Mapping[str, Any]], current_node_id: str | None
+) -> tuple[list[str], list[dict[str, str]]]:
+    if current_node_id is None:
+        return [], []
+    if current_node_id not in nodes:
+        return [], [
+            {
+                "from_node_id": next(iter(nodes), "capture"),
+                "relation": "other",
+                "target_node_id": current_node_id,
+            }
+        ]
+
+    reverse_path: list[str] = []
+    visited: set[str] = set()
+    cursor: str | None = current_node_id
+    unresolved: list[dict[str, str]] = []
+    while cursor is not None:
+        if cursor in visited:
+            unresolved.append(
+                {
+                    "from_node_id": cursor,
+                    "relation": "other",
+                    "target_node_id": cursor,
+                }
+            )
+            break
+        visited.add(cursor)
+        reverse_path.append(cursor)
+        parent = nodes[cursor].get("parent_id")
+        if parent is None:
+            break
+        parent_id = str(parent)
+        if parent_id not in nodes:
+            # The graph-level reference checker records the missing target.
+            break
+        cursor = parent_id
+    return list(reversed(reverse_path)), unresolved
+
+
+def build_shared_chat_capture_receipt(
+    *,
+    capture_id: str,
+    provider: str,
+    source: Mapping[str, Any],
+    fidelity: str,
+    nodes: Mapping[str, Mapping[str, Any]],
+    current_node_id: str | None,
+    continuation: Mapping[str, Any],
+    schema_path: Path,
+    adapter_version: str | None = None,
+) -> dict[str, Any]:
+    """Derive a receipt from parsed provider-neutral conversation graph records.
+
+    ``nodes`` is an adapter boundary, not durable authority. Each key is a
+    provider-exposed node identity. A node may provide ``parent_id``,
+    ``child_ids`` and ``message_present``. This function independently derives
+    graph accounting, active/non-active partitioning, unresolved references and
+    the completeness status before returning a schema-valid receipt.
+    """
+
+    normalized_nodes: dict[str, dict[str, Any]] = {
+        str(node_id): copy.deepcopy(dict(node)) for node_id, node in nodes.items()
+    }
+    discovered = set(normalized_nodes)
+    roots = sorted(
+        node_id
+        for node_id, node in normalized_nodes.items()
+        if node.get("parent_id") is None
+    )
+    message_nodes = sorted(
+        node_id
+        for node_id, node in normalized_nodes.items()
+        if bool(node.get("message_present", False))
+    )
+
+    unresolved = _graph_unresolved_refs(normalized_nodes)
+    active, active_unresolved = _active_branch(normalized_nodes, current_node_id)
+    unresolved.extend(active_unresolved)
+    unresolved = sorted(
+        unresolved,
+        key=lambda item: (
+            item["from_node_id"],
+            item["relation"],
+            item["target_node_id"],
+        ),
+    )
+    active_set = set(active)
+    non_active = sorted(discovered - active_set)
+
+    continuation_copy = copy.deepcopy(dict(continuation))
+    terminal_continuation = continuation_copy.get("state") in {"not_present", "resolved"}
+    terminal_reason = continuation_copy.get("termination_reason") in {
+        "source_terminal",
+        "continuation_exhausted",
+    }
+    complete = bool(discovered) and not unresolved and terminal_continuation and terminal_reason
+
+    receipt = {
+        "schema_version": SHARED_CHAT_CAPTURE_RECEIPT_VERSION,
+        "capture_id": capture_id,
+        "provider": provider,
+        "adapter_version": adapter_version,
+        "source": copy.deepcopy(dict(source)),
+        "fidelity": fidelity,
+        "completeness": "complete" if complete else "incomplete",
+        "graph": {
+            "discovered_node_ids": sorted(discovered),
+            "accounted_node_ids": sorted(discovered),
+            "message_node_ids": message_nodes,
+            "root_node_ids": roots,
+            "current_node_id": current_node_id,
+            "active_branch_node_ids": active,
+            "non_active_exposed_node_ids": non_active,
+            "unresolved_refs": unresolved,
+        },
+        "continuation": continuation_copy,
+    }
+    return validate_shared_chat_capture_receipt(receipt, schema_path=schema_path)
 
 
 def require_complete_shared_chat_capture(
