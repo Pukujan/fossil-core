@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pukujan.github.io/fossil-core/schemas/shared-chat-capture/receipt-v1.schema.json",
+  "title": "FOSSIL Shared Chat Capture Receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "capture_id",
+    "provider",
+    "source",
+    "fidelity",
+    "completeness",
+    "graph",
+    "continuation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "fossil.shared-chat-capture-receipt.v1"
+    },
+    "capture_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "adapter_version": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["external_ref", "sha256", "byte_count", "captured_at"],
+      "properties": {
+        "external_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_id": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "captured_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "fidelity": {
+      "enum": ["verbatim", "reconstructed", "mixed"]
+    },
+    "completeness": {
+      "enum": ["complete", "incomplete", "unknown"]
+    },
+    "graph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "discovered_node_ids",
+        "accounted_node_ids",
+        "message_node_ids",
+        "root_node_ids",
+        "current_node_id",
+        "active_branch_node_ids",
+        "non_active_exposed_node_ids",
+        "unresolved_refs"
+      ],
+      "properties": {
+        "discovered_node_ids": {
+          "$ref": "#/$defs/unique_ids"
+        },
+        "accounted_node_ids": {
+          "$ref": "#/$defs/unique_ids"
+        },
+        "message_node_ids": {
+          "$ref": "#/$defs/unique_ids"
+        },
+        "root_node_ids": {
+          "$ref": "#/$defs/unique_ids"
+        },
+        "current_node_id": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "active_branch_node_ids": {
+          "$ref": "#/$defs/unique_ids"
+        },
+        "non_active_exposed_node_ids": {
+          "$ref": "#/$defs/unique_ids"
+        },
+        "unresolved_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["from_node_id", "relation", "target_node_id"],
+            "properties": {
+              "from_node_id": {"type": "string", "minLength": 1},
+              "relation": {"enum": ["parent", "child", "other"]},
+              "target_node_id": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    },
+    "continuation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "mechanism", "attempts", "termination_reason"],
+      "properties": {
+        "state": {
+          "enum": ["not_present", "resolved", "unresolved"]
+        },
+        "mechanism": {
+          "type": ["string", "null"]
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["ref", "outcome"],
+            "properties": {
+              "ref": {"type": "string", "minLength": 1},
+              "outcome": {
+                "enum": [
+                  "success",
+                  "http_error",
+                  "timeout",
+                  "connection_error",
+                  "malformed",
+                  "cycle",
+                  "other_error"
+                ]
+              },
+              "status_code": {
+                "type": ["integer", "null"],
+                "minimum": 100,
+                "maximum": 599
+              }
+            }
+          }
+        },
+        "termination_reason": {
+          "enum": [
+            "source_terminal",
+            "continuation_exhausted",
+            "http_error",
+            "timeout",
+            "connection_error",
+            "malformed",
+            "cycle",
+            "unresolved_reference",
+            "unknown"
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"completeness": {"const": "complete"}},
+        "required": ["completeness"]
+      },
+      "then": {
+        "properties": {
+          "graph": {
+            "properties": {
+              "discovered_node_ids": {"minItems": 1},
+              "accounted_node_ids": {"minItems": 1},
+              "unresolved_refs": {"maxItems": 0}
+            }
+          },
+          "continuation": {
+            "properties": {
+              "state": {"enum": ["not_present", "resolved"]},
+              "termination_reason": {
+                "enum": ["source_terminal", "continuation_exhausted"]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "unique_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
