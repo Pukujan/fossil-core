@@ -309,6 +309,16 @@ def test_a_disconnected_parent_cycle_is_not_hidden_by_a_valid_root() -> None:
                 "child_ids": ["cycle_a"],
                 "message_present": True,
             },
+            "cycle_c": {
+                "parent_id": "cycle_d",
+                "child_ids": ["cycle_d"],
+                "message_present": True,
+            },
+            "cycle_d": {
+                "parent_id": "cycle_c",
+                "child_ids": ["cycle_c"],
+                "message_present": True,
+            },
         },
         current_node_id="message",
         continuation={
@@ -324,6 +334,10 @@ def test_a_disconnected_parent_cycle_is_not_hidden_by_a_valid_root() -> None:
     assert receipt["completeness"] == "incomplete"
     assert any(
         ref["from_node_id"] == ref["target_node_id"] == "cycle_a"
+        for ref in receipt["graph"]["unresolved_refs"]
+    )
+    assert any(
+        ref["from_node_id"] == ref["target_node_id"] == "cycle_c"
         for ref in receipt["graph"]["unresolved_refs"]
     )
 

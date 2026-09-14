@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 from collections.abc import Mapping
 from pathlib import Path
@@ -140,6 +141,49 @@ def validate_shared_chat_capture_receipt(
             )
 
     return candidate
+
+
+def bind_shared_chat_capture_source(
+    receipt: Mapping[str, Any],
+    source_bytes: bytes,
+    *,
+    schema_path: Path,
+    artifact_id: str | None = None,
+) -> dict[str, Any]:
+    """Bind a capture receipt to exact bytes and their content identity.
+
+    Receipt validation alone cannot prove that a manifest's ``source_path`` is
+    the captured representation described by the receipt. This boundary checks
+    the digest and byte count before promotion, then records the deterministic
+    content-addressed artifact identity. A caller that already stored the
+    bytes can pass the store-returned ``artifact_id`` for a second, explicit
+    identity check.
+    """
+
+    candidate = validate_shared_chat_capture_receipt(receipt, schema_path=schema_path)
+    observed_digest = hashlib.sha256(source_bytes).hexdigest()
+    source = candidate["source"]
+    if source["sha256"] != observed_digest:
+        raise SharedChatCaptureError(
+            "capture source sha256 does not match the exact source bytes"
+        )
+    if int(source["byte_count"]) != len(source_bytes):
+        raise SharedChatCaptureError(
+            "capture source byte_count does not match the exact source bytes"
+        )
+
+    expected_artifact_id = f"art_{observed_digest[:32]}"
+    declared_artifact_id = source.get("artifact_id")
+    if declared_artifact_id is not None and declared_artifact_id != expected_artifact_id:
+        raise SharedChatCaptureError(
+            "capture source artifact identity does not match source sha256"
+        )
+    if artifact_id is not None and artifact_id != expected_artifact_id:
+        raise SharedChatCaptureError(
+            "stored capture artifact identity does not match source sha256"
+        )
+    candidate["source"]["artifact_id"] = artifact_id or expected_artifact_id
+    return validate_shared_chat_capture_receipt(candidate, schema_path=schema_path)
 
 
 def _graph_unresolved_refs(nodes: Mapping[str, Mapping[str, Any]]) -> list[dict[str, str]]:

@@ -10,11 +10,13 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
 
 from fossil_core.application.ingest.shared_chat_capture import (
+    bind_shared_chat_capture_source,
     require_complete_shared_chat_capture,
 )
 from fossil_core.artifact_store import ArtifactStore
@@ -39,6 +41,13 @@ def _publish_json(path: Path, value: Any) -> None:
         raise RuntimeError(f"immutable output conflict: {path}")
 
 
+def _capture_receipt_path(output_root: Path, capture_id: str) -> Path:
+    """Return a safe, stable path keyed by the logical capture identity."""
+
+    identity = hashlib.sha256(capture_id.encode("utf-8")).hexdigest()[:32]
+    return output_root / "capture-receipts" / f"capture_{identity}.json"
+
+
 def _actor(actor: dict[str, Any], *, role: str, actor_id: str) -> dict[str, Any]:
     return {
         "actor_id": actor_id,
@@ -55,16 +64,18 @@ def _build_envelope(
     *,
     repo_root: Path,
     conversation_store: ConversationStore,
+    source: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    source_path = repo_root / spec["source_path"]
-    source_bytes = source_path.read_bytes()
-    source = conversation_store.add_source(
-        source_bytes,
-        evidence_status="reconstructed",
-        media_type="text/markdown",
-        label=spec["source_label"],
-        external_ref=spec["external_ref"],
-    )
+    if source is None:
+        source_path = repo_root / spec["source_path"]
+        source_bytes = source_path.read_bytes()
+        source = conversation_store.add_source(
+            source_bytes,
+            evidence_status="reconstructed",
+            media_type="text/markdown",
+            label=spec["source_label"],
+            external_ref=spec["external_ref"],
+        )
 
     messages: list[dict[str, Any]] = []
     spans: list[dict[str, Any]] = []
@@ -177,17 +188,44 @@ def ingest_manifest(
     results: list[dict[str, Any]] = []
     for spec in manifest["conversations"]:
         capture_receipt = spec.get("capture_receipt")
+        source = None
         if capture_receipt is not None:
-            require_complete_shared_chat_capture(
-                capture_receipt,
-                schema_path=repo_root
+            schema_path = (
+                repo_root
                 / "schemas"
                 / "shared-chat-capture"
-                / "receipt-v1.schema.json",
+                / "receipt-v1.schema.json"
+            )
+            source_bytes = (repo_root / spec["source_path"]).read_bytes()
+            capture_receipt = bind_shared_chat_capture_source(
+                capture_receipt, source_bytes, schema_path=schema_path
+            )
+            source = conversation_store.add_source(
+                source_bytes,
+                evidence_status="reconstructed",
+                media_type="text/markdown",
+                label=spec["source_label"],
+                external_ref=spec["external_ref"],
+            )
+            capture_receipt = bind_shared_chat_capture_source(
+                capture_receipt,
+                source_bytes,
+                artifact_id=source["artifact_id"],
+                schema_path=schema_path,
+            )
+            _publish_json(
+                _capture_receipt_path(output_root, capture_receipt["capture_id"]),
+                capture_receipt,
+            )
+            require_complete_shared_chat_capture(
+                capture_receipt, schema_path=schema_path
             )
 
         envelope, build_state = _build_envelope(
-            spec, repo_root=repo_root, conversation_store=conversation_store
+            spec,
+            repo_root=repo_root,
+            conversation_store=conversation_store,
+            source=source,
         )
         lineage = _build_lineage(
             spec,
