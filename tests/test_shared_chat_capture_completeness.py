@@ -32,6 +32,9 @@ def _incomplete_receipt(external_ref: str) -> dict:
         "fidelity": "reconstructed",
         "completeness": "incomplete",
         "graph": {
+            "discovered_node_count": 2,
+            "accounted_node_count": 2,
+            "message_node_count": 1,
             "discovered_node_ids": ["node_root", "node_message"],
             "accounted_node_ids": ["node_root", "node_message"],
             "message_node_ids": ["node_message"],
@@ -89,6 +92,7 @@ def test_capture_receipt_schema_allows_accounted_graph_to_remain_incomplete() ->
     # Exhausting the graph exposed in one response is not proof that an
     # unresolved provider continuation contains no additional material.
     assert receipt["graph"]["discovered_node_ids"] == receipt["graph"]["accounted_node_ids"]
+    assert receipt["graph"]["discovered_node_count"] == receipt["graph"]["accounted_node_count"] == 2
     assert receipt["continuation"]["state"] == "unresolved"
     assert receipt["completeness"] == "incomplete"
 
