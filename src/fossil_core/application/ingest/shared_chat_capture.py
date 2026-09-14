@@ -44,6 +44,17 @@ def validate_shared_chat_capture_receipt(
     active = _ids(graph, "active_branch_node_ids")
     non_active = _ids(graph, "non_active_exposed_node_ids")
 
+    expected_counts = {
+        "discovered_node_count": len(discovered),
+        "accounted_node_count": len(accounted),
+        "message_node_count": len(messages),
+    }
+    for field, expected in expected_counts.items():
+        if int(graph[field]) != expected:
+            raise SharedChatCaptureError(
+                f"capture {field} must equal the number of corresponding node IDs"
+            )
+
     if not accounted <= discovered:
         raise SharedChatCaptureError(
             "capture accounted_node_ids must be a subset of discovered_node_ids"
@@ -112,16 +123,29 @@ def _graph_unresolved_refs(nodes: Mapping[str, Mapping[str, Any]]) -> list[dict[
     for node_id in sorted(discovered):
         node = nodes[node_id]
         parent_id = node.get("parent_id")
-        if parent_id is not None and str(parent_id) not in discovered:
-            unresolved.append(
-                {
-                    "from_node_id": node_id,
-                    "relation": "parent",
-                    "target_node_id": str(parent_id),
-                }
-            )
-        for child_id in node.get("child_ids", []):
-            child_id = str(child_id)
+        if parent_id is not None:
+            parent_id = str(parent_id)
+            if parent_id not in discovered:
+                unresolved.append(
+                    {
+                        "from_node_id": node_id,
+                        "relation": "parent",
+                        "target_node_id": parent_id,
+                    }
+                )
+            else:
+                parent_children = {str(child) for child in nodes[parent_id].get("child_ids", [])}
+                if node_id not in parent_children:
+                    unresolved.append(
+                        {
+                            "from_node_id": node_id,
+                            "relation": "other",
+                            "target_node_id": parent_id,
+                        }
+                    )
+
+        for child_id_raw in node.get("child_ids", []):
+            child_id = str(child_id_raw)
             if child_id not in discovered:
                 unresolved.append(
                     {
@@ -132,7 +156,7 @@ def _graph_unresolved_refs(nodes: Mapping[str, Mapping[str, Any]]) -> list[dict[
                 )
                 continue
             child_parent = nodes[child_id].get("parent_id")
-            if child_parent is not None and str(child_parent) != node_id:
+            if child_parent is None or str(child_parent) != node_id:
                 unresolved.append(
                     {
                         "from_node_id": node_id,
@@ -149,9 +173,11 @@ def _active_branch(
     if current_node_id is None:
         return [], []
     if current_node_id not in nodes:
+        if not nodes:
+            return [], []
         return [], [
             {
-                "from_node_id": next(iter(nodes), "capture"),
+                "from_node_id": sorted(nodes)[0],
                 "relation": "other",
                 "target_node_id": current_node_id,
             }
@@ -221,7 +247,8 @@ def build_shared_chat_capture_receipt(
     )
 
     unresolved = _graph_unresolved_refs(normalized_nodes)
-    active, active_unresolved = _active_branch(normalized_nodes, current_node_id)
+    requested_current = None if current_node_id is None else str(current_node_id)
+    active, active_unresolved = _active_branch(normalized_nodes, requested_current)
     unresolved.extend(active_unresolved)
     unresolved = sorted(
         unresolved,
@@ -233,6 +260,7 @@ def build_shared_chat_capture_receipt(
     )
     active_set = set(active)
     non_active = sorted(discovered - active_set)
+    recorded_current = requested_current if requested_current in discovered else None
 
     continuation_copy = copy.deepcopy(dict(continuation))
     terminal_continuation = continuation_copy.get("state") in {"not_present", "resolved"}
@@ -242,6 +270,7 @@ def build_shared_chat_capture_receipt(
     }
     complete = bool(discovered) and not unresolved and terminal_continuation and terminal_reason
 
+    discovered_ids = sorted(discovered)
     receipt = {
         "schema_version": SHARED_CHAT_CAPTURE_RECEIPT_VERSION,
         "capture_id": capture_id,
@@ -251,11 +280,14 @@ def build_shared_chat_capture_receipt(
         "fidelity": fidelity,
         "completeness": "complete" if complete else "incomplete",
         "graph": {
-            "discovered_node_ids": sorted(discovered),
-            "accounted_node_ids": sorted(discovered),
+            "discovered_node_count": len(discovered_ids),
+            "accounted_node_count": len(discovered_ids),
+            "message_node_count": len(message_nodes),
+            "discovered_node_ids": discovered_ids,
+            "accounted_node_ids": discovered_ids,
             "message_node_ids": message_nodes,
             "root_node_ids": roots,
-            "current_node_id": current_node_id,
+            "current_node_id": recorded_current,
             "active_branch_node_ids": active,
             "non_active_exposed_node_ids": non_active,
             "unresolved_refs": unresolved,
